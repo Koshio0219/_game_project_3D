@@ -95,6 +95,7 @@ sysinfo.txt
 
 # Ignore large MMD4Mecanim BulletPhysics native plugins
 game_project/Assets/MMD4Mecanim/Plugins/MMD4MecanimBulletPhysics/**
+game_project/Assets/MMD4Mecanim/Plugins/MMD4MecanimBulletPhysics 2.75/**
 
 # ============ #
 # Other #

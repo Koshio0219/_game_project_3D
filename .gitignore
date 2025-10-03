@@ -8,6 +8,37 @@
 [Ll]ogs/
 [Mm]emoryCaptures/
 
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+
+# Visual Studio / Rider / VSCode generated files
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Mono auto-generated
+*.cache
+*.log
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !*.meta
 

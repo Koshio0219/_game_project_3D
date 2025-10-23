@@ -53,12 +53,12 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.5
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.7, z: 0}
+  m_Center: {x: 0, y: 0.775, z: 0}
 --- !u!114 &745823697897187855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,8 +71,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f12b0ff155bff549a5072eba6fde36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Player.PlayerMoveCtrl
-  walkSpeed: 5
-  runSpeed: 10
+  animator: {fileID: 876922875337549779}
+  walkSpeed: 3
+  runSpeed: 5
   jumpHeight: 3
   gravity: -9.81
   groundCheck: {fileID: 0}
@@ -132,6 +133,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: model
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: a9056f131e92126438a879261beaf98d, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a17cdb3e47cd0c6488415f0bb2dd5d85, type: 2}
     - target: {fileID: 7026134587718898032, guid: a9056f131e92126438a879261beaf98d, type: 3}
       propertyPath: m_Quality
       value: 0
@@ -1669,6 +1674,11 @@ MonoBehaviour:
   boneID: 282
   ikEnabled: 0
   ikWeight: 1
+--- !u!95 &876922875337549779 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: a9056f131e92126438a879261beaf98d, type: 3}
+  m_PrefabInstance: {fileID: 6719899631606045250}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &878882819881803325 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3354185186327165825, guid: a9056f131e92126438a879261beaf98d, type: 3}
@@ -4621,7 +4631,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5872844329753847571}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2dbcb8f64d6a7a640a973b2df934eb10, type: 3}
   m_Name: 

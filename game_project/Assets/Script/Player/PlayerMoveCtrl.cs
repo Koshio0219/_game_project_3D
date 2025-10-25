@@ -1,15 +1,14 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Playables;
+using Cysharp.Threading.Tasks;
 
 namespace Game.Player
 {
-    public enum PlayerState
+    public enum PlayerAnimatorState
     {
         Idle,
         Running,
-        Jumpping,
+        Jump,
     }
 
     [RequireComponent(typeof(CharacterController))]
@@ -38,11 +37,16 @@ namespace Game.Player
         private UnityEngine.Camera mainCamera;
 
         private Vector2 moveInput;
-        private bool isRunning;
+        private bool RunningInput;
+        //是否按下跳跃
         private bool jumpPressed;
+        //是否正在跳跃中
+        private bool isJumping = false;
+        [Header("Jumpping Settings")]
+        [SerializeField] private float jumpDelay = 0.2f;
 
-        private PlayerState state = PlayerState.Idle;
-        public PlayerState State
+        private PlayerAnimatorState state = PlayerAnimatorState.Idle;
+        public PlayerAnimatorState State
         {
             get => state;
             set => OnPlayerStateChange(value);
@@ -51,17 +55,17 @@ namespace Game.Player
         void Awake()
         {
             controller = GetComponent<CharacterController>();
+            mainCamera = UnityEngine.Camera.main;
 
             // 创建输入系统实例
             input = new InputSystem_Actions();
-            mainCamera = UnityEngine.Camera.main;
 
             // 注册输入事件回调
             input.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
             input.Player.Move.canceled += ctx => moveInput = Vector2.zero;
 
-            input.Player.Sprint.performed += ctx => isRunning = true;
-            input.Player.Sprint.canceled += ctx => isRunning = false;
+            input.Player.Sprint.performed += ctx => RunningInput = true;
+            input.Player.Sprint.canceled += ctx => RunningInput = false;
 
             input.Player.Jump.performed += ctx => jumpPressed = true;
             input.Player.Jump.canceled += ctx => jumpPressed = false;
@@ -112,9 +116,6 @@ namespace Game.Player
 
         private void Movement(float dt)
         {
-            if (!isGrounded)
-                return;
-
             var h = moveInput.x;
             var v = moveInput.y;
 
@@ -133,55 +134,77 @@ namespace Game.Player
             transform.forward = targetDirection;
 
             //transform.Translate(dt * moveSpeed * targetDirection);
-            float moveSpeed = isRunning && isGrounded ? runSpeed : walkSpeed;
+            float moveSpeed = RunningInput && isGrounded ? runSpeed : walkSpeed;
             //transform.position += dt * moveSpeed * transform.forward;
             controller.Move(dt * moveSpeed * transform.forward);
-               
+
             //rig.linearVelocity = Vector3.zero;
             //rig.AddForce(transform.forward * moveSpeed * dt);
             //rig.velocity = new Vector3(transform.position.x, 0, transform.position.z) * moveSpeed * dt;
-            State = PlayerState.Running;
+
+            if (isGrounded && !isJumping)
+                State = PlayerAnimatorState.Running;
         }
 
         private void CheckJump()
         {
-            if (jumpPressed && isGrounded)
+            if (jumpPressed && isGrounded && !isJumping)
             {
-                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-                State = PlayerState.Jumpping;
-                isGrounded = false;
-                //jumpPressed = false;
+                JumpAsync().Forget();
             }
         }
+
+        private async UniTaskVoid JumpAsync()
+        {
+            isJumping = true;
+
+            // 播放起跳动画（动画里脚开始下蹲的时机）
+            State = PlayerAnimatorState.Jump;
+
+            // 等待动画的起跳前置时间
+            await UniTask.Delay(TimeSpan.FromSeconds(jumpDelay), cancellationToken: this.GetCancellationTokenOnDestroy());
+
+            // 执行物理跳跃
+            if (isGrounded) // 确保此时仍在地面上
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                isGrounded = false;
+            }
+
+            // 等待角色落地
+            await UniTask.WaitUntil(() => controller.isGrounded);
+            isJumping = false;
+        }
+
 
         private void CheckIdle()
         {
             var noMove = moveInput == Vector2.zero;
-            var noJump = isGrounded && velocity.y < 0;
+            var noJump = !isJumping && velocity.y < 0;
             if (noMove && noJump)
             {
-                State = PlayerState.Idle;
+                State = PlayerAnimatorState.Idle;
             }
         }
 
-        private void OnPlayerStateChange(PlayerState to)
+        private void OnPlayerStateChange(PlayerAnimatorState to)
         {
             if (to == state)
                 return;
 
             switch (to)
             {
-                case PlayerState.Idle:
+                case PlayerAnimatorState.Idle:
                     {
                         animator.CrossFade("Idle", .2f);
                         break;
                     }
-                case PlayerState.Running:
+                case PlayerAnimatorState.Running:
                     {
                         animator.CrossFade("Running", .2f);
                         break;
                     }
-                case PlayerState.Jumpping:
+                case PlayerAnimatorState.Jump:
                     {
                         animator.CrossFade("Jump", .2f);
                         //animator.Play("Jumping@loop");
@@ -191,13 +214,5 @@ namespace Game.Player
 
             state = to;
         }
-
-        //test
-        //void OnDrawGizmosSelected()
-        //{
-        //    if (groundCheck == null) return;
-        //    Gizmos.color = Color.yellow;
-        //    Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
-        //}
     }
 }

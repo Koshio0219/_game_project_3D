@@ -76,7 +76,8 @@ MonoBehaviour:
   runSpeed: 5
   jumpHeight: 2
   gravity: -9.81
-  groundedRememberTime: 0.2
+  groundedRememberTime: 0.5
+  jumpDelay: 0.5
 --- !u!1001 &6719899631606045250
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1090,6 +1091,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: a17cdb3e47cd0c6488415f0bb2dd5d85, type: 2}
     - target: {fileID: 5866666021909216657, guid: a9056f131e92126438a879261beaf98d, type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: a9056f131e92126438a879261beaf98d, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
@@ -1176,6 +1181,30 @@ PrefabInstance:
     - target: {fileID: 7026134587718898032, guid: a9056f131e92126438a879261beaf98d, type: 3}
       propertyPath: m_RayTracingMode
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7026134587718898032, guid: a9056f131e92126438a879261beaf98d, type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: NaN
+      objectReference: {fileID: 0}
+    - target: {fileID: 7026134587718898032, guid: a9056f131e92126438a879261beaf98d, type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: NaN
+      objectReference: {fileID: 0}
+    - target: {fileID: 7026134587718898032, guid: a9056f131e92126438a879261beaf98d, type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: NaN
+      objectReference: {fileID: 0}
+    - target: {fileID: 7026134587718898032, guid: a9056f131e92126438a879261beaf98d, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: NaN
+      objectReference: {fileID: 0}
+    - target: {fileID: 7026134587718898032, guid: a9056f131e92126438a879261beaf98d, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: NaN
+      objectReference: {fileID: 0}
+    - target: {fileID: 7026134587718898032, guid: a9056f131e92126438a879261beaf98d, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: NaN
       objectReference: {fileID: 0}
     - target: {fileID: 7026134587718898032, guid: a9056f131e92126438a879261beaf98d, type: 3}
       propertyPath: m_UpdateWhenOffscreen
@@ -5795,7 +5824,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5872844329753847571}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2dbcb8f64d6a7a640a973b2df934eb10, type: 3}
   m_Name: 
@@ -5807,7 +5836,7 @@ MonoBehaviour:
   nextEdgeColor: {r: 0.4, g: 1, b: 1, a: 1}
   supportNEXTEdge: 0
   importScale: 0.01
-  initializeOnAwake: 0
+  initializeOnAwake: 1
   postfixRenderQueue: 1
   renderQueueAfterSkybox: 0
   updateWhenOffscreen: 1
@@ -5837,25 +5866,25 @@ MonoBehaviour:
   tessEdgeLengthRate: 1
   tessPhongStrengthRate: 1
   tessExtrusionAmountRate: 1
-  physicsEngine: 0
+  physicsEngine: 1
   bulletPhysics:
     joinLocalWorld: 1
     useOriginalScale: 1
-    useCustomResetTime: 0
-    resetMorphTime: 1.8
-    resetWaitTime: 1.2
+    useCustomResetTime: 1
+    resetMorphTime: 0.2
+    resetWaitTime: 0.2
     worldProperty:
       accurateStep: 1
-      framePerSecond: 0
-      resetFrameRate: 0
-      limitDeltaFrames: 0
-      axisSweepDistance: 0
-      gravityScale: 10
+      framePerSecond: 60
+      resetFrameRate: 60
+      limitDeltaFrames: 2
+      axisSweepDistance: 2
+      gravityScale: 12
       gravityNoise: 0
       gravityDirection: {x: 0, y: -1, z: 0}
       vertexScale: 8
-      importScale: 0.01
-      worldSolverInfoNumIterations: 0
+      importScale: 1
+      worldSolverInfoNumIterations: 10
       worldSolverInfoSplitImpulse: 1
       worldAddFloorPlane: 0
       optimizeSettings: 1
@@ -5898,10 +5927,10 @@ MonoBehaviour:
       rigidBodyCcdMotionThreshold: 0.1
       rigidBodyShapeScale: 1
       rigidBodyMassRate: 1
-      rigidBodyLinearDampingRate: 1
-      rigidBodyAngularDampingRate: 1
+      rigidBodyLinearDampingRate: 1.6
+      rigidBodyAngularDampingRate: 1.8
       rigidBodyRestitutionRate: 1
-      rigidBodyFrictionRate: 1
+      rigidBodyFrictionRate: 1.2
       rigidBodyAntiJitterRate: 1
       rigidBodyAntiJitterRateOnKinematic: 1
       rigidBodyPreBoneAlignmentLimitLength: 0.01
@@ -5926,1322 +5955,1322 @@ MonoBehaviour:
   rigidBodyList:
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.5
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.5
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.25
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.25
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.25
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.25
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.25
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.25
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.25
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 1.25
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 1.25
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 1.25
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 1.25
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 1.75
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 1.75
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 1.75
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 1.75
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 2.45
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 2.45
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 2.45
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 2.45
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 2.45
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 2.45
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 2.45
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 2.45
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 1.75
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 1.75
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 1.75
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 1.75
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.25
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.25
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.75
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.75
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.75
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.75
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.75
   - freezed: 0
     _freezedCached: -1
     mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    linearDamping: 0.5
+    angularDamping: 0.5
     restitution: -1
-    friction: -1
+    friction: 0.75
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 0
+    linearDamping: 0.5
+    angularDamping: 0.5
+    restitution: 0
+    friction: 0.25
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 1
+    linearDamping: 0.5
+    angularDamping: 0.5
+    restitution: 0
+    friction: 0.5
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 1
+    linearDamping: 0.5
+    angularDamping: 0.5
+    restitution: 0
+    friction: 0.5
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 1
+    linearDamping: 0
+    angularDamping: 0
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 38
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 38
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 38
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 38
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 38
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 38
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 38
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 38
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 38
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 38
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 38
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 38
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 35
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 35
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 35
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 35
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 35
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 35
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 35
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 35
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
-    restitution: -1
-    friction: -1
+    mass: 35
+    linearDamping: 0.999
+    angularDamping: 0.9999
+    restitution: 0
+    friction: 0
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 35
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 35
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 35
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 30
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 30
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 30
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 30
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 30
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 30
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 30
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 30
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 30
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 30
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 30
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 30
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 28
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 28
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 28
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 28
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 28
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 28
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 28
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 28
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 28
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 28
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 28
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 28
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 26
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 26
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 26
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 26
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 26
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 26
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 26
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 26
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 26
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 26
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 26
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 26
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 24
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 24
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 24
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 24
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 24
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 24
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 24
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 24
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 24
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 24
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 24
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 24
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 22
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 22
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 22
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 22
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 22
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 22
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 22
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 22
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 22
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 22
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 22
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 22
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 20
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 20
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 20
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 20
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 20
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 20
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 20
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 20
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 20
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 20
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 20
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 20
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 15
+    linearDamping: 0.99
+    angularDamping: 0.8
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 12.318
+    linearDamping: 0.999
+    angularDamping: 0.999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 9.696
+    linearDamping: 0.999
+    angularDamping: 0.999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 7.192
+    linearDamping: 0.999
+    angularDamping: 0.999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 4.928
+    linearDamping: 0.999
+    angularDamping: 0.999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 2.961
+    linearDamping: 0.936
+    angularDamping: 0.9974
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 1.411
+    linearDamping: 0.971
+    angularDamping: 0.9974
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.458
+    linearDamping: 0.9992
+    angularDamping: 0.99998
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.1
+    linearDamping: 1
+    angularDamping: 1
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 4
+    linearDamping: 0.99999
+    angularDamping: 0.999999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 3
+    linearDamping: 0.99999
+    angularDamping: 0.999999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 2
+    linearDamping: 0.99999
+    angularDamping: 0.999999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 1
+    linearDamping: 0.99999
+    angularDamping: 0.999999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.6
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.4
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.3
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.2
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.1
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.6
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.4
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.3
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.2
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.1
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 5
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 4
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 3
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 2
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 1
+    linearDamping: 0.9999
+    angularDamping: 1
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 5
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 4
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 3
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 2
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 1
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.5
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.3
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.2
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.1
+    linearDamping: 0.999
+    angularDamping: 0.9999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.05
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.04
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.03
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.02
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.01
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.05
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.04
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.03
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.02
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 0.01
+    linearDamping: 0.9999
+    angularDamping: 0.99999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 4
+    linearDamping: 0.99999
+    angularDamping: 0.999999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 3
+    linearDamping: 0.99999
+    angularDamping: 0.999999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 2
+    linearDamping: 0.99999
+    angularDamping: 0.999999
     restitution: -1
     friction: -1
   - freezed: 0
     _freezedCached: -1
-    mass: -1
-    linearDamping: -1
-    angularDamping: -1
+    mass: 1
+    linearDamping: 0.99999
+    angularDamping: 0.999999
     restitution: -1
     friction: -1
   animList: []
-  editorViewPage: 0
+  editorViewPage: 5
   editorViewMorphBits: 15
   editorViewRigidBodies: 0
   editorViewMorphNameType: 0

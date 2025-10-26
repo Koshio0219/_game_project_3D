@@ -119,6 +119,69 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &10758501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 10758503}
+  - component: {fileID: 10758502}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &10758502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10758501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d355d86deb1a6418258e1b4ccbbd28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MMD4MecanimBulletPhysics
+  globalWorldProperty:
+    accurateStep: 1
+    framePerSecond: 0
+    resetFrameRate: 0
+    limitDeltaFrames: 0
+    axisSweepDistance: 0
+    gravityScale: 10
+    gravityNoise: 0
+    gravityDirection: {x: 0, y: -1, z: 0}
+    vertexScale: 8
+    importScale: 0.01
+    worldSolverInfoNumIterations: 0
+    worldSolverInfoSplitImpulse: 1
+    worldAddFloorPlane: 0
+    optimizeSettings: 1
+    multiThreading: 1
+    multiThreadingSynchronize: 1
+    parallelDispatcher: 0
+    parallelSolver: 0
+--- !u!4 &10758503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10758501}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.16693, y: 0, z: 89.43121}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &59547872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1324,10 +1387,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 745823697897187855, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
-      propertyPath: jumpDelay
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 5711102773969412134, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1373,6 +1432,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: physicsEngine
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
       propertyPath: nextEdgeMaterial_Pass4
       value: 
       objectReference: {fileID: 1651135974}
@@ -1380,6 +1443,66 @@ PrefabInstance:
       propertyPath: nextEdgeMaterial_Pass8
       value: 
       objectReference: {fileID: 1758393053}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.rigidBodyAntiJitterRate
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.jointAdditionalLimitAngle
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.rigidBodyLinearDampingLimit
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.jointAdditionalLimitForcibly
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.rigidBodyAngularDampingLimit
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.rigidBodyLinearVelocityLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.jointRootAdditionalLimitAngle
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.rigidBodyAngularVelocityLimit
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.rigidBodyLinearDampingLossRate
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.rigidBodyAngularDampingLossRate
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.rigidBodyPreBoneAlignmentLossRate
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.rigidBodyAntiJitterRateOnKinematic
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.rigidBodyForceAngularVelocityLimit
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.rigidBodyPostBoneAlignmentLossRate
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+      propertyPath: bulletPhysics.mmdModelProperty.rigidBodyPostBoneAlignmentLimitLength
+      value: 0.01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1591,8 +1714,8 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
+  m_ColorTemperature: 14615
+  m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
@@ -2486,3 +2609,4 @@ SceneRoots:
   - {fileID: 894822543}
   - {fileID: 1480814511}
   - {fileID: 1586506037}
+  - {fileID: 10758503}

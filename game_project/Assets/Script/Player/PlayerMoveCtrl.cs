@@ -197,17 +197,19 @@ namespace Game.Player
                 case PlayerAnimatorState.Idle:
                     {
                         animator.CrossFade("Idle", .2f);
+                        //animator.speed = 1f;
                         break;
                     }
                 case PlayerAnimatorState.Running:
                     {
                         animator.CrossFade("Running", .2f);
+                        //animator.speed = 1f;
                         break;
                     }
                 case PlayerAnimatorState.Jump:
                     {
                         animator.CrossFade("Jump", .2f);
-                        //animator.Play("Jumping@loop");
+                        //animator.speed = 1.5f;
                         break;
                     }
             }

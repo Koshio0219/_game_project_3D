@@ -4,17 +4,12 @@ using Cysharp.Threading.Tasks;
 
 namespace Game.Player
 {
-    public enum PlayerAnimatorState
-    {
-        Idle,
-        Running,
-        Jump,
-    }
-
     [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(PlayerInputHandler))]
+    [RequireComponent(typeof(PlayerStateHandler))]
     public class PlayerMoveCtrl : MonoBehaviour
     {
-        public Animator animator;
+        //public Animator animator;
 
         [Header("Movement Settings")]
         public float walkSpeed = 5f;
@@ -33,46 +28,50 @@ namespace Game.Player
         private Vector3 velocity;
         private bool isGrounded;
 
-        private InputSystem_Actions input;
+        //private InputSystem_Actions input;
+        private PlayerInputHandler input;
+        private PlayerStateHandler stateHandler;
         private UnityEngine.Camera mainCamera;
 
-        private Vector2 moveInput;
-        private bool RunningInput;
-        //是否按下跳跃
-        private bool jumpPressed;
+        //private Vector2 MoveInput;
+        //private bool RunningInput;
+        ////是否按下跳跃
+        //private bool JumpPressed;
         //是否正在跳跃中
         private bool isJumping = false;
         [Header("Jumpping Settings")]
         [SerializeField] private float jumpDelay = 0.2f;
 
-        private PlayerAnimatorState state = PlayerAnimatorState.Idle;
-        public PlayerAnimatorState State
-        {
-            get => state;
-            set => OnPlayerStateChange(value);
-        }
+        //private PlayerAnimatorState state = PlayerAnimatorState.Idle;
+        //public PlayerAnimatorState State
+        //{
+        //    get => state;
+        //    set => OnPlayerStateChange(value);
+        //}
 
         void Awake()
         {
             controller = GetComponent<CharacterController>();
+            input = GetComponent<PlayerInputHandler>();
+            stateHandler = GetComponent<PlayerStateHandler>();
             mainCamera = UnityEngine.Camera.main;
 
-            // 创建输入系统实例
-            input = new InputSystem_Actions();
+            //// 创建输入系统实例
+            //input = new InputSystem_Actions();
 
-            // 注册输入事件回调
-            input.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-            input.Player.Move.canceled += ctx => moveInput = Vector2.zero;
+            //// 注册输入事件回调
+            //input.Player.Move.performed += ctx => MoveInput = ctx.ReadValue<Vector2>();
+            //input.Player.Move.canceled += ctx => MoveInput = Vector2.zero;
 
-            input.Player.Sprint.performed += ctx => RunningInput = true;
-            input.Player.Sprint.canceled += ctx => RunningInput = false;
+            //input.Player.Sprint.performed += ctx => RunningInput = true;
+            //input.Player.Sprint.canceled += ctx => RunningInput = false;
 
-            input.Player.Jump.performed += ctx => jumpPressed = true;
-            input.Player.Jump.canceled += ctx => jumpPressed = false;
+            //input.Player.Jump.performed += ctx => JumpPressed = true;
+            //input.Player.Jump.canceled += ctx => JumpPressed = false;
         }
 
-        void OnEnable() => input.Enable();
-        void OnDisable() => input.Disable();
+        //void OnEnable() => input.Enable();
+        //void OnDisable() => input.Disable();
 
         void Update()
         {
@@ -116,8 +115,8 @@ namespace Game.Player
 
         private void Movement(float dt)
         {
-            var h = moveInput.x;
-            var v = moveInput.y;
+            var h = input.MoveInput.x;
+            var v = input.MoveInput.y;
 
             if (h == 0 && v == 0)
                 return;
@@ -134,7 +133,7 @@ namespace Game.Player
             transform.forward = targetDirection;
 
             //transform.Translate(dt * moveSpeed * targetDirection);
-            float moveSpeed = RunningInput && isGrounded ? runSpeed : walkSpeed;
+            float moveSpeed = input.RunningInput && isGrounded ? runSpeed : walkSpeed;
             //transform.position += dt * moveSpeed * transform.forward;
             controller.Move(dt * moveSpeed * transform.forward);
 
@@ -143,12 +142,12 @@ namespace Game.Player
             //rig.velocity = new Vector3(transform.position.x, 0, transform.position.z) * moveSpeed * dt;
 
             if (isGrounded && !isJumping)
-                State = PlayerAnimatorState.Running;
+                stateHandler.State = PlayerAnimatorState.Running;
         }
 
         private void CheckJump()
         {
-            if (jumpPressed && isGrounded && !isJumping)
+            if (input.JumpPressed && isGrounded && !isJumping)
             {
                 JumpAsync().Forget();
             }
@@ -159,7 +158,7 @@ namespace Game.Player
             isJumping = true;
 
             // 播放起跳动画（动画里脚开始下蹲的时机）
-            State = PlayerAnimatorState.Jump;
+            stateHandler.State = PlayerAnimatorState.Jump;
 
             // 等待动画的起跳前置时间
             await UniTask.Delay(TimeSpan.FromSeconds(jumpDelay), cancellationToken: this.GetCancellationTokenOnDestroy());
@@ -179,42 +178,42 @@ namespace Game.Player
 
         private void CheckIdle()
         {
-            var noMove = moveInput == Vector2.zero;
+            var noMove = input.MoveInput == Vector2.zero;
             var noJump = !isJumping && velocity.y < 0;
             if (noMove && noJump)
             {
-                State = PlayerAnimatorState.Idle;
+                stateHandler.State = PlayerAnimatorState.Idle;
             }
         }
 
-        private void OnPlayerStateChange(PlayerAnimatorState to)
-        {
-            if (to == state)
-                return;
+        //private void OnPlayerStateChange(PlayerAnimatorState to)
+        //{
+        //    if (to == state)
+        //        return;
 
-            switch (to)
-            {
-                case PlayerAnimatorState.Idle:
-                    {
-                        animator.CrossFade("Idle", .2f);
-                        //animator.speed = 1f;
-                        break;
-                    }
-                case PlayerAnimatorState.Running:
-                    {
-                        animator.CrossFade("Running", .2f);
-                        //animator.speed = 1f;
-                        break;
-                    }
-                case PlayerAnimatorState.Jump:
-                    {
-                        animator.CrossFade("Jump", .2f);
-                        //animator.speed = 1.5f;
-                        break;
-                    }
-            }
+        //    switch (to)
+        //    {
+        //        case PlayerAnimatorState.Idle:
+        //            {
+        //                animator.CrossFade("Idle", .2f);
+        //                //animator.speed = 1f;
+        //                break;
+        //            }
+        //        case PlayerAnimatorState.Running:
+        //            {
+        //                animator.CrossFade("Running", .2f);
+        //                //animator.speed = 1f;
+        //                break;
+        //            }
+        //        case PlayerAnimatorState.Jump:
+        //            {
+        //                animator.CrossFade("Jump", .2f);
+        //                //animator.speed = 1.5f;
+        //                break;
+        //            }
+        //    }
 
-            state = to;
-        }
+        //    state = to;
+        //}
     }
 }

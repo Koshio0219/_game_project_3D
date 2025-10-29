@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UnityEngine;
 
 namespace Game.Player
 {
+    [System.Serializable]
     public class PlayerData
     {
-        private int _MaxHP;
+        [SerializeField]
+        private int _maxHP;
         public int MaxHP
         {
-            get { return _MaxHP; }
-            set{  _MaxHP = value;
+            get { return _maxHP; }
+            set{  _maxHP = value;
             }
         }
 
@@ -24,6 +22,7 @@ namespace Game.Player
             set { _HP = value; }
         }
 
+        [SerializeField]
         private float _AtkPoint;
         public float AtkPoint
         {
@@ -32,6 +31,7 @@ namespace Game.Player
         }
 
         //% 0-1
+        [SerializeField]
         private float _HitRate;
         public float HitRate
         {
@@ -39,6 +39,7 @@ namespace Game.Player
             set { _HitRate = value; }
         }
         //% 0-1
+        [SerializeField]
         private float _CritRate;
         public float CritRate
         {
@@ -47,6 +48,7 @@ namespace Game.Player
         }
 
         //% >0
+        [SerializeField]
         private float _CritDmg;
         public float CritDmg
         {
@@ -55,6 +57,7 @@ namespace Game.Player
         }
 
         //剑气上限
+        [SerializeField]
         private int _maxSwordPoint;
         public int MaxSwordPoint
         {
@@ -63,23 +66,23 @@ namespace Game.Player
         }
 
         //剑气
-        private int _swordPoint;
+        private int _SwordPoint;
         public int SwordPoint
         {
-            get { return _swordPoint; }
-            set { _swordPoint = value; }
+            get { return _SwordPoint; }
+            set { _SwordPoint = value; }
         }
 
-        public PlayerData(int maxHP=100,int maxSwordPoint=5)
+        public PlayerData(int maxSwordPoint=5)
         {
-            _MaxHP = maxHP;
-            _HP = maxHP;
+            _maxHP = 0;
+            _HP = 0;
             _AtkPoint = 0;
             _HitRate = 0.0f;
             _CritRate = 0.0f;
             _CritDmg = 0.0f;
             _maxSwordPoint = maxSwordPoint;
-            _swordPoint = 0;
+            _SwordPoint = 0;
         }
     }
 }

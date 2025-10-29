@@ -74,7 +74,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f12b0ff155bff549a5072eba6fde36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Player.PlayerMoveCtrl
-  animator: {fileID: 876922875337549779}
   walkSpeed: 3
   runSpeed: 5
   jumpHeight: 2
@@ -93,6 +92,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ccb8e970c6f8c4da2c50810d7b200d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Player.PlayerAttackCtrl
+  weaponTransform:
+  - handType: 1
+    transform: {fileID: 6554374807658081118}
+  - handType: 0
+    transform: {fileID: 6405762135589688667}
 --- !u!114 &4012023066602300630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7715,6 +7719,11 @@ MonoBehaviour:
   boneID: 70
   ikEnabled: 0
   ikWeight: 1
+--- !u!4 &6405762135589688667 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 406511050785066777, guid: a9056f131e92126438a879261beaf98d, type: 3}
+  m_PrefabInstance: {fileID: 6719899631606045250}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6425226431886134375 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8904992531000977883, guid: a9056f131e92126438a879261beaf98d, type: 3}

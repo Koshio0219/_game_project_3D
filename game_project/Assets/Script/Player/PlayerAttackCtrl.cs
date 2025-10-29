@@ -3,6 +3,13 @@ using UnityEngine;
 
 namespace Game.Player
 {
+    [System.Serializable]
+    public struct WeaponHandTypeToTransform
+    {
+        public WeaponHandType handType;
+        public Transform transform;
+    }
+
     [RequireComponent(typeof(PlayerInputHandler))]
     [RequireComponent(typeof(PlayerStateHandler))]
     public class PlayerAttackCtrl:MonoBehaviour
@@ -10,7 +17,9 @@ namespace Game.Player
         public PlayerPropManager PropManager { get;private set; }
 
         [Header("Weapon")]
-        public List<(WeaponHandType, Transform)> weaponTransform;
+        public List<WeaponHandTypeToTransform> weaponTransform;
+
+        private Weapon currentWeapon = null;
 
         private PlayerInputHandler input;
         private PlayerStateHandler stateHandler;
@@ -30,11 +39,12 @@ namespace Game.Player
         {
             PropManager = new PlayerPropManager(new PlayerData());
 
+            EquipWeapon(1);
         }
 
-        public void EquippedWeapon(Weapon weapon)
+        public void EquipWeapon(int weaponId)
         {
-
+            if (currentWeapon != null) return;
         }
 
         public void ExitLevel()

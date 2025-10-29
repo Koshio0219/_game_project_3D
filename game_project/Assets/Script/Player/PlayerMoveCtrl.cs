@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Game.Framework;
 
 namespace Game.Player
 {

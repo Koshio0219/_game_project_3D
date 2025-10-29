@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Game.Camera
+namespace Game.CameraSystem
 {
     internal class CameraInputHandler
     {

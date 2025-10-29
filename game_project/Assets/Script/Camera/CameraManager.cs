@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Unity.Cinemachine;
 using UnityEngine;
 
-namespace Game.Camera
+namespace Game.CameraSystem
 {
     public enum CameraMode { Free, LockOn, Special }
 

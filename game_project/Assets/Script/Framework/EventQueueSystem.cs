@@ -25,6 +25,8 @@ namespace Game.Framework
         public bool bLimitQueueProcessing = false;
         public float limitQueueTime = 0.1f;
 
+        //已清理标记
+        private static bool isCleared = false;
         //注册侦听事件（持续）
         //add a listener(長続き)
         public static void AddListener<T>(EventDelegate<T> del) where T : GameEvent
@@ -52,7 +54,7 @@ namespace Game.Framework
         //ListenerをRemoveする
         public static void RemoveListener<T>(EventDelegate<T> del) where T : GameEvent
         {
-            if (Instance == null)
+            if (isCleared || Instance == null)
                 return;
             if (Instance.delegateLookup.TryGetValue(del, out InternalEventDelegate eventDelegate))
             {
@@ -145,10 +147,12 @@ namespace Game.Framework
             }
         }
 
-        private void OnApplicationQuit()
+        protected override void OnApplicationQuit()
         {
             RemoveAll();
             eventQueue.Clear();
+            isCleared = true;
+            base.OnApplicationQuit();
         }
     }
 }

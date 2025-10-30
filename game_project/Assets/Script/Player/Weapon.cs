@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using Game.Base;
+using System.Collections;
 using UnityEngine;
 
 namespace Game.Player
@@ -25,6 +27,15 @@ namespace Game.Player
         public virtual Vector3 SpawnPosOffse { get; private set; }
 
         public virtual WeaponAttackType AttackType { get; private set; }
+
+        public virtual void InitWeapon(int id)
+        {
+            WeaponID = id;
+            var weaponData = GameManager.Instance.gameData.playerWeaponDatas[id];
+            HandType = weaponData.handType;
+            AddProp = GameManager.Instance.gameData.playerWeaponDatas[id].weaponAddProp;
+            Debug.Log($"ID: {WeaponID} - Weapon Build");
+        }
 
         public virtual void NormalAttack()
         {

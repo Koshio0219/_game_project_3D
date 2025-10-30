@@ -25,7 +25,10 @@ namespace Game.Player
         {
             return Prop.AtkPoint * Prop.SwordPoint * (1 + Prop.CritDmg);
         }
-        
-        
+
+        public void AddProp(PlayerData addProp)
+        {
+            Prop += addProp;
+        }
     }
 }

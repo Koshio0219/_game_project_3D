@@ -13,14 +13,75 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: Assembly-CSharp::Game.Base.GameData
   playerConfig:
-    initWeaponId: 0
+    initWeaponId: 1
+    maxSwordPoint: 5
   playerWeaponDatas:
-  - weaponId: 0
-    prefab: {fileID: 4015741000892416919, guid: 78db73fb19ee81844ba0c6642a4985bd, type: 3}
-    weaponAddProp:
-      _maxHP: 100
-      _AtkPoint: 100
-      _HitRate: 0
-      _CritRate: 0
-      _CritDmg: 0
-      _maxSwordPoint: 0
+    _serializedList:
+    - Key: 0
+      Value:
+        prefab: {fileID: 4213627522537898958, guid: 92f8b959128871b40a304c49de4a5fb3, type: 3}
+        handType: 0
+        weaponAddProp:
+          _maxHP: 100
+          _AtkPoint: 100
+          _HitRate: 0
+          _CritRate: 0
+          _CritDmg: 0
+          _maxSwordPoint: 0
+    - Key: 2
+      Value:
+        prefab: {fileID: 6124045002855527346, guid: e2158d1f1e65cac449e1d1ef2454679c, type: 3}
+        handType: 1
+        weaponAddProp:
+          _maxHP: 100
+          _AtkPoint: 100
+          _HitRate: 0
+          _CritRate: 0
+          _CritDmg: 0
+          _maxSwordPoint: 0
+    - Key: 3
+      Value:
+        prefab: {fileID: 8048757080381267519, guid: 6808555716b49b44c93ec5121634a742, type: 3}
+        handType: 1
+        weaponAddProp:
+          _maxHP: 100
+          _AtkPoint: 100
+          _HitRate: 0
+          _CritRate: 0
+          _CritDmg: 0
+          _maxSwordPoint: 0
+    - Key: 1
+      Value:
+        prefab: {fileID: 4015741000892416919, guid: 78db73fb19ee81844ba0c6642a4985bd, type: 3}
+        handType: 1
+        weaponAddProp:
+          _maxHP: 100
+          _AtkPoint: 100
+          _HitRate: 0
+          _CritRate: 0
+          _CritDmg: 0
+          _maxSwordPoint: 0
+  playerStateConfigs:
+    _serializedList:
+    - Key: 0
+      Value:
+        priority: 0
+        duration: 0
+    - Key: 1
+      Value:
+        priority: 1
+        duration: 0
+    - Key: 2
+      Value:
+        priority: 2
+        duration: 0
+    - Key: 3
+      Value:
+        priority: 3
+        duration: 5.5
+    - Key: 4
+      Value:
+        priority: 10
+        duration: 0.5
+  hudConfig:
+    popupTextPrefab: {fileID: 0}

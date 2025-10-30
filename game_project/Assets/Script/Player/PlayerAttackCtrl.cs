@@ -1,15 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using AYellowpaper.SerializedCollections;
+using Game.Base;
+using Game.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Player
 {
-    [System.Serializable]
-    public struct WeaponHandTypeToTransform
-    {
-        public WeaponHandType handType;
-        public Transform transform;
-    }
-
     [RequireComponent(typeof(PlayerInputHandler))]
     [RequireComponent(typeof(PlayerStateHandler))]
     public class PlayerAttackCtrl:MonoBehaviour
@@ -17,7 +13,7 @@ namespace Game.Player
         public PlayerPropManager PropManager { get;private set; }
 
         [Header("Weapon")]
-        public List<WeaponHandTypeToTransform> weaponTransform;
+        public SerializedDictionary<WeaponHandType, Transform> weaponTransform;
 
         private Weapon currentWeapon = null;
 
@@ -37,14 +33,32 @@ namespace Game.Player
 
         public void EnterLevel()
         {
-            PropManager = new PlayerPropManager(new PlayerData());
+            PropManager = new PlayerPropManager(new PlayerData(GameManager.Instance.gameData.playerConfig.maxSwordPoint));
 
-            EquipWeapon(1);
+            EquipWeapon(GameManager.Instance.gameData.playerConfig.initWeaponId);
+            EventQueueSystem.QueueEvent(new PlayerEnterLevelEvent(PropManager.Prop));
         }
 
         public void EquipWeapon(int weaponId)
         {
             if (currentWeapon != null) return;
+            var data = GameManager.Instance.gameData.playerWeaponDatas[weaponId];
+
+            currentWeapon = GameObjectPool.Instance.GetObj(data.prefab, weaponTransform[data.handType]).GetComponent<Weapon>();
+            currentWeapon.transform.ResetLocal();
+            currentWeapon.InitWeapon(weaponId);
+            PropManager.AddProp(currentWeapon.AddProp);
+        }
+
+        private void Update()
+        {
+            if (currentWeapon == null) return;
+
+            if (input.AttackPressed)
+            {
+                currentWeapon.NormalAttack();
+                stateHandler.State = PlayerAnimatorState.Attack;
+            }
         }
 
         public void ExitLevel()

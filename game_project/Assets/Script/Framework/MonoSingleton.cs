@@ -15,7 +15,10 @@ namespace Game.Framework
             {
                 if (bAppQuitting)
                 {
-                    Debug.LogWarning($"[MonoSingleton] Instance of {typeof(T)} requested after quitting.");
+#if UNITY_EDITOR
+                    if (UnityEditor.EditorApplication.isPlaying)
+                        Debug.LogWarning($"[MonoSingleton] Instance of {typeof(T)} requested after quitting.");
+#endif
                     return null;
                 }
 

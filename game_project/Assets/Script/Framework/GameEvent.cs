@@ -1,8 +1,10 @@
 ﻿//Game中の全てのEventはこのScriptに書く、そして確認できる
 //EventはGameEventというClassを継承する必要がある
 //using Game.Manager;
+using Game.Player;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Base;
 
 namespace Game.Framework
 {
@@ -35,16 +37,6 @@ namespace Game.Framework
     }
 
     public class SceneLoadFinishedEvent : GameEvent { }
-
-    public class BackgroundScrollerEvent : GameEvent 
-    {
-        public float dis;
-
-        public BackgroundScrollerEvent(float dis)
-        {
-            this.dis = dis;
-        }
-    }
 
     public enum DamageActonType
     {
@@ -118,46 +110,46 @@ namespace Game.Framework
         }
     }
 
-    public enum PlayerType
-    {
-        Swordsman,
-        Witch
-    }
-
     public class PlayerHpChangeEvent : GameEvent
     {
-        public PlayerType playerType;
         public float lastHp;
         public float nowHp;
-        public PlayerHpChangeEvent(PlayerType playerType, float lastHp, float nowHp)
+        public float maxHp;
+        public PlayerHpChangeEvent(float lastHp, float nowHp, float maxHp)
         {
-            this.playerType = playerType;
             this.lastHp = lastHp;
             this.nowHp = nowHp;
+            this.maxHp = maxHp;
         }
     }
 
     public class UpdateNavMeshEvent : GameEvent { }
 
-    public class PointChangeEvent: GameEvent
+    public class SwordPointChangeEvent: GameEvent
     {
         public int lastP;
         public int nowP;
-        public bool reachGoal;
+        public int maxP;
 
-        public PointChangeEvent(int lastP, int nowP, bool reachGoal)
+        public SwordPointChangeEvent(int lastP, int nowP, int maxP)
         {
             this.lastP = lastP;
             this.nowP = nowP;
-            this.reachGoal = reachGoal;
+            this.maxP = maxP;
         }
     }
 
-    public class ReachPointEvent : GameEvent { }
-
-    public class StageTimeUpEvent : GameEvent {
-    
+    public class PlayerEnterLevelEvent : GameEvent 
+    {
+        public PlayerData playerData;
+        public PlayerEnterLevelEvent(PlayerData playerData)
+        {
+            this.playerData = playerData;
+        }
     }
+
+    public class PlayerExitLevelEvent : GameEvent { }
+   
 
     public class  PlayerDeadEvent : GameEvent
     {
@@ -178,23 +170,12 @@ namespace Game.Framework
         }
     }
 
-    public class EnterDeadZoneEvent : GameEvent
+    public class StageStatesEvent : GameEvent
     {
-        public int rootGoInsId;
-        public EnterDeadZoneEvent(int rootGoInsId)
+        public StageStates to;
+        public StageStatesEvent(StageStates stageStates)
         {
-            this.rootGoInsId = rootGoInsId;
+            to = stageStates;
         }
     }
-
-    public class BlockDragStartEvent : GameEvent 
-    {
-        public Transform targetBlock;
-        public BlockDragStartEvent(Transform transform)
-        {
-            targetBlock = transform;
-        }
-    }
-
-    public class BlockDragEndEvent : GameEvent { }
 }

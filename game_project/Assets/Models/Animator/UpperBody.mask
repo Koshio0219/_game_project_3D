@@ -1,0 +1,593 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UpperBody
+  m_Mask: 01000000010000000100000000000000000000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: 283.!Root
+    m_Weight: 1
+  - m_Path: 283.!Root/0.!joint_Actuator
+    m_Weight: 1
+  - m_Path: 283.!Root/1.!joint_Master
+    m_Weight: 1
+  - m_Path: 283.!Root/1.!joint_Master/2.!joint_Center
+    m_Weight: 1
+  - m_Path: 283.!Root/1.!joint_Master/2.!joint_Center/3.!joint_Center2
+    m_Weight: 1
+  - m_Path: 283.!Root/1.!joint_Master/2.!joint_Center/3.!joint_Center2/4.!joint_guru^bu
+    m_Weight: 1
+  - m_Path: 283.!Root/1.!joint_Master/2.!joint_Center/3.!joint_Center2/4.!joint_guru^bu/5.!joint_guru^bu2
+    m_Weight: 1
+  - m_Path: 283.!Root/1.!joint_Master/2.!joint_Center/3.!joint_Center2/4.!joint_guru^bu/5.!joint_guru^bu2/6.!joint_Waist
+    m_Weight: 1
+  - m_Path: 283.!Root/1.!joint_Master/100.!IK_LeftHipParent
+    m_Weight: 1
+  - m_Path: 283.!Root/1.!joint_Master/100.!IK_LeftHipParent/101.!IK_LeftHip
+    m_Weight: 1
+  - m_Path: 283.!Root/1.!joint_Master/100.!IK_LeftHipParent/101.!IK_LeftHip/102.!IK_LeftToe
+    m_Weight: 1
+  - m_Path: 283.!Root/1.!joint_Master/103.!IK_RightHipParent
+    m_Weight: 1
+  - m_Path: 283.!Root/1.!joint_Master/103.!IK_RightHipParent/104.!IK_RightHip
+    m_Weight: 1
+  - m_Path: 283.!Root/1.!joint_Master/103.!IK_RightHipParent/104.!IK_RightHip/105.!IK_RightToe
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/9.joint_Torso3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/9.joint_Torso3/11.joint_kaminome
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/22.joint_?shita
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/23.joint_?ue
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/24.!joint_Eyes
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/25.joint_RightEye
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/26.joint_LeftEye
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/214.joint___0_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/214.joint___0_1/215.joint___1_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/214.joint___0_1/215.joint___1_1/216.joint___2_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/214.joint___0_1/215.joint___1_1/216.joint___2_1/217.joint___3_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/214.joint___0_1/215.joint___1_1/216.joint___2_1/217.joint___3_1/218.joint___4_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/214.joint___0_1/215.joint___1_1/216.joint___2_1/217.joint___3_1/218.joint___4_1/219.joint___5_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/214.joint___0_1/215.joint___1_1/216.joint___2_1/217.joint___3_1/218.joint___4_1/219.joint___5_1/220.joint___6_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/214.joint___0_1/215.joint___1_1/216.joint___2_1/217.joint___3_1/218.joint___4_1/219.joint___5_1/220.joint___6_1/221.joint___7_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/214.joint___0_1/215.joint___1_1/216.joint___2_1/217.joint___3_1/218.joint___4_1/219.joint___5_1/220.joint___6_1/221.joint___7_1/222.joint___8_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/214.joint___0_1/215.joint___1_1/216.joint___2_1/217.joint___3_1/218.joint___4_1/219.joint___5_1/220.joint___6_1/221.joint___7_1/222.joint___8_1/223.!joint___9_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/224.joint_migi__1_0_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/224.joint_migi__1_0_1/225.joint_migi__1_1_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/224.joint_migi__1_0_1/225.joint_migi__1_1_1/226.joint_migi__1_2_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/224.joint_migi__1_0_1/225.joint_migi__1_1_1/226.joint_migi__1_2_1/227.joint_migi__1_3_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/224.joint_migi__1_0_1/225.joint_migi__1_1_1/226.joint_migi__1_2_1/227.joint_migi__1_3_1/228.!joint_migi__1_4_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/229.joint_migi__0_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/229.joint_migi__0_1/230.joint_migi__1_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/229.joint_migi__0_1/230.joint_migi__1_1/231.joint_migi__2_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/229.joint_migi__0_1/230.joint_migi__1_1/231.joint_migi__2_1/232.joint_migi__3_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/229.joint_migi__0_1/230.joint_migi__1_1/231.joint_migi__2_1/232.joint_migi__3_1/233.joint_migi__4_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/229.joint_migi__0_1/230.joint_migi__1_1/231.joint_migi__2_1/232.joint_migi__3_1/233.joint_migi__4_1/234.!joint_migi__5_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/235.joint_hidari__0_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/235.joint_hidari__0_1/236.joint_hidari__1_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/235.joint_hidari__0_1/236.joint_hidari__1_1/237.joint_hidari__2_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/235.joint_hidari__0_1/236.joint_hidari__1_1/237.joint_hidari__2_1/238.joint_hidari__3_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/235.joint_hidari__0_1/236.joint_hidari__1_1/237.joint_hidari__2_1/238.joint_hidari__3_1/239.joint_hidari__4_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/235.joint_hidari__0_1/236.joint_hidari__1_1/237.joint_hidari__2_1/238.joint_hidari__3_1/239.joint_hidari__4_1/240.!joint_hidari__5_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/270.joint_hidari__1_0_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/270.joint_hidari__1_0_1/271.joint_hidari__1_1_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/270.joint_hidari__1_0_1/271.joint_hidari__1_1_1/272.joint_hidari__1_2_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/270.joint_hidari__1_0_1/271.joint_hidari__1_1_1/272.joint_hidari__1_2_1/273.joint_hidari__1_3_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/12.joint_Neck/13.joint_Head/270.joint_hidari__1_0_1/271.joint_hidari__1_1_1/272.joint_hidari__1_2_1/273.joint_hidari__1_3_1/274.!joint_hidari__1_4_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/14.!joint_hidarikataP
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/16.!joint_LeftShoulderC
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/28.joint_LeftArmTwist
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/29.joint_LeftArmTwist1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/30.joint_LeftArmTwist2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/31.joint_LeftArmTwist3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/33.joint_LeftHandTwist
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/34.joint_LeftHandTwist1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/35.joint_LeftHandTwist2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/36.joint_LeftHandTwist3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/38.!joint_LeftDummy
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/39.joint_LeftThumb0
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/40.joint_LeftIndex1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/40.joint_LeftIndex1/47.joint_LeftIndex2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/40.joint_LeftIndex1/47.joint_LeftIndex2/48.joint_LeftIndex3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/40.joint_LeftIndex1/47.joint_LeftIndex2/48.joint_LeftIndex3/49.!joint_LeftIndexTip
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/41.joint_LeftMiddle1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/41.joint_LeftMiddle1/50.joint_LeftMiddle2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/41.joint_LeftMiddle1/50.joint_LeftMiddle2/51.joint_LeftMiddle3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/41.joint_LeftMiddle1/50.joint_LeftMiddle2/51.joint_LeftMiddle3/52.!joint_LeftMiddleTip
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/42.joint_LeftRing1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/42.joint_LeftRing1/53.joint_LeftRing2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/42.joint_LeftRing1/53.joint_LeftRing2/54.joint_LeftRing3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/42.joint_LeftRing1/53.joint_LeftRing2/54.joint_LeftRing3/55.!joint_LeftRingTip
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/43.joint_LeftPinky1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/43.joint_LeftPinky1/56.joint_LeftPinky2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/43.joint_LeftPinky1/56.joint_LeftPinky2/57.joint_LeftPinky3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/43.joint_LeftPinky1/56.joint_LeftPinky2/57.joint_LeftPinky3/58.!joint_LeftPinkyTip
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/284.!joint_LeftThumb0M
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/284.!joint_LeftThumb0M/44.joint_LeftThumb1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/284.!joint_LeftThumb0M/44.joint_LeftThumb1/45.joint_LeftThumb2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/15.joint_LeftShoulder/27.joint_LeftArm/32.joint_LeftElbow/37.joint_LeftWrist/284.!joint_LeftThumb0M/44.joint_LeftThumb1/45.joint_LeftThumb2/46.!joint_LeftThumbTip
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/17.!joint_migikataP
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/19.!joint_RightShoulderC
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/60.joint_RightArmTwist
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/61.joint_RightArmTwist1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/62.joint_RightArmTwist2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/63.joint_RightArmTwist3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/65.joint_RightHandTwist
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/66.joint_RightHandTwist1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/67.joint_RightHandTwist2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/68.joint_RightHandTwist3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/70.!joint_RightDummy
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/71.joint_RightThumb0
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/72.joint_RightIndex1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/72.joint_RightIndex1/79.joint_RightIndex2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/72.joint_RightIndex1/79.joint_RightIndex2/80.joint_RightIndex3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/72.joint_RightIndex1/79.joint_RightIndex2/80.joint_RightIndex3/81.!joint_RightIndexTip
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/73.joint_RightMiddle1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/73.joint_RightMiddle1/82.joint_RightMiddle2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/73.joint_RightMiddle1/82.joint_RightMiddle2/83.joint_RightMiddle3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/73.joint_RightMiddle1/82.joint_RightMiddle2/83.joint_RightMiddle3/84.!joint_RightMiddleTip
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/74.joint_RightRing1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/74.joint_RightRing1/85.joint_RightRing2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/74.joint_RightRing1/85.joint_RightRing2/86.joint_RightRing3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/74.joint_RightRing1/85.joint_RightRing2/86.joint_RightRing3/87.!joint_RightRingTip
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/75.joint_RightPinky1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/75.joint_RightPinky1/88.joint_RightPinky2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/75.joint_RightPinky1/88.joint_RightPinky2/89.joint_RightPinky3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/75.joint_RightPinky1/88.joint_RightPinky2/89.joint_RightPinky3/90.!joint_RightPinkyTip
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/285.!joint_RightThumb0M
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/285.!joint_RightThumb0M/76.joint_RightThumb1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/285.!joint_RightThumb0M/76.joint_RightThumb1/77.joint_RightThumb2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/18.joint_RightShoulder/59.joint_RightArm/64.joint_RightElbow/69.joint_RightWrist/285.!joint_RightThumb0M/76.joint_RightThumb1/77.joint_RightThumb2/78.!joint_RightThumbTip
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/20.joint_RightBreast
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/21.joint_LeftBreast
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/10.joint_Torso2/97.!joint_otsu_ichousei
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/241.joint_migiyui_0_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/241.joint_migiyui_0_1/242.joint_migiyui_1_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/241.joint_migiyui_0_1/242.joint_migiyui_1_1/243.joint_migiyui_2_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/241.joint_migiyui_0_1/242.joint_migiyui_1_1/243.joint_migiyui_2_1/244.joint_migiyui_3_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/241.joint_migiyui_0_1/242.joint_migiyui_1_1/243.joint_migiyui_2_1/244.joint_migiyui_3_1/245.joint_migiyui_4_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/241.joint_migiyui_0_1/242.joint_migiyui_1_1/243.joint_migiyui_2_1/244.joint_migiyui_3_1/245.joint_migiyui_4_1/246.!joint_migiyui_5_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/247.joint_hidariyui_0_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/247.joint_hidariyui_0_1/248.joint_hidariyui_1_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/247.joint_hidariyui_0_1/248.joint_hidariyui_1_1/249.joint_hidariyui_2_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/247.joint_hidariyui_0_1/248.joint_hidariyui_1_1/249.joint_hidariyui_2_1/250.joint_hidariyui_3_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/247.joint_hidariyui_0_1/248.joint_hidariyui_1_1/249.joint_hidariyui_2_1/250.joint_hidariyui_3_1/251.joint_hidariyui_4_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/247.joint_hidariyui_0_1/248.joint_hidariyui_1_1/249.joint_hidariyui_2_1/250.joint_hidariyui_3_1/251.joint_hidariyui_4_1/252.!joint_hidariyui_5_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/253.joint__1_0_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/253.joint__1_0_1/254.joint__1_1_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/253.joint__1_0_1/254.joint__1_1_1/255.joint__1_2_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/253.joint__1_0_1/254.joint__1_1_1/255.joint__1_2_1/256.joint__1_3_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/8.joint_Torso/253.joint__1_0_1/254.joint__1_1_1/255.joint__1_2_1/256.joint__1_3_1/257.!joint__1_4_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/91.!joint_LeftHip
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/91.!joint_LeftHip/92.!joint_LeftKnee
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/91.!joint_LeftHip/92.!joint_LeftKnee/93.!joint_LeftFoot
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/91.!joint_LeftHip/92.!joint_LeftKnee/93.!joint_LeftFoot/98.!joint_LeftToe
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/94.!joint_RightHip
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/94.!joint_RightHip/95.!joint_RightKnee
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/94.!joint_RightHip/95.!joint_RightKnee/96.!joint_RightFoot
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/94.!joint_RightHip/95.!joint_RightKnee/96.!joint_RightFoot/99.!joint_RightToe
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/106.joint___0_0
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/106.joint___0_0/118.joint___1_0
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/106.joint___0_0/118.joint___1_0/130.joint___2_0
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/106.joint___0_0/118.joint___1_0/130.joint___2_0/142.joint___3_0
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/106.joint___0_0/118.joint___1_0/130.joint___2_0/142.joint___3_0/154.joint___4_0
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/106.joint___0_0/118.joint___1_0/130.joint___2_0/142.joint___3_0/154.joint___4_0/166.joint___5_0
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/106.joint___0_0/118.joint___1_0/130.joint___2_0/142.joint___3_0/154.joint___4_0/166.joint___5_0/178.joint___6_0
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/106.joint___0_0/118.joint___1_0/130.joint___2_0/142.joint___3_0/154.joint___4_0/166.joint___5_0/178.joint___6_0/190.joint___7_0
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/106.joint___0_0/118.joint___1_0/130.joint___2_0/142.joint___3_0/154.joint___4_0/166.joint___5_0/178.joint___6_0/190.joint___7_0/202.!joint___8_0
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/107.joint___0_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/107.joint___0_1/119.joint___1_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/107.joint___0_1/119.joint___1_1/131.joint___2_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/107.joint___0_1/119.joint___1_1/131.joint___2_1/143.joint___3_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/107.joint___0_1/119.joint___1_1/131.joint___2_1/143.joint___3_1/155.joint___4_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/107.joint___0_1/119.joint___1_1/131.joint___2_1/143.joint___3_1/155.joint___4_1/167.joint___5_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/107.joint___0_1/119.joint___1_1/131.joint___2_1/143.joint___3_1/155.joint___4_1/167.joint___5_1/179.joint___6_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/107.joint___0_1/119.joint___1_1/131.joint___2_1/143.joint___3_1/155.joint___4_1/167.joint___5_1/179.joint___6_1/191.joint___7_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/107.joint___0_1/119.joint___1_1/131.joint___2_1/143.joint___3_1/155.joint___4_1/167.joint___5_1/179.joint___6_1/191.joint___7_1/203.!joint___8_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/108.joint___0_2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/108.joint___0_2/120.joint___1_2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/108.joint___0_2/120.joint___1_2/132.joint___2_2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/108.joint___0_2/120.joint___1_2/132.joint___2_2/144.joint___3_2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/108.joint___0_2/120.joint___1_2/132.joint___2_2/144.joint___3_2/156.joint___4_2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/108.joint___0_2/120.joint___1_2/132.joint___2_2/144.joint___3_2/156.joint___4_2/168.joint___5_2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/108.joint___0_2/120.joint___1_2/132.joint___2_2/144.joint___3_2/156.joint___4_2/168.joint___5_2/180.joint___6_2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/108.joint___0_2/120.joint___1_2/132.joint___2_2/144.joint___3_2/156.joint___4_2/168.joint___5_2/180.joint___6_2/192.joint___7_2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/108.joint___0_2/120.joint___1_2/132.joint___2_2/144.joint___3_2/156.joint___4_2/168.joint___5_2/180.joint___6_2/192.joint___7_2/204.!joint___8_2
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/109.joint___0_3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/109.joint___0_3/121.joint___1_3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/109.joint___0_3/121.joint___1_3/133.joint___2_3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/109.joint___0_3/121.joint___1_3/133.joint___2_3/145.joint___3_3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/109.joint___0_3/121.joint___1_3/133.joint___2_3/145.joint___3_3/157.joint___4_3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/109.joint___0_3/121.joint___1_3/133.joint___2_3/145.joint___3_3/157.joint___4_3/169.joint___5_3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/109.joint___0_3/121.joint___1_3/133.joint___2_3/145.joint___3_3/157.joint___4_3/169.joint___5_3/181.joint___6_3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/109.joint___0_3/121.joint___1_3/133.joint___2_3/145.joint___3_3/157.joint___4_3/169.joint___5_3/181.joint___6_3/193.joint___7_3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/109.joint___0_3/121.joint___1_3/133.joint___2_3/145.joint___3_3/157.joint___4_3/169.joint___5_3/181.joint___6_3/193.joint___7_3/205.!joint___8_3
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/110.joint___0_4
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/110.joint___0_4/122.joint___1_4
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/110.joint___0_4/122.joint___1_4/134.joint___2_4
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/110.joint___0_4/122.joint___1_4/134.joint___2_4/146.joint___3_4
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/110.joint___0_4/122.joint___1_4/134.joint___2_4/146.joint___3_4/158.joint___4_4
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/110.joint___0_4/122.joint___1_4/134.joint___2_4/146.joint___3_4/158.joint___4_4/170.joint___5_4
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/110.joint___0_4/122.joint___1_4/134.joint___2_4/146.joint___3_4/158.joint___4_4/170.joint___5_4/182.joint___6_4
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/110.joint___0_4/122.joint___1_4/134.joint___2_4/146.joint___3_4/158.joint___4_4/170.joint___5_4/182.joint___6_4/194.joint___7_4
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/110.joint___0_4/122.joint___1_4/134.joint___2_4/146.joint___3_4/158.joint___4_4/170.joint___5_4/182.joint___6_4/194.joint___7_4/206.!joint___8_4
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5/135.joint___2_5
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5/135.joint___2_5/147.joint___3_5
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5/135.joint___2_5/147.joint___3_5/159.joint___4_5
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5/135.joint___2_5/147.joint___3_5/159.joint___4_5/171.joint___5_5
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5/135.joint___2_5/147.joint___3_5/159.joint___4_5/171.joint___5_5/183.joint___6_5
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5/135.joint___2_5/147.joint___3_5/159.joint___4_5/171.joint___5_5/183.joint___6_5/195.joint___7_5
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5/135.joint___2_5/147.joint___3_5/159.joint___4_5/171.joint___5_5/183.joint___6_5/195.joint___7_5/207.!joint___8_5
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5/135.joint___2_5/147.joint___3_5/159.joint___4_5/171.joint___5_5/183.joint___6_5/195.joint___7_5/258.joint_hidari_1_0_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5/135.joint___2_5/147.joint___3_5/159.joint___4_5/171.joint___5_5/183.joint___6_5/195.joint___7_5/258.joint_hidari_1_0_1/259.joint_hidari_1_1_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5/135.joint___2_5/147.joint___3_5/159.joint___4_5/171.joint___5_5/183.joint___6_5/195.joint___7_5/258.joint_hidari_1_0_1/259.joint_hidari_1_1_1/260.joint_hidari_1_2_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5/135.joint___2_5/147.joint___3_5/159.joint___4_5/171.joint___5_5/183.joint___6_5/195.joint___7_5/258.joint_hidari_1_0_1/259.joint_hidari_1_1_1/260.joint_hidari_1_2_1/261.joint_hidari_1_3_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5/135.joint___2_5/147.joint___3_5/159.joint___4_5/171.joint___5_5/183.joint___6_5/195.joint___7_5/258.joint_hidari_1_0_1/259.joint_hidari_1_1_1/260.joint_hidari_1_2_1/261.joint_hidari_1_3_1/262.joint_hidari_1_4_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/111.joint___0_5/123.joint___1_5/135.joint___2_5/147.joint___3_5/159.joint___4_5/171.joint___5_5/183.joint___6_5/195.joint___7_5/258.joint_hidari_1_0_1/259.joint_hidari_1_1_1/260.joint_hidari_1_2_1/261.joint_hidari_1_3_1/262.joint_hidari_1_4_1/263.!joint_hidari_1_5_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/112.joint___0_6
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/112.joint___0_6/124.joint___1_6
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/112.joint___0_6/124.joint___1_6/136.joint___2_6
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/112.joint___0_6/124.joint___1_6/136.joint___2_6/148.joint___3_6
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/112.joint___0_6/124.joint___1_6/136.joint___2_6/148.joint___3_6/160.joint___4_6
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/112.joint___0_6/124.joint___1_6/136.joint___2_6/148.joint___3_6/160.joint___4_6/172.joint___5_6
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/112.joint___0_6/124.joint___1_6/136.joint___2_6/148.joint___3_6/160.joint___4_6/172.joint___5_6/184.joint___6_6
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/112.joint___0_6/124.joint___1_6/136.joint___2_6/148.joint___3_6/160.joint___4_6/172.joint___5_6/184.joint___6_6/196.joint___7_6
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/112.joint___0_6/124.joint___1_6/136.joint___2_6/148.joint___3_6/160.joint___4_6/172.joint___5_6/184.joint___6_6/196.joint___7_6/208.!joint___8_6
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7/137.joint___2_7
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7/137.joint___2_7/149.joint___3_7
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7/137.joint___2_7/149.joint___3_7/161.joint___4_7
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7/137.joint___2_7/149.joint___3_7/161.joint___4_7/173.joint___5_7
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7/137.joint___2_7/149.joint___3_7/161.joint___4_7/173.joint___5_7/185.joint___6_7
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7/137.joint___2_7/149.joint___3_7/161.joint___4_7/173.joint___5_7/185.joint___6_7/197.joint___7_7
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7/137.joint___2_7/149.joint___3_7/161.joint___4_7/173.joint___5_7/185.joint___6_7/197.joint___7_7/209.!joint___8_7
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7/137.joint___2_7/149.joint___3_7/161.joint___4_7/173.joint___5_7/185.joint___6_7/197.joint___7_7/264.joint_migi_1_0_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7/137.joint___2_7/149.joint___3_7/161.joint___4_7/173.joint___5_7/185.joint___6_7/197.joint___7_7/264.joint_migi_1_0_1/265.joint_migi_1_1_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7/137.joint___2_7/149.joint___3_7/161.joint___4_7/173.joint___5_7/185.joint___6_7/197.joint___7_7/264.joint_migi_1_0_1/265.joint_migi_1_1_1/266.joint_migi_1_2_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7/137.joint___2_7/149.joint___3_7/161.joint___4_7/173.joint___5_7/185.joint___6_7/197.joint___7_7/264.joint_migi_1_0_1/265.joint_migi_1_1_1/266.joint_migi_1_2_1/267.joint_migi_1_3_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7/137.joint___2_7/149.joint___3_7/161.joint___4_7/173.joint___5_7/185.joint___6_7/197.joint___7_7/264.joint_migi_1_0_1/265.joint_migi_1_1_1/266.joint_migi_1_2_1/267.joint_migi_1_3_1/268.joint_migi_1_4_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/113.joint___0_7/125.joint___1_7/137.joint___2_7/149.joint___3_7/161.joint___4_7/173.joint___5_7/185.joint___6_7/197.joint___7_7/264.joint_migi_1_0_1/265.joint_migi_1_1_1/266.joint_migi_1_2_1/267.joint_migi_1_3_1/268.joint_migi_1_4_1/269.!joint_migi_1_5_1
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/114.joint___0_8
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/114.joint___0_8/126.joint___1_8
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/114.joint___0_8/126.joint___1_8/138.joint___2_8
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/114.joint___0_8/126.joint___1_8/138.joint___2_8/150.joint___3_8
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/114.joint___0_8/126.joint___1_8/138.joint___2_8/150.joint___3_8/162.joint___4_8
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/114.joint___0_8/126.joint___1_8/138.joint___2_8/150.joint___3_8/162.joint___4_8/174.joint___5_8
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/114.joint___0_8/126.joint___1_8/138.joint___2_8/150.joint___3_8/162.joint___4_8/174.joint___5_8/186.joint___6_8
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/114.joint___0_8/126.joint___1_8/138.joint___2_8/150.joint___3_8/162.joint___4_8/174.joint___5_8/186.joint___6_8/198.joint___7_8
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/114.joint___0_8/126.joint___1_8/138.joint___2_8/150.joint___3_8/162.joint___4_8/174.joint___5_8/186.joint___6_8/198.joint___7_8/210.!joint___8_8
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/115.joint___0_9
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/115.joint___0_9/127.joint___1_9
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/115.joint___0_9/127.joint___1_9/139.joint___2_9
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/115.joint___0_9/127.joint___1_9/139.joint___2_9/151.joint___3_9
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/115.joint___0_9/127.joint___1_9/139.joint___2_9/151.joint___3_9/163.joint___4_9
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/115.joint___0_9/127.joint___1_9/139.joint___2_9/151.joint___3_9/163.joint___4_9/175.joint___5_9
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/115.joint___0_9/127.joint___1_9/139.joint___2_9/151.joint___3_9/163.joint___4_9/175.joint___5_9/187.joint___6_9
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/115.joint___0_9/127.joint___1_9/139.joint___2_9/151.joint___3_9/163.joint___4_9/175.joint___5_9/187.joint___6_9/199.joint___7_9
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/115.joint___0_9/127.joint___1_9/139.joint___2_9/151.joint___3_9/163.joint___4_9/175.joint___5_9/187.joint___6_9/199.joint___7_9/211.!joint___8_9
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/116.joint___0_10
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/116.joint___0_10/128.joint___1_10
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/116.joint___0_10/128.joint___1_10/140.joint___2_10
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/116.joint___0_10/128.joint___1_10/140.joint___2_10/152.joint___3_10
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/116.joint___0_10/128.joint___1_10/140.joint___2_10/152.joint___3_10/164.joint___4_10
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/116.joint___0_10/128.joint___1_10/140.joint___2_10/152.joint___3_10/164.joint___4_10/176.joint___5_10
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/116.joint___0_10/128.joint___1_10/140.joint___2_10/152.joint___3_10/164.joint___4_10/176.joint___5_10/188.joint___6_10
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/116.joint___0_10/128.joint___1_10/140.joint___2_10/152.joint___3_10/164.joint___4_10/176.joint___5_10/188.joint___6_10/200.joint___7_10
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/116.joint___0_10/128.joint___1_10/140.joint___2_10/152.joint___3_10/164.joint___4_10/176.joint___5_10/188.joint___6_10/200.joint___7_10/212.!joint___8_10
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/117.joint___0_11
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/117.joint___0_11/129.joint___1_11
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/117.joint___0_11/129.joint___1_11/141.joint___2_11
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/117.joint___0_11/129.joint___1_11/141.joint___2_11/153.joint___3_11
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/117.joint___0_11/129.joint___1_11/141.joint___2_11/153.joint___3_11/165.joint___4_11
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/117.joint___0_11/129.joint___1_11/141.joint___2_11/153.joint___3_11/165.joint___4_11/177.joint___5_11
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/117.joint___0_11/129.joint___1_11/141.joint___2_11/153.joint___3_11/165.joint___4_11/177.joint___5_11/189.joint___6_11
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/117.joint___0_11/129.joint___1_11/141.joint___2_11/153.joint___3_11/165.joint___4_11/177.joint___5_11/189.joint___6_11/201.joint___7_11
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/117.joint___0_11/129.joint___1_11/141.joint___2_11/153.joint___3_11/165.joint___4_11/177.joint___5_11/189.joint___6_11/201.joint___7_11/213.!joint___8_11
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/275.joint_RightHipD
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/275.joint_RightHipD/276.joint_RightKneeD
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/275.joint_RightHipD/276.joint_RightKneeD/277.joint_RightFootD
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/275.joint_RightHipD/276.joint_RightKneeD/277.joint_RightFootD/278.joint_migiashisakiEX
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/279.joint_LeftHipD
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/279.joint_LeftHipD/280.joint_LeftKneeD
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/279.joint_LeftHipD/280.joint_LeftKneeD/281.joint_LeftFootD
+    m_Weight: 1
+  - m_Path: 283.!Root/7.joint_HipMaster/279.joint_LeftHipD/280.joint_LeftKneeD/281.joint_LeftFootD/282.joint_hidariashisakiEX
+    m_Weight: 1
+  - m_Path: U_Char
+    m_Weight: 0
+  - m_Path: U_Char/U_Char_0
+    m_Weight: 1
+  - m_Path: U_Char/U_Char_1
+    m_Weight: 1
+  - m_Path: U_Char/U_Char_2
+    m_Weight: 1

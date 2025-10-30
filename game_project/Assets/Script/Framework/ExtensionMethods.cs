@@ -468,6 +468,45 @@ namespace Game.Framework
         }
 
         #endregion
+
+        #region Animator関連
+        /// <summary>
+        /// 获取动画片段持续时间（秒）
+        /// </summary>
+        public static float GetClipDuration(this Animator animator, string clipName)
+        {
+            if (animator == null) return -1f;
+            var clips = animator.runtimeAnimatorController.animationClips;
+            var clip = clips.FirstOrDefault(c => c.name == clipName);
+            return clip != null ? clip.length : -1f;
+        }
+
+        /// <summary>
+        /// 获取当前状态持续时间（秒）
+        /// </summary>
+        public static float GetCurrentStateDuration(this Animator animator, int layer = 0)
+        {
+            if (animator == null) return -1f;
+            var info = animator.GetCurrentAnimatorStateInfo(layer);
+            return info.length;
+        }
+
+        /// <summary>
+        /// 获取当前动画状态名称
+        /// </summary>
+        public static string GetCurrentStateName(this Animator animator, int layer = 0)
+        {
+            if (animator == null) return null;
+            var info = animator.GetCurrentAnimatorStateInfo(layer);
+            return info.IsName("") ? null : GetStateName(animator, info.shortNameHash);
+        }
+
+        private static string GetStateName(Animator animator, int hash)
+        {
+            return hash.ToString();
+        }
+
+        #endregion
     }
 
 }

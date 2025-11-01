@@ -1,4 +1,6 @@
-﻿using BehaviorDesigner.Runtime;
+﻿#if BEHAVIOR_DESIGNER
+using BehaviorDesigner.Runtime;
+#endif
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
 using System;
@@ -430,7 +432,7 @@ namespace Game.Framework
         #endregion
 
         #region BehaviorTree関連
-
+#if BEHAVIOR_DESIGNER
         public static void SetProp<T>(this BehaviorTree tree, string propName, T value)
         {
             if (tree == null)
@@ -466,8 +468,8 @@ namespace Game.Framework
                 return defaultValue;
             }
         }
-
-        #endregion
+#endif
+#endregion
 
         #region Animator関連
         /// <summary>

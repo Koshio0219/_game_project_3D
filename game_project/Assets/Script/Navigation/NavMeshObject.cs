@@ -8,23 +8,11 @@ namespace Game.Navigation
     public class NavMeshObject : MonoBehaviour
     {
         // Global containers for all active mesh/terrain tags
-        public static List<MeshFilter> m_Meshes = new List<MeshFilter>();
-        //public static List<Terrain> m_Terrains = new List<Terrain>();
+        public static List<MeshFilter> m_Meshes = new();
+        public static List<Terrain> m_Terrains = new();
 
         void OnEnable()
         {
-            //var m = GetComponent<MeshFilter>();
-            //if (m != null)
-            //{
-            //    m_Meshes.Add(m);
-            //}
-
-            //var t = GetComponent<Terrain>();
-            //if (t != null)
-            //{
-            //    m_Terrains.Add(t);
-            //}
-
             foreach (var m in GetComponentsInChildren<MeshFilter>())
             {
                 if (m != null && !m_Meshes.Contains(m))
@@ -32,26 +20,28 @@ namespace Game.Navigation
                     m_Meshes.Add(m);
                 }
             }
+            foreach (var t in GetComponentsInChildren<Terrain>())
+            {
+                if (t != null && !m_Terrains.Contains(t))
+                {
+                    m_Terrains.Add(t);
+                }
+            }
         }
         void OnDisable()
         {
-            //var m = GetComponent<MeshFilter>();
-            //if (m != null)
-            //{
-            //    m_Meshes.Remove(m);
-            //}
-
-            //var t = GetComponent<Terrain>();
-            //if (t != null)
-            //{
-            //    m_Terrains.Remove(t);
-            //}
-
             foreach (var m in GetComponentsInChildren<MeshFilter>())
             {
                 if (m != null && m_Meshes.Contains(m))
                 {
                     m_Meshes.Remove(m);
+                }
+            }
+            foreach (var t in GetComponentsInChildren<Terrain>())
+            {
+                if (t != null && m_Terrains.Contains(t))
+                {
+                    m_Terrains.Remove(t);
                 }
             }
         }
@@ -69,30 +59,34 @@ namespace Game.Navigation
                 var m = mf.sharedMesh;
                 if (m == null) continue;
 
-                var s = new NavMeshBuildSource();
-                s.shape = NavMeshBuildSourceShape.Mesh;
-                s.sourceObject = m;
-                s.transform = mf.transform.localToWorldMatrix;
-                s.area = 0;
+                var s = new NavMeshBuildSource
+                {
+                    shape = NavMeshBuildSourceShape.Mesh,
+                    sourceObject = m,
+                    transform = mf.transform.localToWorldMatrix,
+                    area = 0
+                };
                 if (mf.gameObject.activeInHierarchy)
                 {
                     sources.Add(s);
                 }
             }
 
-            //for (var i = 0; i < m_Terrains.Count; ++i)
-            //{
-            //    var t = m_Terrains[i];
-            //    if (t == null) continue;
+            for (var i = 0; i < m_Terrains.Count; ++i)
+            {
+                var t = m_Terrains[i];
+                if (t == null) continue;
 
-            //    var s = new NavMeshBuildSource();
-            //    s.shape = NavMeshBuildSourceShape.Terrain;
-            //    s.sourceObject = t.terrainData;
-            //    // Terrain system only supports translation - so we pass translation only to back-end
-            //    s.transform = Matrix4x4.TRS(t.transform.position, Quaternion.identity, Vector3.one);
-            //    s.area = 0;
-            //    sources.Add(s);
-            //}
+                var s = new NavMeshBuildSource
+                {
+                    shape = NavMeshBuildSourceShape.Terrain,
+                    sourceObject = t.terrainData,
+                    // Terrain system only supports translation - so we pass translation only to back-end
+                    transform = Matrix4x4.TRS(t.transform.position, Quaternion.identity, Vector3.one),
+                    area = 0
+                };
+                sources.Add(s);
+            }
         }
     }
 }

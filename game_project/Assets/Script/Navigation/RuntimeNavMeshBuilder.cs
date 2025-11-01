@@ -31,18 +31,11 @@ namespace Game.Navigation
         private NavMeshDataInstance mInstance;
         private List<NavMeshBuildSource> mSources = new();
 
-        private CancellationTokenSource dragTokenSource = new();
-        //private Vector3 tempSize;
-        //private Transform tempTracked;
-
         public async UniTask Build()
         {
             mInstance.Remove();
             mNavMesh = new NavMeshData();
             mInstance = NavMesh.AddNavMeshData(mNavMesh);
-            //if (tracked == null)
-            //    CenterPoint = transform.position;
-
             await BuildMesh();
         }
 
@@ -52,12 +45,11 @@ namespace Game.Navigation
             await UpdateNavMesh();
         }
 
-#if DEBUG_MODE
         protected virtual void OnEnable()
         {
-            Build();
+            _ = Build();
         }
-#endif
+
         private void Awake()
         {
             EventQueueSystem.AddListener<StageStatesEvent>(StageStatesHandler);

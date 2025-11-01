@@ -15,7 +15,7 @@ namespace Cysharp.Threading.Tasks.Editor
 {
     public class UniTaskTrackerViewItem : TreeViewItem
     {
-        static Regex removeHref = new Regex("<a href.+>(.+)</a>", RegexOptions.Compiled);
+        static Regex removeHref = new("<a href.+>(.+)</a>", RegexOptions.Compiled);
 
         public string TaskType { get; set; }
         public string Elapsed { get; set; }

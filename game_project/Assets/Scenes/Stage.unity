@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 187044883}
   - component: {fileID: 187044884}
+  - component: {fileID: 187044885}
   m_Layer: 0
   m_Name: NavMeshBuilder
   m_TagString: Untagged
@@ -165,6 +166,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Navigation.RuntimeNavMeshBuilder
   tracked: {fileID: 0}
   size: {x: 20, y: 20, z: 20}
+--- !u!114 &187044885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187044882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec09c238a2109a747b28185c9d853225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Navigation.RuntimeNavMeshRebuildController
+  builder: {fileID: 187044884}
+  updateFrequency: 0.5
+  padding: 4
+  fixedHeight: 20
+  minSizeXZ: {x: 40, y: 40}
+  maxSizeXZ: {x: 100, y: 100}
+  singleDefaultSizeXZ: {x: 50, y: 50}
+  followLerp: 8
+  sizeEpsilon: 0.25
+  centerEpsilon: 0.05
 --- !u!1 &587346110
 GameObject:
   m_ObjectHideFlags: 0

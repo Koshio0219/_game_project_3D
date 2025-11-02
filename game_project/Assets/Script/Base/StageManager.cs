@@ -86,6 +86,7 @@ namespace Game.Base
 
         private void EnemyBuildEndHandler()
         {
+            GameManager.runtimeNavMeshRebuildController.mapEnemyIdToInstance= MapEnemyIdToInstance;
             SendStateEvent(StageStates.BattleStarted);
         }
 

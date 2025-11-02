@@ -2,6 +2,7 @@
 using DG.Tweening;
 using Game.Data;
 using Game.Framework;
+using Game.Navigation;
 using Game.Player;
 using System.Threading;
 using UnityEngine;
@@ -28,6 +29,7 @@ namespace Game.Base
 
         public static StageManager stageManager = null;
         public static PointManager pointManager = null;
+        public static RuntimeNavMeshRebuildController runtimeNavMeshRebuildController = null;
 
         private int levelIdx;
         public int LevelIdx

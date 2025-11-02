@@ -1,27 +1,44 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
-using System.ComponentModel;
-using Tasks = BehaviorDesigner.Runtime.Tasks;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using System.ComponentModel;
 
 namespace Game.BehaviorTask
 {
-    [Description("Makes the agent wander randomly within the navigation map")]
-    public class Wander : Tasks.Action
+    [Description("Makes the agent wander randomly within the navigation map (robust to runtime baking).")]
+    public class Wander : BehaviorDesigner.Runtime.Tasks.Action
     {
+        [Header("Move")]
         public SharedFloat speed = 3;
         public SharedFloat keepDistance = .1f;
-        public SharedFloat minWanderDistance = 5;
-        public SharedFloat maxWanderDistance = 8;
-        public bool repeat = true;
 
-        // 失败时最大重试次数
-        [Description("How many times to try sampling a valid wander point this tick")]
-        public int maxTriesPerTick = 6;
+        [Header("Wander Radius")]
+        public SharedFloat minWanderDistance = 5;   // 最小半径
+        public SharedFloat maxWanderDistance = 8;   // 最大半径
+
+        [Header("Behavior")]
+        public bool repeat = true;                  // 达到后是否继续游走
+
+        [Header("Picking")]
+        public int maxPickTries = 8;            // 每次挑点最多尝试
+        public float searchPadding = 2f;           // SamplePosition 的额外搜索半径
+
+        [Header("Stuck Detection")]
+        public float stuckTimeout = 3.0f;       // 认为卡住的时间（秒）
+        public float progressEpsilon = 0.05f;      // remainingDistance 变化阈值（米）
+        public float minSpeedToCount = 0.1f;       // 判定“没动”时的速度阈值（米/秒）
+
+        [Header("Snap To NavMesh")]
+        public float localSnapRadius = 2f;         // 近场吸附半径
+        public float globalSnapRadius = 32f;        // 兜底吸附半径（有限值，避免AABB报错）
 
         private NavMeshAgent agent;
         private TaskStatus status;
+
+        // 防卡进度追踪
+        private float stuckTimer = 0f;
+        private float lastRemaining = float.PositiveInfinity;
 
         public override void OnAwake()
         {
@@ -38,16 +55,15 @@ namespace Game.BehaviorTask
 
             agent.speed = speed.Value;
 
-            // 关键：首帧优先确保落在NavMesh上，再考虑寻路
-            if (!EnsureAgentPlaced(2f))
+            // 首帧先尝试吸附到网格（在运行时烘焙/瞬移后尤为重要）
+            if (!AgentReady())
             {
-                // 还没落上，先进入Running，下一帧再尝试
-                status = TaskStatus.Running;
+                status = TaskStatus.Running; // 等下一帧再试
                 return;
             }
 
             status = TaskStatus.Running;
-            DoWander();
+            PickAndGo(); // 先挑一个可达点
         }
 
         public override TaskStatus OnUpdate()
@@ -55,24 +71,128 @@ namespace Game.BehaviorTask
             if (agent == null || !agent.isActiveAndEnabled)
                 return TaskStatus.Failure;
 
-            // 未落到NavMesh上时，别碰remainingDistance，先尝试吸附
-            if (!EnsureAgentPlaced(2f))
+            // agent 可能因为实时烘焙/移动导致瞬间离网格
+            if (!AgentReady())
                 return TaskStatus.Running;
 
-            // 只有在Agent已就绪时才读这些属性
-            if (!agent.pathPending && agent.hasPath &&
+            // 还在算路径就先等
+            if (agent.pathPending)
+                return TaskStatus.Running;
+
+            // 1) 到达：挑下一个或结束
+            if (agent.hasPath &&
+                agent.pathStatus == NavMeshPathStatus.PathComplete &&
                 agent.remainingDistance <= agent.stoppingDistance + keepDistance.Value)
             {
-                if (repeat)
-                    DoWander();
-                else
-                    status = TaskStatus.Success;
+                if (repeat) PickAndGo();
+                else status = TaskStatus.Success;
+
+                ResetStuck();
+                return status;
+            }
+
+            // 2) 路径损坏（Partial/Invalid/无路径）：立刻重选
+            if (!agent.hasPath || agent.pathStatus != NavMeshPathStatus.PathComplete)
+            {
+                PickAndGo();
+                ResetStuck();
+                return status;
+            }
+
+            // 3) 卡住判定：remainingDistance 几乎不变 & 速度很小
+            float rem = agent.remainingDistance;
+            float delta = Mathf.Abs(rem - lastRemaining);
+            lastRemaining = rem;
+
+            bool hardlyMoving = agent.velocity.sqrMagnitude < (minSpeedToCount * minSpeedToCount);
+            if (delta < progressEpsilon && hardlyMoving)
+                stuckTimer += Time.deltaTime;
+            else
+                stuckTimer = 0f;
+
+            if (stuckTimer >= stuckTimeout)
+            {
+                // 认为卡住：重新挑点
+                PickAndGo();
+                ResetStuck();
             }
 
             return status;
         }
 
-        void DoWander()
+        public override void OnPause(bool paused)
+        {
+            if (paused) OnEnd();
+        }
+
+        public override void OnEnd()
+        {
+            if (AgentReady())
+                SafeResetPath();
+
+            ResetStuck();
+        }
+
+        // -------- Helpers --------
+
+        private void ResetStuck()
+        {
+            stuckTimer = 0f;
+            lastRemaining = float.PositiveInfinity;
+        }
+
+        /// <summary>
+        /// 仅在“就绪”时才能安全访问/调用 Agent 的实例方法。
+        /// 会尝试将 agent 吸附到最近的 NavMesh（近场→兜底）。
+        /// </summary>
+        private bool AgentReady()
+        {
+            if (agent == null || !agent.isActiveAndEnabled)
+                return false;
+
+#if UNITY_2019_2_OR_NEWER
+            if (agent.isOnNavMesh)
+                return true;
+#endif
+            // 近场吸附
+            if (NavMesh.SamplePosition(agent.transform.position, out var hit, localSnapRadius, agent.areaMask))
+            {
+                agent.Warp(hit.position);
+#if UNITY_2019_2_OR_NEWER
+                return agent.isOnNavMesh;
+#else
+                return true;
+#endif
+            }
+            // 兜底吸附（有限半径！）
+            if (NavMesh.SamplePosition(agent.transform.position, out var hit2, globalSnapRadius, agent.areaMask))
+            {
+                agent.Warp(hit2.position);
+#if UNITY_2019_2_OR_NEWER
+                return agent.isOnNavMesh;
+#else
+                return true;
+#endif
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 只有在就绪时才调用 ResetPath，避免报错。
+        /// </summary>
+        private void SafeResetPath()
+        {
+            if (agent == null || !agent.isActiveAndEnabled) return;
+#if UNITY_2019_2_OR_NEWER
+            if (!agent.isOnNavMesh) return;
+#endif
+            agent.ResetPath();
+        }
+
+        /// <summary>
+        /// 选择可达目标并下发 SetDestination；失败则清路并保持 Running。
+        /// </summary>
+        private void PickAndGo()
         {
             if (agent == null || !agent.isActiveAndEnabled)
             {
@@ -80,92 +200,53 @@ namespace Game.BehaviorTask
                 return;
             }
 
-            // 计算采样参数（都要是有限值）
-            float min = Mathf.Max(0.01f, minWanderDistance.Value);
-            float max = Mathf.Max(min, maxWanderDistance.Value);
-            float searchRadius = Mathf.Max(max + 1.0f, 2.0f); // 给SamplePosition用的有限半径（不要Infinity）
-
+            // 用 agent 的当前位置作为路径起点（无需读 remainingDistance 等）
             Vector3 origin = agent.transform.position;
             float y = origin.y;
 
-            // 限次尝试，避免死循环
-            for (int i = 0; i < maxTriesPerTick; i++)
+            float min = Mathf.Max(0.01f, minWanderDistance.Value);
+            float max = Mathf.Max(min, maxWanderDistance.Value);
+            float searchRadius = Mathf.Max(max + Mathf.Max(0.01f, searchPadding), 2f);
+
+            float curMax = max;
+            var path = new NavMeshPath();
+
+            for (int i = 0; i < Mathf.Max(1, maxPickTries); i++)
             {
-                // 在XZ平面采样，避免把y抬很高或压很低
-                Vector2 offset2D = Random.insideUnitCircle * max;
-                // 至少要离当前点min距离
-                if (offset2D.sqrMagnitude < (min * min))
+                // 在XZ平面采样，避免高度偏差
+                Vector2 o2 = Random.insideUnitCircle * curMax;
+                if (o2.sqrMagnitude < (min * min))
+                    continue;
+
+                Vector3 candidate = new Vector3(origin.x + o2.x, y, origin.z + o2.y);
+
+                // 将候选点投射到NavMesh（有限半径！）
+                if (!NavMesh.SamplePosition(candidate, out var hit, searchRadius, agent.areaMask))
                 {
-                    // 太近就再试
+                    // 更靠近自身再试：逐步收缩半径，远离边界
+                    curMax = Mathf.Lerp(curMax, min, 0.4f);
                     continue;
                 }
 
-                Vector3 candidate = new Vector3(origin.x + offset2D.x, y, origin.z + offset2D.y);
-
-                // 用有限半径 + areaMask 采样最近可走点
-                if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, searchRadius, agent.areaMask))
+                // 关键：用静态API先校验可达（不依赖 agent 状态）
+                if (NavMesh.CalculatePath(origin, hit.position, agent.areaMask, path) &&
+                    path.status == NavMeshPathStatus.PathComplete)
                 {
-                    // 可选：再验证一下路径是否可达
-                    NavMeshPath path = new NavMeshPath();
-                    if (agent.CalculatePath(hit.position, path) && path.status == NavMeshPathStatus.PathComplete)
-                    {
+                    // 只有就绪时才真正下发目标
+                    if (AgentReady())
                         agent.SetDestination(hit.position);
-                        return;
-                    }
+                    return;
                 }
+
+                // 不可达则继续尝试，顺带收缩半径
+                curMax = Mathf.Lerp(curMax, min, 0.4f);
             }
 
-            // 走到这里说明这帧没采样到合适点：保留Running，下帧再试；或根据需求Fail
-            // status = TaskStatus.Failure;
-            // 这里选择保持Running，避免行为树直接失败
+            // 本轮挑不到可达点：就绪时清掉路径，下一帧再试
+            if (AgentReady())
+                SafeResetPath();
+
+            status = TaskStatus.Running;
         }
-
-        public override void OnPause(bool paused)
-        {
-            if (paused)
-                OnEnd();
-        }
-
-        public override void OnEnd()
-        {
-            if (agent != null && agent.isActiveAndEnabled && agent.gameObject.activeInHierarchy)
-            {
-                agent.ResetPath();
-                // 不再Warp到自身位置，避免在边界处重复Warp造成奇怪状态
-            }
-        }
-
-        // 有些Unity版本没有NavMeshAgent.isOnNavMesh属性，做个反射/编译期兼容判断
-        bool HasIsOnNavMesh()
-        {
-#if UNITY_2019_2_OR_NEWER
-            return true;
-#else
-            return false;
-#endif
-        }
-
-        // 添加：统一的就绪判定与吸附
-        bool EnsureAgentPlaced(float snapRadius = 2f)
-        {
-            if (agent == null || !agent.isActiveAndEnabled) return false;
-
-#if UNITY_2019_2_OR_NEWER
-            if (agent.isOnNavMesh) return true;
-#endif
-
-            // 尝试把当前Transform位置吸附到最近网格
-            if (NavMesh.SamplePosition(transform.position, out var hit, snapRadius, agent.areaMask))
-            {
-                agent.Warp(hit.position);
-#if UNITY_2019_2_OR_NEWER
-                return agent.isOnNavMesh;
-#else
-        return true;
-#endif
-            }
-            return false;
-        }
-
     }
 }

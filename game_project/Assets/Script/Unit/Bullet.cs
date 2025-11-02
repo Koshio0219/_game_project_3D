@@ -4,6 +4,7 @@ using Game.Framework;
 using System.Collections;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Unit
 {
@@ -47,8 +48,8 @@ namespace Game.Unit
         private CancellationToken token = CancellationToken.None;
         private CancellationTokenSource tokenSource = null;
 
-        //private System.Action recycleAction = null;
-        //private System.Action moveAction = null;
+        private UnityAction recycleAction = null;
+        private UnityAction moveAction = null;
 
         private BulletProp initProp;
         private Vector3 targetPos;
@@ -66,8 +67,8 @@ namespace Game.Unit
             //token = this.GetCancellationTokenOnDisable();
 
             InitAction();
-            //recycleAction.Invoke();
-            //moveAction.Invoke();
+            recycleAction.Invoke();
+            moveAction.Invoke();
 
             if (target == null) return;
             Target = target;
@@ -86,7 +87,7 @@ namespace Game.Unit
         {
             UniTask.Void(async (_) =>
             {
-                await UniTask.Delay((int)(prop.lifeTime * 1000), cancellationToken: token);
+                await UniTask.Delay(System.TimeSpan.FromSeconds(prop.lifeTime), cancellationToken: token);
                 Recycle();
             }, token);
             UniTask.Void(async (_) =>
@@ -123,10 +124,10 @@ namespace Game.Unit
         {
             tokenSource.Cancel();
             prop = new BulletProp(initProp);
-            //recycleAction = ()=> { };
-            //moveAction = ()=> { };
-            //tokenSource = null;
-            //token = CancellationToken.None;
+            recycleAction = () => { };
+            moveAction = () => { };
+            tokenSource = null;
+            token = CancellationToken.None;
         }
     }
 }

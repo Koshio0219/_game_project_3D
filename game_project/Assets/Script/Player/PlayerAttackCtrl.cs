@@ -10,6 +10,15 @@ namespace Game.Player
     [RequireComponent(typeof(PlayerStateHandler))]
     public class PlayerAttackCtrl:MonoBehaviour
     {
+        private int? _insId = null;
+        public int InsId
+        {
+            get{
+                _insId ??= gameObject.GetInstanceID();
+                return _insId.Value;
+            }
+        }
+
         public PlayerPropManager PropManager { get;private set; }
 
         [Header("Weapon")]
@@ -28,6 +37,7 @@ namespace Game.Player
 
         private void Start()
         {
+            GameManager.stageManager.AddOnePlayer(InsId, gameObject);
             EnterLevel();
         }
 

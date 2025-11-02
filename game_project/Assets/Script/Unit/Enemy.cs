@@ -11,7 +11,6 @@ using Game.Framework;
 using System;
 using UnityEngine.AI;
 using BehaviorDesigner.Runtime;
-//using UnityEngine.Networking.Types;
 using System.Threading.Tasks;
 namespace Game.Unit
 {
@@ -76,14 +75,8 @@ namespace Game.Unit
             }
         }
 
-        //private AsyncReactiveProperty<float> attack;
-        //private AsyncReactiveProperty<float> maxHp;
-        //private AsyncReactiveProperty<float> hp;
-
         [SerializeField] protected Animator animator;
         [SerializeField] protected BehaviorTree behaviorTree;
-
-        //private Transform blockTran = null;
 
         public virtual void Attack(int targetId, float damage)
         {
@@ -98,7 +91,7 @@ namespace Game.Unit
             enemyUnitData = data;
             InitBaseProp(data.prop);
             InitBehaviorTree();
-            //GameManager.stageManager.AddOneEnemy(data.InsId, this);
+            GameManager.stageManager.AddOneEnemy(data.InsId, this);
             ChangeState(EnemyState.Idle);
 
             EventQueueSystem.QueueEvent(new InitEnemyHpEvent(data.InsId, MaxHp));
@@ -112,12 +105,12 @@ namespace Game.Unit
             ChangeState(EnemyState.Dead);
             //dead animation time delay
             await UniTask.Delay(1000);
-            
-           
-            //if (GameManager.stageManager.StageState == StageStates.BattleClear) return;
+
+
+            if (GameManager.stageManager.StageState == StageStates.BattleClear) return;
             //EffectManager.Instance.Play(EffectManager.EffectID.EnemyDead, this.transform.position);
             //SEManager.Instance.Play(SEPath.ENEMY_DEAD);
-            //GameManager.stageManager.RemoveOneEnemy(enemyUnitData.InsId);
+            GameManager.stageManager.RemoveOneEnemy(enemyUnitData.InsId);
 
         }
 
@@ -132,7 +125,7 @@ namespace Game.Unit
         public virtual void Hit(int sourceId, float damage)
         {
             if (sourceId == enemyUnitData.InsId) return;
-            //if (GameManager.stageManager.IsFriend(sourceId, enemyUnitData.InsId)) return;
+            if (GameManager.stageManager.IsFriend(sourceId, enemyUnitData.InsId)) return;
 
             EventQueueSystem.QueueEvent(new PopupTextEvent(transform, (int)damage, Color.blue));
             Hp -= damage;
@@ -189,18 +182,18 @@ namespace Game.Unit
             var up = collision.transform.GetRootParent();
             Debug.Log($"enemy name:{gameObject.name} had OnCollisionEnter,target name:{up.name}");
             if (!up.TryGetComponent<IDamageable>(out _)) return;
-            //var pId = GameManager.stageManager.MatchPlayerId(up.gameObject);
-            //if (pId == -1) return;
+            var pId = GameManager.stageManager.MatchPlayerId(up.gameObject);
+            if (pId == -1) return;
             EventQueueSystem.QueueEvent(new SendDamageEvent(enemyUnitData.InsId, up.gameObject, Atk));
         }
 
         protected virtual void InitBehaviorTree() 
         {
             var list = new List<Transform>();
-            //foreach (var item in GameManager.stageManager.GetAllPlayer())
-            //{
-            //    list.Add(item.transform);
-            //}
+            foreach (var item in GameManager.stageManager.GetAllPlayer())
+            {
+                list.Add(item.transform);
+            }
 
             behaviorTree.SetProp("TargetList", list);
             //test null
@@ -214,18 +207,18 @@ namespace Game.Unit
 
         protected virtual void CalDeadPoint()
         {
-            //switch (EnemyUnitData.raceType)
-            //{
-            //    case EnemyRaceType.Slime:
-            //        GameManager.pointManager.AddPoint(GetPointItem.KillSlime, EnemyUnitData.prop.killPoint);
-            //        break;           
-            //    case EnemyRaceType.Guard:
-            //        GameManager.pointManager.AddPoint(GetPointItem.KillGuard, EnemyUnitData.prop.killPoint);
-            //        break;           
-            //    case EnemyRaceType.Ghost:
-            //        GameManager.pointManager.AddPoint(GetPointItem.KillGhost, EnemyUnitData.prop.killPoint);
-            //        break;
-            //}
+            switch (EnemyUnitData.raceType)
+            {
+                case EnemyRaceType.Slime:
+                    GameManager.pointManager.AddPoint(GetPointItem.KillSlime, EnemyUnitData.prop.killPoint);
+                    break;
+                case EnemyRaceType.Guard:
+                    GameManager.pointManager.AddPoint(GetPointItem.KillGuard, EnemyUnitData.prop.killPoint);
+                    break;
+                case EnemyRaceType.Ghost:
+                    GameManager.pointManager.AddPoint(GetPointItem.KillGhost, EnemyUnitData.prop.killPoint);
+                    break;
+            }
         }
 
         protected virtual void OnDestroy()

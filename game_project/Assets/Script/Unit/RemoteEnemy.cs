@@ -26,13 +26,13 @@ namespace Game.Unit
         private void Fire(FireBase fire,int targetId, float damage)
         {
             if (fire == null) return;
-            //var target = GameManager.stageManager.GetPlayer(targetId);
+            var target = GameManager.stageManager.GetPlayer(targetId);
             var creatorId = EnemyUnitData.InsId;
 
-            //fire.SetTarget(target).
-            //    SetFirePos(fire.transform).
-            //    SetDamage(damage + Atk).
-            //    FireBegin(creatorId);
+            fire.SetTarget(target).
+                SetFirePos(fire.transform).
+                SetDamage(damage + Atk).
+                FireBegin(creatorId);
             base.Attack(targetId, damage);
         }
 

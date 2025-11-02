@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Base.GameManager
   gameData: {fileID: 11400000, guid: 8952d2ea053c9c84bb843d4d0ac924c6, type: 2}
+  enemyCreateConfig: {fileID: 11400000, guid: 2c5c76a7eae6f5b4ab496c2b45624d65, type: 2}

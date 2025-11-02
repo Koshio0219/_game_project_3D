@@ -29,18 +29,18 @@ namespace Game.Unit
             var up = other.transform.GetRootParent();
 
             //recycle
-            //if (up.TryGetComponent<Bullet>(out _)) return;
-            //var enemy = GameManager.stageManager.GetEnemy(sourceId);
-            //if (enemy != null && up.gameObject.GetInstanceID() == enemy.gameObject.GetInstanceID())
-            //    return;
-            //var player = GameManager.stageManager.GetPlayer(sourceId);
-            //if (player != null && up.gameObject.GetInstanceID() == player.gameObject.GetInstanceID())
-            //    return;
-            //bullet.Recycle();
+            if (up.TryGetComponent<Bullet>(out _)) return;
+            var enemy = GameManager.stageManager.GetEnemy(sourceId);
+            if (enemy != null && up.gameObject.GetInstanceID() == enemy.gameObject.GetInstanceID())
+                return;
+            var player = GameManager.stageManager.GetPlayer(sourceId);
+            if (player != null && up.gameObject.GetInstanceID() == player.gameObject.GetInstanceID())
+                return;
+            bullet.Recycle();
 
             //damage
             if (!up.TryGetComponent<IDamageable>(out var damageable)) return;
-            //damageable.Hit(sourceId, damage);
+            damageable.Hit(sourceId, damage);
             EventQueueSystem.QueueEvent(new SendDamageEvent(sourceId, up.gameObject, damage));
         }
     }

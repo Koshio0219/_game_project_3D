@@ -99,13 +99,16 @@ namespace Game.Action
             //hit
             var hit = bullet.GetComponent<BulletHit>();
             hit.Init((creatorId, baseProp.damage));
+
+            
+            /////////////
             //var cts = new CancellationTokenSource();
             //var enterTrigger = hit.GetAsyncTriggerEnterTrigger();
             //var enter = await enterTrigger.OnTriggerEnterAsync(cts.Token);
-            //hit.OnEnterHit(enter, creatorId, baseProp.damage);
+            ////hit.OnEnterHit(enter, creatorId, baseProp.damage);
             //cts.Cancel();
 
-            //recycle
+            ////recycle
             //var self = transform.GetRootParent();
             //var up = enter.transform.GetRootParent().gameObject;
             //if (up.GetComponent<Bullet>()) return;

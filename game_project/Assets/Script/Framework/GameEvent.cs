@@ -178,4 +178,16 @@ namespace Game.Framework
             to = stageStates;
         }
     }
+
+    public class PointChangeEvent : GameEvent
+    {
+        public int lastPoint;
+        public int nowPoint;
+
+        public PointChangeEvent(int lastPoint, int nowPoint)
+        {
+            this.lastPoint = lastPoint;
+            this.nowPoint = nowPoint;
+        }
+    }
 }

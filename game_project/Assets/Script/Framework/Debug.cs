@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -61,6 +62,11 @@ namespace Game
         public static void DrawLine(Vector3 start, Vector3 end, Color color)
         {
             UnityEngine.Debug.DrawLine(start, end, color,10);
+        }
+
+        internal static void LogException(Exception e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

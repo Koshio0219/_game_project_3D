@@ -68,6 +68,7 @@ namespace Game.Hud
     public enum HudType
     {
         None,
+        StartPanel,
         LoadingPanel,
         StagePrePanel,
         StageShowPanel,

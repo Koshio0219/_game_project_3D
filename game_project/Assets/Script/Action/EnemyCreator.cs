@@ -54,41 +54,30 @@ namespace Game.Action
 
         public void Init()
         {
-            //enemyCreateConfig = GameData.Instance.EnemyCreateConfig;
+            enemyCreateConfig = GameManager.Instance.enemyCreateConfig;
 
-            //buildAction = UniTask.UnityAction(async (_) =>
-            //{
-            //    insEnemy.Clear();
-            //    Debug.Log("enemy build start!");
-            //    if (enemyCreateConfig == null) return;
-            //    var levelIdx = GameManager.Instance.LevelIdx;
-            //    var data = enemyCreateConfig.levelEnemyData[levelIdx];
-            //    foreach (var one in data.enemies)
-            //    {
-            //        var createData = enemyCreateConfig.MapEnemyTypeIDToData[one.typeID];
-            //        var ins = await AssetLoader.Instance.Load<Enemy>
-            //        (createData.assetReference, this.GetCancellationTokenOnDestroy(), false);
-            //        ins.transform.position = one.randomOnBlock ? 
-            //        GameManager.stageManager.SelecteOneBlockPoint().position : one.pos;
-            //        //if (one.randomOnBlock)
-            //        //{
-            //        //    var createPoint = GameManager.stageManager.SelecteOneBlockPoint();            
-            //        //    ins.SetBlockPoint(createPoint.parent);
-            //        //    ins.transform.position = createPoint.position;
-            //        //}
-            //        //else
-            //        //{
-            //        //    ins.transform.position = one.pos;
-            //        //}
-            //        //face to left
-            //        ins.transform.forward = Vector3.left;
-            //        ins.Born(createData.unitData);
-            //        insEnemy.Add(ins);
-            //        await UniTask.DelayFrame(1);
-            //    }
-            //    Debug.Log("enemy build end!");
-            //    EventQueueSystem.QueueEvent(new StageStatesEvent(StageStates.EnemyBuildEnd));
-            //}, this.GetCancellationTokenOnDestroy());
+            buildAction = UniTask.UnityAction(async (_) =>
+            {
+                insEnemy.Clear();
+                Debug.Log("enemy build start!");
+                var levelIdx = GameManager.Instance.LevelIdx;
+                var data = enemyCreateConfig.levelEnemyData[levelIdx];
+                foreach (var one in data.enemies)
+                {
+                    var createData = enemyCreateConfig.MapEnemyTypeIDToData[one.typeID];
+                    var ins = GameObjectPool.Instance
+                    .GetObj(enemyCreateConfig.MapEnemyTypeIDToData[one.typeID].prefab, null)
+                    .GetComponent<Enemy>();
+                    ins.transform.position = one.pos;
+                    //face to forward
+                    ins.transform.forward = Vector3.forward;
+                    ins.Born(createData.unitData);
+                    insEnemy.Add(ins);
+                    await UniTask.DelayFrame(1);
+                }
+                Debug.Log("enemy build end!");
+                EventQueueSystem.QueueEvent(new StageStatesEvent(StageStates.EnemyBuildEnd));
+            }, this.GetCancellationTokenOnDestroy());
         }
     }
 }

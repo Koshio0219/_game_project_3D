@@ -12,6 +12,7 @@ namespace Game.Data
         public EnemyTypeID typeID;
         public EnemyUnitData unitData;
         //public AssetReference assetReference;
+        public GameObject prefab;
     }
 
     [System.Serializable]
@@ -19,7 +20,6 @@ namespace Game.Data
     {
         public EnemyTypeID typeID;
         public Vector3Int pos;
-        public bool randomOnBlock;
     }
 
     [System.Serializable]

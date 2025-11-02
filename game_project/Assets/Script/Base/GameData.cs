@@ -1,7 +1,9 @@
-﻿using Game.Player;
+﻿using AYellowpaper.SerializedCollections;
+using Game.Data;
+using Game.Player;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using AYellowpaper.SerializedCollections;
 
 namespace Game.Base
 {
@@ -40,13 +42,21 @@ namespace Game.Base
         public GameObject popupTextPrefab;
     }
 
+    [Serializable]
+    public struct LevelData
+    {
+        public Color backgroundColor;
+    }
+
     [CreateAssetMenu(fileName = "GameData", menuName = "Scriptable Objects/GameData")]
     public class GameData : ScriptableObject
     {
+        public List<LevelData> levelDatas;
+
         public PlayerConfig playerConfig;
         public SerializedDictionary<int, PlayerWeaponData> playerWeaponDatas;
         public SerializedDictionary<PlayerAnimatorState, PlayerStateConfig> playerStateConfigs;
-
         public HudConfig hudConfig;
+        
     }
 }

@@ -10,7 +10,11 @@ namespace Game.Player
         Running,
         Jump,
         Attack,
-        Hurt
+        Hurt, //受伤
+        Dodge, //闪避
+        ParrySuccess, //招架成功
+        Parry, //招架
+        Dead
     }
 
     public class PlayerStateHandler : MonoBehaviour

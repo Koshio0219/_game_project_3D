@@ -1,15 +1,12 @@
 ﻿using Game.Base;
 using Game.Framework;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Hud
 {
     public class PopupTextSystem : MonoBehaviour
     {
-        public float textHeight = 3f;
+        public float textHeight = .5f;
         private void Awake()
         {
             EventQueueSystem.AddListener<PopupTextEvent>(PopupTextHandler);
@@ -27,11 +24,11 @@ namespace Game.Hud
             var ins = GameObjectPool.Instance.GetObj(prefab);
             ins.transform.SetParent(null);
             ins.transform.position = e.target.position +
-                Vector3.up * UnityEngine.Random.Range(textHeight - .15f, textHeight + .15f) +
-                Vector3.right * UnityEngine.Random.Range(-.3f, .3f) +
-                Vector3.back * UnityEngine.Random.Range(0.2f, 0.6f);
-            var com = ins.GetComponent<PopupText>();
-            com.Setup(e.num, e.color);
+                Vector3.up * Random.Range(textHeight - .15f, textHeight + .15f) +
+                Vector3.right * Random.Range(-.3f, .3f) +
+                Vector3.back * Random.Range(0.2f, 0.6f);
+            var com = ins.GetComponentInChildren<PopupText>();
+            com.Setup(e.num);
         }
     }
 }

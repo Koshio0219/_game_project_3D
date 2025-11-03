@@ -606,45 +606,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6333455266019853026}
     m_Modifications:
-    - target: {fileID: 153073338256398679, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3751582097824733331, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107827135014050, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107827135014050, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107827643978973, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107827643978973, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107827998520551, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9036107827998520552, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
       propertyPath: m_Name
       value: EnemyHpBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107827998520552, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107827998520552, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9036107827998520553, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
       propertyPath: m_Pivot.x
@@ -653,10 +617,6 @@ PrefabInstance:
     - target: {fileID: 9036107827998520553, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107827998520553, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 9036107827998520553, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
       propertyPath: m_AnchorMax.x
@@ -728,34 +688,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9036107827998520553, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107828404598857, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107828404598857, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107828525452620, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107828707542352, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107828707542352, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107828717542852, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 9036107828717542852, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
-      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

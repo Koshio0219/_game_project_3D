@@ -159,14 +159,12 @@ namespace Game.Framework
     public class  PopupTextEvent:GameEvent
     {
         public Transform target;
-        public Color color;
         public int num;
 
-        public PopupTextEvent(Transform _target,int _num,Color _color)
+        public PopupTextEvent(Transform _target,int _num)
         {
             target = _target;
             num = _num;
-            color = _color;
         }
     }
 

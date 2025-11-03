@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8189745602001496037}
   - component: {fileID: 2082268652437215012}
   - component: {fileID: 6055855491050328016}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 3265433826376119410}
   - component: {fileID: 3240070767706444927}
   - component: {fileID: 8108246291186036620}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 9036107827135014051}
   - component: {fileID: 9036107827135014049}
   - component: {fileID: 9036107827135014048}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: ring_hp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 9036107827643978970}
   - component: {fileID: 9036107827643978968}
   - component: {fileID: 9036107827643978971}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 9036107827998520546}
   - component: {fileID: 9036107827998520549}
   - component: {fileID: 4591263815576114432}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: EnemyHpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,9 +456,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aeff007d8ece254e812b7c5e83af15e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ring_mod: {fileID: 0}
-  ring_hp: {fileID: 0}
-  text_hp: {fileID: 0}
+  ring_mod: {fileID: 9036107828717542850}
+  ring_hp: {fileID: 9036107827135014048}
+  text_hp: {fileID: 9036107827643978971}
 --- !u!114 &9036107827998520549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 9036107828404598854}
   - component: {fileID: 9036107828404598852}
   - component: {fileID: 9036107828404598855}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: ring_out
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,7 +569,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9036107828707542353}
   - component: {fileID: 9036107828707542319}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -620,7 +620,7 @@ GameObject:
   - component: {fileID: 9036107828717542853}
   - component: {fileID: 9036107828717542851}
   - component: {fileID: 9036107828717542850}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: ring_mod
   m_TagString: Untagged
   m_Icon: {fileID: 0}

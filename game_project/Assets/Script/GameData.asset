@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62dc7dcce658a7242a3968a323ca400a, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: Assembly-CSharp::Game.Base.GameData
+  levelDatas: []
   playerConfig:
     initWeaponId: 1
     maxSwordPoint: 5
@@ -84,4 +85,4 @@ MonoBehaviour:
         priority: 10
         duration: 0.5
   hudConfig:
-    popupTextPrefab: {fileID: 0}
+    popupTextPrefab: {fileID: 4805653534348250543, guid: 0e34c660e80062848b8c1e4f6aeee5f3, type: 3}

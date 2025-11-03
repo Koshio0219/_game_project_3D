@@ -12,6 +12,7 @@ using System;
 using UnityEngine.AI;
 using BehaviorDesigner.Runtime;
 using System.Threading.Tasks;
+using KanKikuchi.AudioManager;
 namespace Game.Unit
 {
     public class Enemy : MonoBehaviour, IEnemyBaseAction, IInit
@@ -109,7 +110,7 @@ namespace Game.Unit
 
             if (GameManager.stageManager.StageState == StageStates.BattleClear) return;
             //EffectManager.Instance.Play(EffectManager.EffectID.EnemyDead, this.transform.position);
-            //SEManager.Instance.Play(SEPath.ENEMY_DEAD);
+            SEManager.Instance.Play(SEPath.ENEMY_DEAD);
             GameManager.stageManager.RemoveOneEnemy(enemyUnitData.InsId);
 
         }
@@ -127,7 +128,7 @@ namespace Game.Unit
             if (sourceId == enemyUnitData.InsId) return;
             if (GameManager.stageManager.IsFriend(sourceId, enemyUnitData.InsId)) return;
 
-            EventQueueSystem.QueueEvent(new PopupTextEvent(transform, (int)damage, Color.blue));
+            EventQueueSystem.QueueEvent(new PopupTextEvent(transform, (int)damage));
             Hp -= damage;
             Debug.Log($"enemy id :{enemyUnitData.InsId},name:{gameObject.name} had receive damage:{damage},current hp :{Hp}");
             ChangeState(EnemyState.Hit);

@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Game.Base;
+using KanKikuchi.AudioManager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace Game.Unit
             normal_fire.ForEach(one =>
             {
                 Fire(one, targetId, damage);
-                //SEManager.Instance.Play(SEPath.ENEMY_BULLET_ATTACK, volumeRate: 0.4f);
+                SEManager.Instance.Play(SEPath.ENEMY_BULLET_ATTACK, volumeRate: 0.4f);
             });
         }
 

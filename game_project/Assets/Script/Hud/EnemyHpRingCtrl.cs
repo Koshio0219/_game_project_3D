@@ -50,20 +50,20 @@ namespace Game.Hud
 
         private void StageStatesHandler(StageStatesEvent e)
         {
-            //switch (e.to)
-            //{
-            //    case StageStates.GameOver:
-            //    case StageStates.BattleClear:
-            //        Destroy(gameObject);
-            //        break;
-            //}
+            switch (e.to)
+            {
+                case StageStates.GameOver:
+                case StageStates.BattleClear:
+                    Destroy(gameObject);
+                    break;
+            }
         }
 
         private void InitEnemyHpHandler(InitEnemyHpEvent e)
         {
-            //var targetId = GameManager.stageManager.GetEnemy(e.enemyId).gameObject.GetInstanceID();
-            //if (RootObjId != targetId) return;
-            //View.InitHpView(e.hp);
+            var targetId = GameManager.stageManager.GetEnemy(e.enemyId).gameObject.GetInstanceID();
+            if (RootObjId != targetId) return;
+            View.InitHpView(e.hp);
         }
 
         private void OnEnable()
@@ -73,10 +73,10 @@ namespace Game.Hud
 
         private void EnemyHpChangeHandler(EnemyHpChangeEvent e)
         {
-            //var up = transform.GetRootParent();
-            //var objId = up.gameObject.GetInstanceID();
-            //if (RootObjId != GameManager.stageManager.GetEnemy(e.enemyId).gameObject.GetInstanceID()) return;
-            //View.UpdateHpView(e.lastHp, e.nowHp);
+            var up = transform.GetRootParent();
+            var objId = up.gameObject.GetInstanceID();
+            if (RootObjId != GameManager.stageManager.GetEnemy(e.enemyId).gameObject.GetInstanceID()) return;
+            View.UpdateHpView(e.lastHp, e.nowHp);
         }
 
         private void OnDisable()

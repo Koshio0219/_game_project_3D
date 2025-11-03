@@ -2,8 +2,6 @@
 using DG.Tweening;
 using Game.Framework;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -14,11 +12,10 @@ namespace Game.Hud
         [SerializeField] private TextMeshProUGUI text;
         [SerializeField] private float lifeTime = 1f;
 
-        public void Setup(int num ,Color color)
+        public void Setup(int num)
         {
             if (text == null) return;
-            text.color = color;
-            text.text = num.ToString();
+            text.text =num == 0 ? "Miss!" : num.ToString();
 
             WaitRecycle().Forget();
             Move();
@@ -35,7 +32,7 @@ namespace Game.Hud
         {
             await UniTask.Delay(TimeSpan.FromSeconds(lifeTime));
             if (this == null) return;
-            GameObjectPool.Instance.RecycleObj(gameObject);
+            GameObjectPool.Instance.RecycleObj(transform.root.gameObject);
         }
 
         private void Fade()

@@ -257,6 +257,7 @@ GameObject:
   - component: {fileID: 6333455266019853024}
   - component: {fileID: 6333455266019853039}
   - component: {fileID: 6333455266019853038}
+  - component: {fileID: -2383297644440128239}
   m_Layer: 10
   m_Name: Slime5_Follow
   m_TagString: Enemy
@@ -393,6 +394,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-2383297644440128239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6333455266019853049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d5c9134e334f54b8b64fb07272cc10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Unit.AutoTriggerGenerator
+  triggerScale: 1.2
 --- !u!1 &7343719183810279834
 GameObject:
   m_ObjectHideFlags: 0

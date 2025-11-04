@@ -10,7 +10,18 @@ namespace Game.Player
         public int MaxHP
         {
             get { return _maxHP; }
-            set{  _maxHP = value;}
+            set{
+                var lastValue = _maxHP;
+                _maxHP = value;
+                //值减少
+                if (lastValue > _maxHP)
+                {
+                    HP = _HP; //重新设置一遍HP，以防止HP超过最大值
+                }else if (lastValue < _maxHP)
+                {
+                    HP+= (_maxHP - lastValue); //HP同步增加
+                }
+            }
         }
 
         //current
@@ -18,7 +29,18 @@ namespace Game.Player
         public int HP
         {
             get { return _HP; }
-            set { _HP = value; }
+            set {
+                if (value > MaxHP)
+                {
+                    _HP = MaxHP;
+                    return;
+                }else if (value < 0)
+                {
+                    _HP = 0;
+                    return;
+                }
+                _HP = value;
+            }
         }
 
         [SerializeField]
@@ -94,8 +116,9 @@ namespace Game.Player
 
             PlayerData result = new()
             {
-                MaxHP = a._maxHP + b._maxHP,
+                //必须先HP防止被覆盖
                 HP = a._HP + b._HP,
+                MaxHP = a._maxHP + b._maxHP,
                 AtkPoint = a._AtkPoint + b._AtkPoint,
                 HitRate = Mathf.Clamp01(a._HitRate + b._HitRate),
                 CritRate = Mathf.Clamp01(a._CritRate + b._CritRate),
@@ -116,8 +139,8 @@ namespace Game.Player
 
             PlayerData result = new()
             {
-                MaxHP = Mathf.Max(0, a._maxHP - b._maxHP),
                 HP = Mathf.Max(0, a._HP - b._HP),
+                MaxHP = Mathf.Max(0, a._maxHP - b._maxHP),
                 AtkPoint = Mathf.Max(0, a._AtkPoint - b._AtkPoint),
                 HitRate = Mathf.Clamp01(a._HitRate - b._HitRate),
                 CritRate = Mathf.Clamp01(a._CritRate - b._CritRate),
@@ -137,8 +160,8 @@ namespace Game.Player
 
             PlayerData result = new()
             {
-                MaxHP = Mathf.RoundToInt(a._maxHP * factor),
                 HP = Mathf.RoundToInt(a._HP * factor),
+                MaxHP = Mathf.RoundToInt(a._maxHP * factor),
                 AtkPoint = a._AtkPoint * factor,
                 HitRate = Mathf.Clamp01(a._HitRate * factor),
                 CritRate = Mathf.Clamp01(a._CritRate * factor),

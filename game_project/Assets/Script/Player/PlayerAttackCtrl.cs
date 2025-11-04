@@ -20,7 +20,7 @@ namespace Game.Player
 
     [RequireComponent(typeof(PlayerInputHandler))]
     [RequireComponent(typeof(PlayerStateHandler))]
-    public class PlayerAttackCtrl : MonoBehaviour
+    public class PlayerAttackCtrl : MonoBehaviour, IDamageable
     {
         private int? _insId;
         public int InsId => _insId ??= gameObject.GetInstanceID();
@@ -159,17 +159,18 @@ namespace Game.Player
             await UniTask.Delay(TimeSpan.FromSeconds(skillHitDelay), cancellationToken: attackCTS.Token);
 
             var hits = Physics.OverlapSphere(transform.position, skillHitRadius);
+            var list = new List<GameObject>();
             foreach (var c in hits)
             {
                 if (c.gameObject == gameObject) continue;
                 var dmgable = c.GetComponentInParent<IDamageable>();
                 if (dmgable != null)
                 {
-                    float dmg = PropManager.CalSkillAttackDamaage();
-                    dmgable.Hit(InsId, dmg);
+                    list.Add(c.gameObject);
                 }
             }
-
+            float dmg = PropManager.CalSkillAttackDamaage();
+            EventQueueSystem.QueueEvent(new SendDamageEvent(InsId, list, dmg));
             await UniTask.Delay(TimeSpan.FromSeconds(skillHitWindow), cancellationToken: attackCTS.Token);
         }
         #endregion
@@ -210,13 +211,20 @@ namespace Game.Player
             isInvulnerable = false;
         }
 
+        void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            Debug.Log("玩家撞到了：" + hit.gameObject.name);
+        }
+
         public void ApplyHit(float damageAmount, int attackerId)
         {
             if (isInvulnerable) return;
 
             var prop = PropManager.Prop;
             var lastHp = prop.HP;
-            prop.HP -= (int)damageAmount;
+            var intDamage = (int)damageAmount;
+            prop.HP -= intDamage;
+            EventQueueSystem.QueueEvent(new PopupTextEvent(transform, intDamage,Color.blue));
             EventQueueSystem.QueueEvent(new PlayerHpChangeEvent(lastHp, prop.HP, prop.MaxHP));
             if (prop.HP <= 0)
             {
@@ -243,6 +251,7 @@ namespace Game.Player
             if (e.damageActonType == DamageActonType.Range && !e.rangeObjs.Contains(gameObject)) return;
             ApplyHit(e.damage, e.sourceId);
         }
+
         #endregion
     }
 }

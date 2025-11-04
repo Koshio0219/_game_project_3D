@@ -5,6 +5,6 @@ namespace Game.Base
 {
     public interface IDamageable 
     {
-        void Hit(int sourceId, float damage);
+        //该接口仅作为标记用
     }
 }

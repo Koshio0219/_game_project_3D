@@ -128,7 +128,7 @@ namespace Game.Unit
             if (sourceId == enemyUnitData.InsId) return;
             if (GameManager.stageManager.IsFriend(sourceId, enemyUnitData.InsId)) return;
 
-            EventQueueSystem.QueueEvent(new PopupTextEvent(transform, (int)damage));
+            EventQueueSystem.QueueEvent(new PopupTextEvent(transform, (int)damage, Color.white));
             Hp -= damage;
             Debug.Log($"enemy id :{enemyUnitData.InsId},name:{gameObject.name} had receive damage:{damage},current hp :{Hp}");
             ChangeState(EnemyState.Hit);
@@ -178,14 +178,31 @@ namespace Game.Unit
             mapStateToAction.Add(EnemyState.Attack, OnChangeAttack);
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private HashSet<int> _enteredColliders = new();
+
+        void OnTriggerEnter(Collider other)
         {
-            var up = collision.transform.GetRootParent();
-            Debug.Log($"enemy name:{gameObject.name} had OnCollisionEnter,target name:{up.name}");
+            var up = other.transform.root;
+            // 去重：只在第一次进入时执行逻辑
+            var instanceId = up.GetInstanceID();
+            if (_enteredColliders.Contains(instanceId)) return;
+            _enteredColliders.Add(instanceId);
+
+            Debug.Log($"enemy name:{gameObject.name} had OnTriggerEnter,target name:{up.name}");
             if (!up.TryGetComponent<IDamageable>(out _)) return;
             var pId = GameManager.stageManager.MatchPlayerId(up.gameObject);
             if (pId == -1) return;
             EventQueueSystem.QueueEvent(new SendDamageEvent(enemyUnitData.InsId, up.gameObject, Atk));
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            var up = other.transform.root;
+            var instanceId = up.GetInstanceID();
+            if (!_enteredColliders.Contains(instanceId)) return;
+            _enteredColliders.Remove(instanceId);
+
+            Debug.Log($"enemy name:{gameObject.name} had OnTriggerExit,target name:{up.name}");
         }
 
         protected virtual void InitBehaviorTree() 

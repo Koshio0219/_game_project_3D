@@ -1,4 +1,5 @@
 ﻿using Game.Base;
+using Game.Framework;
 using System;
 using UnityEngine;
 
@@ -51,12 +52,9 @@ namespace Game.Player
             if (alreadyHit.Contains(id)) return;
             alreadyHit.Add(id);
 
-            var dmgable = root.GetComponentInChildren<IDamageable>();
-            if (dmgable != null)
-            {
-                float dmg = isSkill ? owner.PropManager.CalSkillAttackDamaage() : owner.PropManager.CalNormalAttackDamaage();
-                dmgable.Hit(owner.InsId,dmg);
-            }
+            if (!root.TryGetComponent<IDamageable>(out _)) return;
+            float dmg = isSkill ? owner.PropManager.CalSkillAttackDamaage() : owner.PropManager.CalNormalAttackDamaage();
+            EventQueueSystem.QueueEvent(new SendDamageEvent(owner.InsId, root, dmg));
         }
     }
 }

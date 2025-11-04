@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 362581409136911760}
   - component: {fileID: 7091013910681132996}
+  - component: {fileID: -8694730575932499913}
   m_Layer: 10
   m_Name: TestEnemy
   m_TagString: Enemy
@@ -48,6 +49,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Unit.Enemy
   animator: {fileID: 0}
   behaviorTree: {fileID: 0}
+--- !u!114 &-8694730575932499913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585369184098903352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d5c9134e334f54b8b64fb07272cc10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Unit.AutoTriggerGenerator
+  triggerScale: 1.2
 --- !u!1 &4603369034442221942
 GameObject:
   m_ObjectHideFlags: 0

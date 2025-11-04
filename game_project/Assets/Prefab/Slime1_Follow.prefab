@@ -324,6 +324,7 @@ GameObject:
   - component: {fileID: 6333455266019853039}
   - component: {fileID: 6333455266019853038}
   - component: {fileID: 7539846506255900110}
+  - component: {fileID: 7143679466827739848}
   m_Layer: 10
   m_Name: Slime1_Follow
   m_TagString: Enemy
@@ -449,6 +450,19 @@ MonoBehaviour:
       Version: 1.7.1
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1
+--- !u!114 &7143679466827739848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6333455266019853049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d5c9134e334f54b8b64fb07272cc10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Unit.AutoTriggerGenerator
+  triggerScale: 1.2
 --- !u!1 &7888335122451226535
 GameObject:
   m_ObjectHideFlags: 0

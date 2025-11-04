@@ -39,8 +39,7 @@ namespace Game.Unit
             bullet.Recycle();
 
             //damage
-            if (!up.TryGetComponent<IDamageable>(out var damageable)) return;
-            damageable.Hit(sourceId, damage);
+            if (!up.TryGetComponent<IDamageable>(out _)) return;
             EventQueueSystem.QueueEvent(new SendDamageEvent(sourceId, up.gameObject, damage));
         }
     }

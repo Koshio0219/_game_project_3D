@@ -28,7 +28,7 @@ namespace Game.Hud
                 Vector3.right * Random.Range(-.3f, .3f) +
                 Vector3.back * Random.Range(0.2f, 0.6f);
             var com = ins.GetComponentInChildren<PopupText>();
-            com.Setup(e.num);
+            com.Setup(e.num,e.color);
         }
     }
 }

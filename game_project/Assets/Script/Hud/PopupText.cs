@@ -12,10 +12,11 @@ namespace Game.Hud
         [SerializeField] private TextMeshProUGUI text;
         [SerializeField] private float lifeTime = 1f;
 
-        public void Setup(int num)
+        public void Setup(int num,Color color)
         {
             if (text == null) return;
             text.text =num == 0 ? "Miss!" : num.ToString();
+            text.color = color;
 
             WaitRecycle().Forget();
             Move();

@@ -591,6 +591,7 @@ GameObject:
   - component: {fileID: 6199058164825075953}
   - component: {fileID: 897635500390371931}
   - component: {fileID: 4919995227982086039}
+  - component: {fileID: 4710948577365635882}
   m_Layer: 10
   m_Name: Ghost1_Fly
   m_TagString: Enemy
@@ -706,6 +707,19 @@ MonoBehaviour:
   ghost_normal: {fileID: 7011922011992266746}
   ghost_parts: {fileID: 7011922012478830512}
   animationCrossTime: 0.5
+--- !u!114 &4710948577365635882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6199058164825075947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d5c9134e334f54b8b64fb07272cc10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Unit.AutoTriggerGenerator
+  triggerScale: 1.2
 --- !u!1 &6639697902968279547
 GameObject:
   m_ObjectHideFlags: 0

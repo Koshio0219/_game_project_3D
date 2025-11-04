@@ -58,6 +58,7 @@ namespace Game.Action
 
             buildAction = UniTask.UnityAction(async (_) =>
             {
+                await UniTask.DelayFrame(1);
                 insEnemy.Clear();
                 Debug.Log("enemy build start!");
                 var levelIdx = GameManager.Instance.LevelIdx;

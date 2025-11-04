@@ -26,6 +26,7 @@ namespace Game.Unit
 
         private void OnTriggerEnter(Collider other)
         {
+            if (!other.TryGetComponent<IDamageable>(out _)) return;
             var up = other.transform.GetRootParent();
 
             //recycle
@@ -39,7 +40,6 @@ namespace Game.Unit
             bullet.Recycle();
 
             //damage
-            if (!up.TryGetComponent<IDamageable>(out _)) return;
             EventQueueSystem.QueueEvent(new SendDamageEvent(sourceId, up.gameObject, damage));
         }
     }

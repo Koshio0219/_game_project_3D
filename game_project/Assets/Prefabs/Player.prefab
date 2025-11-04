@@ -3810,7 +3810,6 @@ GameObject:
   - component: {fileID: 871263772456641015}
   - component: {fileID: 4012023066602300630}
   - component: {fileID: 4301085840714271144}
-  - component: {fileID: 2407042642295825681}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -3902,6 +3901,7 @@ MonoBehaviour:
   skillHitWindow: 0.35
   parryWindow: 0.25
   parryCooldown: 1
+  hurtInvulDuration: 1.5
 --- !u!114 &4012023066602300630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3927,33 +3927,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Player.PlayerStateHandler
   animator: {fileID: 876922875337549779}
---- !u!54 &2407042642295825681
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5711102773969412134}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &5746855990718290531
 GameObject:
   m_ObjectHideFlags: 0

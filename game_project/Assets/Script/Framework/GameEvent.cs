@@ -139,6 +139,15 @@ namespace Game.Framework
         }
     }
 
+    public class PlayerPropChangedEvent : GameEvent
+    {
+        public PlayerData playerData;
+        public PlayerPropChangedEvent(PlayerData playerData)
+        {
+            this.playerData = playerData;
+        }
+    }
+
     public class PlayerEnterLevelEvent : GameEvent 
     {
         public PlayerData playerData;

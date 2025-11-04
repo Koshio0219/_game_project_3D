@@ -13,9 +13,11 @@ namespace Game.Navigation
         public RuntimeNavMeshBuilder builder;   // 你的实时烘培脚本实例（要求 tracked = null）
 
         [Header("Update Frequency")]
-        public float updateFrequency = 0.5f;  // 每秒更新频率
+        public float updateFrequency = 30f;  // 每秒更新频率
 
-        [HideInInspector]
+        [Header("Safe Start Point")]
+        public Vector3Int safeStartPoint;
+
         public Dictionary<int, Enemy> mapEnemyIdToInstance; // 由你的关卡/敌人管理器维护与注入
 
         [Header("Bounds Settings")]
@@ -26,13 +28,13 @@ namespace Game.Navigation
         public float fixedHeight = 20f;
 
         [Tooltip("XZ 尺寸的最小值")]
-        public Vector2 minSizeXZ = new Vector2(40, 40);
+        public Vector2 minSizeXZ = new(40, 40);
 
         [Tooltip("XZ 尺寸的最大值")]
-        public Vector2 maxSizeXZ = new Vector2(100, 100);
+        public Vector2 maxSizeXZ = new(100, 100);
 
         [Tooltip("当只有1个敌人时使用的默认尺寸（会在min/max里再夹一次）")]
-        public Vector2 singleDefaultSizeXZ = new Vector2(50, 50);
+        public Vector2 singleDefaultSizeXZ = new(50, 50);
 
         [Header("Smoothing")]
         [Tooltip("中心与尺寸的平滑因子，越大越跟手，越小越稳态")]
@@ -48,7 +50,7 @@ namespace Game.Navigation
         private Vector3 _targetCenter;
         private Vector3 _targetSize;
         private bool _hasTarget = false;
-        private float timer;
+        private float timer=999;
 
         private void Reset()
         {
@@ -94,7 +96,7 @@ namespace Game.Navigation
             Vector3 center;
             Vector3 size;
 
-            bool ok = false;
+            bool ok;
             if (map != null && map.Count > 0)
             {
                 // 使用计算器（注意：单一敌人时会回默认尺寸，你也可以强制 singleDefaultSizeXZ）
@@ -119,10 +121,10 @@ namespace Game.Navigation
             }
             else
             {
-                // 没有敌人：保持原样（或者回到某个锚点/玩家附近，看你需求）
-                center = builder.transform.position;
-                size = builder.size;
-                ok = true;
+                // 没有敌人：回到安全初始点
+                builder.transform.position =  safeStartPoint;
+                _ = builder.Build();
+                return;
             }
 
             if (!ok) return;
@@ -149,7 +151,7 @@ namespace Game.Navigation
             if ((newCenter - builder.transform.position).sqrMagnitude >= centerEpsilon * centerEpsilon)
                 builder.transform.position = new Vector3(newCenter.x, builder.transform.position.y, newCenter.z);
 
-            Vector2 sizeDeltaXZ = new Vector2(newSize.x - builder.size.x, newSize.z - builder.size.z);
+            Vector2 sizeDeltaXZ = new(newSize.x - builder.size.x, newSize.z - builder.size.z);
             if (sizeDeltaXZ.sqrMagnitude >= sizeEpsilon * sizeEpsilon)
                 builder.size = new Vector3(newSize.x, fixedHeight, newSize.z);
 

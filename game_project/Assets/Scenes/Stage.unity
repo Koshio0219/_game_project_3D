@@ -145,12 +145,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 187044882}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.10336, y: 4.85284, z: 68.99863}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 734832411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &187044884
 MonoBehaviour:
@@ -179,7 +179,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Navigation.RuntimeNavMeshRebuildController
   builder: {fileID: 187044884}
-  updateFrequency: 0.5
+  updateFrequency: 30
+  safeStartPoint: {x: 25, y: 0, z: 69}
   padding: 4
   fixedHeight: 20
   minSizeXZ: {x: 40, y: 40}
@@ -188,6 +189,58 @@ MonoBehaviour:
   followLerp: 8
   sizeEpsilon: 0.25
   centerEpsilon: 0.05
+--- !u!1 &217769430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 217769431}
+  - component: {fileID: 217769432}
+  m_Layer: 0
+  m_Name: SwordSoulManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &217769431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217769430}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 734832411}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &217769432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217769430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f485d919805e3934d9e931a5fcb0480c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Soul.SwordSoulManager
+  allSouls:
+  - {fileID: 11400000, guid: 4831cae2dd3bf774eaefa17d330317c7, type: 2}
+  - {fileID: 11400000, guid: 82c2508e37838a8439a067af6108e3ab, type: 2}
+  - {fileID: 11400000, guid: 1c9348ce474d51e4f84a2c8dd56e2886, type: 2}
+  currentDeck:
+  - {fileID: 11400000, guid: 82c2508e37838a8439a067af6108e3ab, type: 2}
+  - {fileID: 11400000, guid: 4831cae2dd3bf774eaefa17d330317c7, type: 2}
+  - {fileID: 11400000, guid: 1c9348ce474d51e4f84a2c8dd56e2886, type: 2}
 --- !u!21 &262678119
 Material:
   serializedVersion: 8
@@ -299,6 +352,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &734832410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 734832411}
+  m_Layer: 0
+  m_Name: CodeObj
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &734832411
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734832410}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1313903981}
+  - {fileID: 217769431}
+  - {fileID: 187044883}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1313903980
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,11 +414,11 @@ Transform:
   m_GameObject: {fileID: 1313903980}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.60476, y: 1.50608, z: 33.9}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 734832411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1313903982
 MonoBehaviour:
@@ -987,5 +1074,4 @@ SceneRoots:
   - {fileID: 5082702471764413869}
   - {fileID: 1934124346}
   - {fileID: 1909675554}
-  - {fileID: 187044883}
-  - {fileID: 1313903981}
+  - {fileID: 734832411}

@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d5c9134e334f54b8b64fb07272cc10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Unit.AutoTriggerGenerator
-  triggerScale: 1.2
+  triggerScale: 1.1
 --- !u!1 &7976353455333097926
 GameObject:
   m_ObjectHideFlags: 0

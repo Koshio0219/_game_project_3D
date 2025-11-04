@@ -182,6 +182,8 @@ namespace Game.Unit
 
         void OnTriggerEnter(Collider other)
         {
+            //忽略玩家的子物体（如手持武器）
+            if (!other.TryGetComponent<IDamageable>(out _)) return;
             var up = other.transform.root;
             // 去重：只在第一次进入时执行逻辑
             var instanceId = up.GetInstanceID();
@@ -189,7 +191,6 @@ namespace Game.Unit
             _enteredColliders.Add(instanceId);
 
             Debug.Log($"enemy name:{gameObject.name} had OnTriggerEnter,target name:{up.name}");
-            if (!up.TryGetComponent<IDamageable>(out _)) return;
             var pId = GameManager.stageManager.MatchPlayerId(up.gameObject);
             if (pId == -1) return;
             EventQueueSystem.QueueEvent(new SendDamageEvent(enemyUnitData.InsId, up.gameObject, Atk));

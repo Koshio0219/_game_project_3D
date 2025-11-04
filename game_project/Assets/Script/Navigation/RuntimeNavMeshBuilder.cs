@@ -45,68 +45,10 @@ namespace Game.Navigation
             await UpdateNavMesh();
         }
 
-        protected virtual void OnEnable()
-        {
-            _ = Build();
-        }
-
-        private void Awake()
-        {
-            EventQueueSystem.AddListener<StageStatesEvent>(StageStatesHandler);
-            EventQueueSystem.AddListener<UpdateNavMeshEvent>(UpdateNavMeshHandler);
-        }
-
-        //private async void BlockDragEndHandler(BlockDragEndEvent e)
-        //{
-        //    transform.position -= Vector3.forward * 3;
-
-        //    await UniTask.Delay(500);
-        //    dragTokenSource.Cancel();
-        //}
-
-        //private void BlockDragStartHandlerAsync(BlockDragStartEvent e)
-        //{
-        //    //test
-        //    //await UniTask.DelayFrame(5);
-        //    //tempTracked = tracked;
-        //    //tracked = e.targetBlock;
-        //    //tempSize = size;
-        //    //size = new Vector3(0.01f, 0.01f, 0.01f);
-        //    //
-
-        //    //
-        //    transform.position += Vector3.forward * 3;
-
-        //    dragTokenSource = new CancellationTokenSource();
-        //    UniTask.Void(async (_) =>
-        //    {
-        //        while (!_.IsCancellationRequested)
-        //        {
-        //            await UniTask.DelayFrame(1, cancellationToken: dragTokenSource.Token);
-        //            await Build();
-        //            Debug.Log("Update NavMesh");
-        //        }
-        //    },dragTokenSource.Token);
-        //}
-
-        private void UpdateNavMeshHandler(UpdateNavMeshEvent e)
-        {
-            Build().Forget();
-        }
-
-        private async void StageStatesHandler(StageStatesEvent e)
-        {
-            //if (e.to != Manager.StageStates.NavMeshBuildStart) return;
-            await Build();
-            //EventQueueSystem.QueueEvent(new StageStatesEvent(Manager.StageStates.NavMeshBuildEnd));
-        }
-
         protected virtual void OnDestroy()
         {
             // Unload navmesh and clear handle
             mInstance.Remove();
-            EventQueueSystem.RemoveListener<StageStatesEvent>(StageStatesHandler);
-            EventQueueSystem.RemoveListener<UpdateNavMeshEvent>(UpdateNavMeshHandler);
         }
 
         protected virtual async UniTask UpdateNavMesh()

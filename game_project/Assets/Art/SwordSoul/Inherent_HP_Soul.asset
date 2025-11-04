@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30379484287e5fa44b851e6ddebde868, type: 3}
+  m_Name: Inherent_HP_Soul
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Soul.InherentHPSoul
+  soulID: "\u5192\u9669\u4E4B\u9B42"
+  triggerType: 0
+  description: "\u751F\u547D\u503C+100"
+  icon: {fileID: 21300000, guid: b2d3d7075d789da4bba2153fde2e0659, type: 3}
+  usedInStage: 0
+  addMaxHP: 100

@@ -1,11 +1,4 @@
-﻿using Game.Base;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Game.Framework;
-using System;
-using Cysharp.Threading.Tasks;
-using System.Threading;
+﻿using Game.Framework;
 
 namespace Game.Hud
 {
@@ -15,6 +8,7 @@ namespace Game.Hud
         {
             EventQueueSystem.AddListener<PlayerHpChangeEvent>(PlayerHpChangeHandler);
             EventQueueSystem.AddListener<SwordPointChangeEvent>(SwordPointChangeHandler);
+            EventQueueSystem.AddListener<PlayerPropChangedEvent>(PlayerPropChangedHandler);
             EventQueueSystem.AddListener<PlayerEnterLevelEvent>(PlayerEnterLevelHandler);
             EventQueueSystem.AddListener<PlayerDeadEvent>(PlayerDeadHnadler);
         }
@@ -23,8 +17,14 @@ namespace Game.Hud
         {
             EventQueueSystem.RemoveListener<PlayerHpChangeEvent>(PlayerHpChangeHandler);
             EventQueueSystem.RemoveListener<SwordPointChangeEvent>(SwordPointChangeHandler);
+            EventQueueSystem.RemoveListener<PlayerPropChangedEvent>(PlayerPropChangedHandler);
             EventQueueSystem.RemoveListener<PlayerEnterLevelEvent>(PlayerEnterLevelHandler);
             EventQueueSystem.RemoveListener<PlayerDeadEvent>(PlayerDeadHnadler);
+        }
+
+        private void PlayerPropChangedHandler(PlayerPropChangedEvent e)
+        {
+            View.UpdateStats(e.playerData);
         }
 
         private void PlayerEnterLevelHandler(PlayerEnterLevelEvent e)

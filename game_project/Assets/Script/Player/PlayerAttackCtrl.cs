@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Game.Base;
 using Game.Data;
 using Game.Framework;
+using Game.Soul;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -25,7 +26,7 @@ namespace Game.Player
         private int? _insId;
         public int InsId => _insId ??= gameObject.GetInstanceID();
 
-        public PlayerPropManager PropManager { get; private set; }
+        public PlayerPropManager PropManager => PlayerPropManager.Instance;
 
         [Header("Weapon")]
         public SerializedDictionary<WeaponHandType, Transform> weaponTransform;
@@ -42,14 +43,26 @@ namespace Game.Player
         public float skillHitDelay = 0.15f;
         public float skillHitWindow = 0.35f;
 
-        [Header("Parry / Dodge")]
-        public float parryWindow = 0.25f;
-        public float parryCooldown = 1f;
-        private float lastParryTime = -10f;
-        private bool isParrying = false;
-        private bool isInvulnerable = false;
+        [Header("Parry Settings")]
+        [SerializeField] private float parryWindow = 0.25f;
+        [SerializeField] private float parryCooldown = 0.6f;
+
+        [Header("Dodge Settings")]
+        [SerializeField] private float invulDuration = 0.35f;
+        [SerializeField] private float perfectDodgeWindow = 0.3f; // 敌人攻击命中前的时间窗
+
+        private bool isParrying;
+        private bool isInvulnerable;// 受到伤害后是否处于无敌状态
+        private float lastParryTime;
+
+        private float lastIncomingAttackTime = -99999f;
+        private float lastAttackETA = 99999f;
 
         public event Action<GameObject> OnParrySuccess;
+        public event Action<GameObject> OnPerfectDodge;
+
+        [Header("Hurt Setttings")]
+        public float hurtInvulDuration = 1.35f;
         public event Action<float, int> OnHurt;
 
         private AttackState attackState = AttackState.Idle;
@@ -70,8 +83,10 @@ namespace Game.Player
 
         public void EnterLevel()
         {
-            PropManager = new PlayerPropManager(new PlayerData(GameManager.Instance.gameData.playerConfig.maxSwordPoint));
+            //PropManager = new PlayerPropManager(new PlayerData(GameManager.Instance.gameData.playerConfig.maxSwordPoint));
+            PropManager.Init(new PlayerData(GameManager.Instance.gameData.playerConfig.maxSwordPoint));
             EquipWeapon(GameManager.Instance.gameData.playerConfig.initWeaponId);
+            _ = SwordSoulManager.Instance.ApplyInherentSoulsAsync();
             EventQueueSystem.QueueEvent(new PlayerEnterLevelEvent(PropManager.Prop));
         }
 
@@ -176,6 +191,14 @@ namespace Game.Player
         #endregion
 
         #region Parry / Dodge / Damage
+        // 敌人每次即将攻击时调用
+        public void NotifyIncomingAttack(GameObject attacker, float timeToHit)
+        {
+            lastIncomingAttackTime = Time.time;
+            lastAttackETA = timeToHit;
+        }
+
+        //当玩家按下招架键时由输入系统或角色控制器调用
         public bool TryParry()
         {
             if (Time.time - lastParryTime < parryCooldown) return false;
@@ -191,30 +214,55 @@ namespace Game.Player
             isParrying = false;
         }
 
+        //当敌人攻击命中玩家时判定是否招架成功
         public bool TryHandleIncomingAttackAsParry(GameObject attacker)
         {
             if (isParrying)
             {
                 OnParrySuccess?.Invoke(attacker);
+                _ = SwordSoulManager.Instance.TriggerOnParryAsync(gameObject, attacker);
                 isParrying = false;
                 return true;
             }
             return false;
         }
 
+        //当玩家按下闪避键时由输入系统调用
         public async UniTaskVoid TryDodgeAsync(float invulDuration = 0.35f)
         {
             if (isInvulnerable) return;
             isInvulnerable = true;
+
+            bool isPerfect = CheckPerfectDodge();
             stateHandler.State = PlayerAnimatorState.Dodge;
+
+            if (isPerfect)
+            {
+                Debug.Log("✨ Perfect Dodge!");
+                OnPerfectDodge?.Invoke(null);
+                _ = SwordSoulManager.Instance.TriggerOnDodgeAsync(gameObject);
+                // 加入特写慢动作等演出效果
+            }
+
             await UniTask.Delay(TimeSpan.FromSeconds(invulDuration));
             isInvulnerable = false;
         }
 
-        void OnControllerColliderHit(ControllerColliderHit hit)
+        private bool CheckPerfectDodge()
         {
-            Debug.Log("玩家撞到了：" + hit.gameObject.name);
+            // 若玩家最近一次被通知的攻击在 perfectDodgeWindow 时间内即将命中，则视为极限闪避
+            if (Time.time - lastIncomingAttackTime < lastAttackETA &&
+                lastAttackETA < perfectDodgeWindow)
+            {
+                return true;
+            }
+            return false;
         }
+
+        //void OnControllerColliderHit(ControllerColliderHit hit)
+        //{
+        //    Debug.Log("玩家撞到了：" + hit.gameObject.name);
+        //}
 
         public void ApplyHit(float damageAmount, int attackerId)
         {
@@ -234,6 +282,9 @@ namespace Game.Player
 
             stateHandler.State = PlayerAnimatorState.Hurt;
             OnHurt?.Invoke(damageAmount, attackerId);
+
+            isInvulnerable = true;
+            this.Delay(hurtInvulDuration, () => isInvulnerable = false);
         }
 
         private async UniTaskVoid Death()

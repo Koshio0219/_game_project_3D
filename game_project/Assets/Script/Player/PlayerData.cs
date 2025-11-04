@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Game.Player
 {
@@ -192,6 +193,12 @@ namespace Game.Player
         public override string ToString()
         {
             return $"HP:{_HP}/{_maxHP}, ATK:{_AtkPoint}, CRIT:{_CritRate * 100f}%, CRIT DMG:{_CritDmg}, HitRate:{_HitRate * 100f}%";
+        }
+
+        internal void InvokeChanged()
+        {
+            //通知外部属性值发生变化（除HP，MaxHP，SwordPoint外的属性值）
+
         }
     }
 }

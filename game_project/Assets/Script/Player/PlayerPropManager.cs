@@ -1,15 +1,17 @@
-﻿using System;
+﻿using Game.Base;
+using Game.Framework;
+using System;
 using UnityEngine;
 
 namespace Game.Player
 {
-    public class PlayerPropManager
+    public class PlayerPropManager : Singleton<PlayerPropManager>,IInit<PlayerData>
     {
         public PlayerData Prop { get;private set; }
 
-        public PlayerPropManager(PlayerData playerProp)
+        public void Init(PlayerData data)
         {
-            Prop = playerProp;
+            Prop = data;
         }
 
         public float CalNormalAttackDamaage()

@@ -53,7 +53,7 @@ namespace Game.Hud
 
         public virtual void FadeIn() => GameHelper.FadeIn(gameObject);
 
-        public virtual void FadeOut() => GameHelper.FadeOut(gameObject, () => gameObject.Hide());
+        public virtual void FadeOut() => GameHelper.FadeOut(gameObject, 0, () => gameObject.Hide());
 
     }
 

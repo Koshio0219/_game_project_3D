@@ -91,18 +91,18 @@ namespace Game.Framework
 
         #region Hud
 
-        public static void FadeIn(GameObject gameObject,UnityAction callback=null,float time =.3f)
+        public static void FadeIn(GameObject gameObject,float endAlpha = 1f, UnityAction callback=null,float time =.3f)
         {
             var cg = gameObject.GetOrAddComponent<CanvasGroup>();
             cg.alpha = 0f;
-            cg.DOFade(1f, time).OnComplete(()=>callback?.Invoke());
+            cg.DOFade(endAlpha, time).OnComplete(()=>callback?.Invoke());
         }
 
-        public static void FadeOut(GameObject gameObject, UnityAction callback = null, float time = .3f)
+        public static void FadeOut(GameObject gameObject,float endAlpha = 0f,UnityAction callback = null, float time = .3f)
         {
             var cg = gameObject.GetOrAddComponent<CanvasGroup>();
             cg.alpha = 1f;
-            cg.DOFade(0f, time).OnComplete(() => callback?.Invoke());
+            cg.DOFade(endAlpha, time).OnComplete(() => callback?.Invoke());
         }
         #endregion
 

@@ -17,16 +17,34 @@ namespace Game.Soul.UI
         public TextMeshProUGUI tooltipText;
 
         private readonly List<SoulSlot> slots = new();
+        private readonly Dictionary<SoulTriggerType, string> mapSoulToString = new()
+        {
+            {SoulTriggerType.Inherent, "固有剑魂"},
+            {SoulTriggerType.Dodge,"闪避剑魂" },
+            {SoulTriggerType.Parry,"招架剑魂" }
+        };     
 
         private SwordSoul draggingSoulData;
         private SoulSlot draggingSlot;
+
+        public bool IsDragging => draggingSlot != null;
 
         void Start()
         {
             BuildSlotsFromManager();
             SwordSoulManager.Instance.OnDeckChanged += BuildSlotsFromManager;
             HideTooltip();
+
+            //fix bug: Tooltip 不阻挡鼠标事件
+            if (tooltipObject.TryGetComponent<CanvasGroup>(out var cg))
+                cg.blocksRaycasts = false;
+            else
+            {
+                var cgNew = tooltipObject.AddComponent<CanvasGroup>();
+                cgNew.blocksRaycasts = false;
+            }
         }
+
 
         public void BuildSlotsFromManager()
         {
@@ -50,46 +68,47 @@ namespace Game.Soul.UI
             slots.Clear();
         }
 
-        // Called from SoulSlot.OnDrag
+        private SoulSlot potentialTargetSlot;
+
         public void HandleDrag(SoulSlot slot, PointerEventData eventData)
         {
             draggingSlot = slot;
             draggingSoulData = SwordSoulManager.Instance.currentDeck[slot.index];
+            potentialTargetSlot = null;
 
-            // auto-swap in list based on vertical position -> simple approach
-            for (int i = 0; i < slots.Count; i++)
+            // 找到当前鼠标所在的另一个 slot
+            foreach (var srt in slots)
             {
-                var srt = slots[i];
                 if (srt == slot) continue;
                 var r = srt.GetComponent<RectTransform>();
                 if (RectTransformUtility.RectangleContainsScreenPoint(r, eventData.position, eventData.enterEventCamera))
                 {
-                    // swap visually and logically
-                    int a = slot.index;
-                    int b = srt.index;
-                    if (a != b)
-                    {
-                        SwordSoulManager.Instance.MoveSoul(a, b);
-                        // rebuild to refresh indexes/parents (simple)
-                        BuildSlotsFromManager();
-                        break;
-                    }
+                    potentialTargetSlot = srt;
+                    break;
                 }
             }
         }
 
         public void EndDrag(SoulSlot slot, PointerEventData eventData)
         {
-            // 将拖拽物体重新放回父节点（简单实现：重建UI即可）
+            if (potentialTargetSlot != null && potentialTargetSlot != slot)
+            {
+                int a = slot.index;
+                int b = potentialTargetSlot.index;
+                SwordSoulManager.Instance.MoveSoul(a, b);
+            }
+
+            // 重建 UI
             BuildSlotsFromManager();
             draggingSlot = null;
             draggingSoulData = null;
+            potentialTargetSlot = null;
         }
 
         public void ShowTooltip(SoulSlot slot, SwordSoul data)
         {
             tooltipObject.SetActive(true);
-            tooltipText.text = $"[{data.triggerType}] {data.name}\n{data.description}";
+            tooltipText.text = $"[{mapSoulToString[data.triggerType]}] {data.soulID}\n{data.description}";
             // 简单定位到 slot 右侧
             var r = slot.GetComponent<RectTransform>();
             tooltipObject.GetComponent<RectTransform>().position = r.position + Vector3.right * 120;

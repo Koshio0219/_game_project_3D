@@ -17,6 +17,7 @@ public static class BGMPath{
 	public const string STAGE02       = "BGM/Stage02";
 	public const string STAGE03       = "BGM/Stage03";
 	public const string START         = "BGM/Start";
+	public const string STUDIO_EIM    = "BGM/StudioEIM";
 	public const string WAIT_STAGE    = "BGM/WaitStage";
 
 }

@@ -7,10 +7,11 @@ namespace Game.Player
 {
     public class PlayerPropManager : Singleton<PlayerPropManager>,IInit<PlayerData>
     {
-        public PlayerData Prop { get;private set; }
+        public PlayerData Prop { get; private set; } = null;
 
         public void Init(PlayerData data)
         {
+            if (Prop != null) return;
             Prop = data;
         }
 
@@ -32,5 +33,12 @@ namespace Game.Player
         {
             Prop += addProp;
         }
+
+        public void RemoveProp(PlayerData removeProp)
+        {
+            Prop -= removeProp;
+        }
+
+        public void ResetProp() => Prop = null;
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Game.Base;
 using Game.Framework;
+using KanKikuchi.AudioManager;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,22 +12,18 @@ namespace Game.Hud
     {
         private void Awake()
         {
-            EventQueueSystem.AddListener<StageStatesEvent>(StageStatesHandler);
+            View.nextBtn.onClick.AddListener(OnNextBtnClick);
         }
 
-        private void StageStatesHandler(StageStatesEvent e)
+        private void OnNextBtnClick()
         {
-            //switch (e.to)
-            //{
-            //    case StageStates.CurtainInputEnd:
-            //        View.FadeOut();
-            //        break;
-            //}
+            SceneLoader.Instance.GoToStage();
+            BGMSwitcher.FadeOutAndFadeIn(BGMPath.STUDIO_EIM);
         }
 
         private void OnDestroy()
         {
-            EventQueueSystem.RemoveListener<StageStatesEvent>(StageStatesHandler);
+            View.nextBtn.onClick.RemoveListener(OnNextBtnClick);
         }
     }
 }

@@ -78,12 +78,11 @@ namespace Game.Player
         private void Start()
         {
             GameManager.stageManager.AddOnePlayer(InsId, gameObject);
-            EnterLevel();
+            EnterLevel(GameManager.Instance.LevelIdx == 0);
         }
 
-        public void EnterLevel()
+        public void EnterLevel(bool isFirstLevel)
         {
-            //PropManager = new PlayerPropManager(new PlayerData(GameManager.Instance.gameData.playerConfig.maxSwordPoint));
             PropManager.Init(new PlayerData(GameManager.Instance.gameData.playerConfig.maxSwordPoint));
             EquipWeapon(GameManager.Instance.gameData.playerConfig.initWeaponId);
             _ = SwordSoulManager.Instance.ApplyInherentSoulsAsync();

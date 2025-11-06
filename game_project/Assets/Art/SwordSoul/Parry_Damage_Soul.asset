@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Soul.ParryDamageSoul
   soulID: "\u52C7\u6C14\u4E4B\u9B42"
   triggerType: 2
-  description: "\u5BF9\u62DB\u67B6\u5355\u4F4D\u9020\u6210200\u4F24\u5BB3"
+  description: "\u5BF9\u62DB\u67B6\u5355\u4F4D\u9020\u6210100\u70B9\u4F24\u5BB3"
   icon: {fileID: 21300000, guid: dd5dc850a280af9479bde444b94d15f7, type: 3}
   usedInStage: 0
-  baseDamage: 200
+  baseDamage: 100

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332ef667ef169d24a8a3d6cf20458861, type: 3}
+  m_Name: AfterimageDodgeSoul
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Soul.AfterimageDodgeSoul
+  soulID: "\u5E7B\u5F71\u6B8B\u50CF"
+  triggerType: 1
+  description: "\u6781\u9650\u95EA\u907F\u6210\u529F\u65F6\uFF0C\u7559\u4E0B\u6B8B\u50CF\u8FF7\u60D1\u654C\u4EBA"
+  icon: {fileID: 21300000, guid: f7f14b97e3c3c8942adc091263a65981, type: 3}
+  usedInStage: 0
+  afterimageMaterial: {fileID: 2100000, guid: 8c3f067d97073e844a53d8283b2d3820, type: 2}
+  duration: 0.3

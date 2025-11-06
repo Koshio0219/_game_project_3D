@@ -9,6 +9,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using KanKikuchi.AudioManager;
 using System.Linq;
+using Game.Player;
 
 namespace Game.Base
 {
@@ -65,6 +66,7 @@ namespace Game.Base
             ClearAllPlayers();
 
             await UniTask.Delay(1000);
+            PlayerPropManager.Instance.ResetProp();
             GameManager.Instance.LevelIdx = 0;
             //this.WaitInput(Gamepad.current.buttonEast, () => { SceneLoader.Instance.BackToMenu(); SEManager.Instance.Stop(); BGMSwitcher.FadeOutAndFadeIn(BGMPath.START); });
         }
@@ -136,6 +138,7 @@ namespace Game.Base
             // wait ui show
             await UniTask.Delay(1000);
             GameManager.Instance.LevelIdx = 0;
+            PlayerPropManager.Instance.ResetProp();
             //this.WaitInput(Gamepad.current.buttonEast, () => { SceneLoader.Instance.BackToMenu(); SEManager.Instance.Stop(); BGMSwitcher.FadeOutAndFadeIn(BGMPath.START); });
         }
 

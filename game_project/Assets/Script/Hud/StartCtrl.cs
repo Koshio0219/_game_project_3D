@@ -45,8 +45,8 @@ namespace Game.Hud
         private void OnStartBtnClick()
         {
             breathTarget.StopBreathing();
-            SceneLoader.Instance.GoToStage();
-            BGMSwitcher.FadeOutAndFadeIn(BGMPath.STUDIO_EIM);
+            SceneLoader.Instance.GoToReady();
+            //BGMSwitcher.FadeOutAndFadeIn(BGMPath.STUDIO_EIM);
         }
 
         private void OnDestroy()

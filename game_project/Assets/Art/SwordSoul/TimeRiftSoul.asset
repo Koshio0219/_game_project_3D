@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0e1ed2555c4aa341beb52ef79895447, type: 3}
+  m_Name: TimeRiftSoul
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Soul.TimeRiftSoul
+  soulID: "\u65F6\u95F4\u65AD\u88C2"
+  triggerType: 1
+  description: "\u77ED\u6682\u51CF\u7F13\u65F6\u95F4\u6D41\u52A8"
+  icon: {fileID: 0}
+  usedInStage: 0
+  slowTimeScale: 0.2
+  duration: 0.8

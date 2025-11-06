@@ -4,6 +4,7 @@ using Game.Data;
 using Game.Framework;
 using Game.Navigation;
 using Game.Player;
+using KanKikuchi.AudioManager;
 using System.Threading;
 using UnityEngine;
 
@@ -63,6 +64,7 @@ namespace Game.Base
             base.Awake();
             SetFrameRate(60);
             SetFixedDeltaTime(0.02f);
+            SetStartAudioVolume(.5f);
 
             EventQueueSystem.AddListener<SceneLoadStartEvent>(SceneLoadStartHandler);
         }
@@ -88,6 +90,12 @@ namespace Game.Base
         internal void SetFixedDeltaTime(float deltaTime)
         {
             Time.fixedDeltaTime = deltaTime;
+        }
+
+        internal void SetStartAudioVolume(float volume)
+        {
+            BGMManager.Instance.ChangeBaseVolume(volume);
+            SEManager.Instance.ChangeBaseVolume(volume);
         }
 
         public void OpenHomePage(string url = "https://gamepit.tokyo/#top")

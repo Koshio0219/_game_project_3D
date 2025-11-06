@@ -4,11 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 namespace Game.Hud
 {  
     public class StagePreView : HudView
     {
+        public Button nextBtn;
         public TextMeshProUGUI guideText;
 
         public override void OnShow()

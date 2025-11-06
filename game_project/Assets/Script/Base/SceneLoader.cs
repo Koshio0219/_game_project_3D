@@ -36,6 +36,12 @@ namespace Game.Base
             OnClickLoadScene("Start").Forget();
         }
 
+        public void GoToReady()
+        {
+            if (isLoading) return;
+            OnClickLoadScene("Ready").Forget();
+        }
+
         public void GoToStage()
         {
             if (isLoading) return;

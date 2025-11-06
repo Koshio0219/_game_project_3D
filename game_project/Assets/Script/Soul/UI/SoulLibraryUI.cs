@@ -1,33 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using BehaviorDesigner.Runtime.Tasks.Unity.UnityTransform;
+using Game.Framework;
+using Game.Soul;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Game.Soul;
-using TMPro;
-using UnityEngine.EventSystems;
-using System.Linq;
-using Game.Framework;
 
 namespace Game.Soul.UI
 {
     public class SoulLibraryUI : MonoBehaviour
     {
-        public RectTransform contentParent; // 容器（VerticalLayoutGroup）
-        public GameObject soulSlotPrefab; // 带 SoulSlot 组件的预制
+        [Header("剑魂容器 (HorizontalLayoutGroup)")]
+        public RectTransform inherentParent;
+        public RectTransform dodgeParent;
+        public RectTransform parryParent;
+
+        [Header("预制与提示UI")]
+        public GameObject soulSlotPrefab;
         public GameObject tooltipObject;
         public TextMeshProUGUI tooltipText;
 
         private readonly List<SoulSlot> slots = new();
-        private readonly Dictionary<SoulTriggerType, string> mapSoulToString = new()
-        {
-            {SoulTriggerType.Inherent, "固有剑魂"},
-            {SoulTriggerType.Dodge,"闪避剑魂" },
-            {SoulTriggerType.Parry,"招架剑魂" }
-        };     
-
-        private SwordSoul draggingSoulData;
-        private SoulSlot draggingSlot;
-
-        public bool IsDragging => draggingSlot != null;
 
         void Start()
         {
@@ -35,7 +29,7 @@ namespace Game.Soul.UI
             SwordSoulManager.Instance.OnDeckChanged += BuildSlotsFromManager;
             HideTooltip();
 
-            //fix bug: Tooltip 不阻挡鼠标事件
+            // Tooltip 不阻挡鼠标事件
             if (tooltipObject.TryGetComponent<CanvasGroup>(out var cg))
                 cg.blocksRaycasts = false;
             else
@@ -45,16 +39,25 @@ namespace Game.Soul.UI
             }
         }
 
-
         public void BuildSlotsFromManager()
         {
             ClearSlots();
+
             var deck = SwordSoulManager.Instance.currentDeck;
-            for (int i = 0; i < deck.Count; i++)
+
+            foreach (var soul in deck)
             {
-                var go = GameObjectPool.Instance.GetObj(soulSlotPrefab, contentParent);
+                RectTransform parent = soul.triggerType switch
+                {
+                    SoulTriggerType.Inherent => inherentParent,
+                    SoulTriggerType.Dodge => dodgeParent,
+                    SoulTriggerType.Parry => parryParent,
+                    _ => inherentParent
+                };
+
+                var go = GameObjectPool.Instance.GetObj(soulSlotPrefab, parent);
                 var slot = go.GetComponent<SoulSlot>();
-                slot.Init(deck[i], i, this);
+                slot.Init(soul, this);
                 slots.Add(slot);
             }
         }
@@ -63,55 +66,73 @@ namespace Game.Soul.UI
         {
             foreach (var s in slots)
             {
-                if (s != null) GameObjectPool.Instance.RecycleObj(s.gameObject);
+                if (s != null)
+                    GameObjectPool.Instance.RecycleObj(s.gameObject);
             }
             slots.Clear();
         }
 
-        private SoulSlot potentialTargetSlot;
-
-        public void HandleDrag(SoulSlot slot, PointerEventData eventData)
+        public void MoveSoulInCategory(SwordSoul soul, int direction)
         {
-            draggingSlot = slot;
-            draggingSoulData = SwordSoulManager.Instance.currentDeck[slot.index];
-            potentialTargetSlot = null;
+            var deck = SwordSoulManager.Instance.currentDeck;
+            var category = soul.triggerType;
 
-            // 找到当前鼠标所在的另一个 slot
-            foreach (var srt in slots)
-            {
-                if (srt == slot) continue;
-                var r = srt.GetComponent<RectTransform>();
-                if (RectTransformUtility.RectangleContainsScreenPoint(r, eventData.position, eventData.enterEventCamera))
-                {
-                    potentialTargetSlot = srt;
-                    break;
-                }
-            }
+            // 找出同类型的剑魂
+            var sameTypeSouls = deck.Where(s => s.triggerType == category).ToList();
+            int currentIndex = sameTypeSouls.IndexOf(soul);
+            int newIndex = currentIndex + direction;
+            if (newIndex < 0 || newIndex >= sameTypeSouls.Count)
+                return;
+
+            // 在总体列表中交换位置
+            int globalA = deck.IndexOf(sameTypeSouls[currentIndex]);
+            int globalB = deck.IndexOf(sameTypeSouls[newIndex]);
+            SwordSoulManager.Instance.MoveSoul(globalA, globalB);
+
+            // ✅ 只调整 UI 顺序，而不重新 Build
+            SwapUISlots(globalA, globalB,category);
         }
 
-        public void EndDrag(SoulSlot slot, PointerEventData eventData)
+        // 新增方法：交换UI层的Slot顺序
+        private void SwapUISlots(int indexA, int indexB,SoulTriggerType triggerType)
         {
-            if (potentialTargetSlot != null && potentialTargetSlot != slot)
-            {
-                int a = slot.index;
-                int b = potentialTargetSlot.index;
-                SwordSoulManager.Instance.MoveSoul(a, b);
-            }
 
-            // 重建 UI
-            BuildSlotsFromManager();
-            draggingSlot = null;
-            draggingSoulData = null;
-            potentialTargetSlot = null;
+            RectTransform parent =null; // 你的Slot容器
+            switch (triggerType)
+            {
+                case SoulTriggerType.Inherent:
+                    parent = inherentParent;
+                    break;
+                case SoulTriggerType.Dodge:
+                    parent = dodgeParent;
+                    break;
+                case SoulTriggerType.Parry:
+                    parent = parryParent;
+                    break;
+                default:
+                    break;
+            }
+        
+            if (indexA < 0 || indexA >= parent.childCount || indexB < 0 || indexB >= parent.childCount)
+                return;
+
+            var slotA = parent.GetChild(indexA);
+            var slotB = parent.GetChild(indexB);
+
+            int siblingA = slotA.GetSiblingIndex();
+            int siblingB = slotB.GetSiblingIndex();
+
+            slotA.SetSiblingIndex(siblingB);
+            slotB.SetSiblingIndex(siblingA);
         }
 
         public void ShowTooltip(SoulSlot slot, SwordSoul data)
         {
             tooltipObject.SetActive(true);
-            tooltipText.text = $"[{mapSoulToString[data.triggerType]}] {data.soulID}\n{data.description}";
-            // 简单定位到 slot 右侧
+            tooltipText.text = $"[{data.soulID}]\n{data.description}";
+
             var r = slot.GetComponent<RectTransform>();
-            tooltipObject.GetComponent<RectTransform>().position = r.position + Vector3.right * 120;
+            tooltipObject.GetComponent<RectTransform>().position = r.position + new Vector3(80f, 0, 0);
         }
 
         public void HideTooltip()
@@ -121,7 +142,8 @@ namespace Game.Soul.UI
 
         private void OnDestroy()
         {
-            if (SwordSoulManager.Instance != null) SwordSoulManager.Instance.OnDeckChanged -= BuildSlotsFromManager;
+            if (SwordSoulManager.Instance != null)
+                SwordSoulManager.Instance.OnDeckChanged -= BuildSlotsFromManager;
         }
     }
 }

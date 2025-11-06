@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9523e9aab5e648341b89fefd6928fe9e, type: 3}
+  m_Name: GaleCounterSoul
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Soul.GaleCounterSoul
+  soulID: "\u70C8\u98CE\u53CD\u51FB"
+  triggerType: 2
+  description: "\u6210\u529F\u62DB\u67B6\u65F6\u91CA\u653E\u6C14\u6D6A\uFF0C\u5C06\u5468\u56F4\u654C\u4EBA\u51FB\u9000"
+  icon: {fileID: 0}
+  usedInStage: 0
+  shockwaveRadius: 4
+  knockbackForce: 6

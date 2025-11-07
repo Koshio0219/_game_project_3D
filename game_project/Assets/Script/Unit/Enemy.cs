@@ -1,18 +1,14 @@
-﻿using Cysharp.Threading.Tasks;
-using Game.Action;
+﻿using BehaviorDesigner.Runtime;
+using Cysharp.Threading.Tasks;
 using Game.Base;
 using Game.Data;
-using System.Collections;
+using Game.Framework;
+using KanKikuchi.AudioManager;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
-using Game.Framework;
-using System;
-using UnityEngine.AI;
-using BehaviorDesigner.Runtime;
-using System.Threading.Tasks;
-using KanKikuchi.AudioManager;
+
 namespace Game.Unit
 {
     public class Enemy : MonoBehaviour, IEnemyBaseAction, IInit
@@ -79,10 +75,45 @@ namespace Game.Unit
         [SerializeField] protected Animator animator;
         [SerializeField] protected BehaviorTree behaviorTree;
 
-        public virtual void Attack(int targetId, float damage)
+        private GameObject player;
+
+        //行为树等外部调用
+        public virtual async void Attack(int targetId, float damage)
         {
             ChangeState(EnemyState.Attack);
+
+            if (player == null)
+            {
+                Debug.LogWarning("Player not found when enemy attacks.");
+                return;
+            }
+            float timeToHit = 0.3f; //攻击前摇
+            // 检查玩家是否存在Parry系统组件
+            if (!player.TryGetComponent<Player.PlayerAttackCtrl>(out var attackSystem))
+                return;
+            //通知玩家有攻击即将命中
+            attackSystem.NotifyIncomingAttack(gameObject, timeToHit);
+            await UniTask.Delay(TimeSpan.FromSeconds(timeToHit), cancellationToken: this.GetCancellationTokenOnDestroy());
+
+            // 如果敌人已死亡、中断攻击、被击退等，可提前终止
+            if (!gameObject.activeInHierarchy)
+                return;
+
+            // 限定只有近战或Boss敌人才会触发招架逻辑
+            if (enemyUnitData.attackType == EnemyAttackType.Close ||
+                enemyUnitData.attackType == EnemyAttackType.Boss)
+            {
+                bool parried = attackSystem.TryHandleIncomingAttackAsParry(gameObject);
+                if (parried)
+                {
+                    Debug.Log($"Enemy {name}'s attack was parried by player!");
+                    return; // 攻击被招架则不继续执行伤害逻辑
+                }
+            }
+
+            //招架失败，传递伤害
             Debug.Log($"Attacking! targetId:{targetId},damage:{damage}");
+            EventQueueSystem.QueueEvent(new SendDamageEvent(enemyUnitData.InsId, targetId, damage + Atk));
         }
 
         public virtual void Born(EnemyUnitData data)
@@ -91,7 +122,15 @@ namespace Game.Unit
             data.Init();
             enemyUnitData = data;
             InitBaseProp(data.prop);
-            InitBehaviorTree();
+
+            var list = new List<Transform>();
+            foreach (var item in GameManager.stageManager.GetAllPlayer())
+                list.Add(item.transform);
+
+            //one player 
+            player = list[0].gameObject;
+
+            InitBehaviorTree(list);
             GameManager.stageManager.AddOneEnemy(data.InsId, this);
             ChangeState(EnemyState.Idle);
 
@@ -193,7 +232,7 @@ namespace Game.Unit
             Debug.Log($"enemy name:{gameObject.name} had OnTriggerEnter,target name:{up.name}");
             var pId = GameManager.stageManager.MatchPlayerId(up.gameObject);
             if (pId == -1) return;
-            EventQueueSystem.QueueEvent(new SendDamageEvent(enemyUnitData.InsId, up.gameObject, Atk));
+            EventQueueSystem.QueueEvent(new SendDamageEvent(enemyUnitData.InsId, up.gameObject, Atk * 0.5f));
         }
 
         void OnTriggerExit(Collider other)
@@ -206,14 +245,8 @@ namespace Game.Unit
             Debug.Log($"enemy name:{gameObject.name} had OnTriggerExit,target name:{up.name}");
         }
 
-        protected virtual void InitBehaviorTree() 
+        protected virtual void InitBehaviorTree(List<Transform> list)
         {
-            var list = new List<Transform>();
-            foreach (var item in GameManager.stageManager.GetAllPlayer())
-            {
-                list.Add(item.transform);
-            }
-
             behaviorTree.SetProp("TargetList", list);
             //test null
             //behaviorTree.SetProp("TargetList156", 12);

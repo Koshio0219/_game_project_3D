@@ -371,7 +371,7 @@ MonoBehaviour:
   behaviorTree: {fileID: 6333455266019853027}
   faces: {fileID: 11400000, guid: 8b8a7554fceb39841840f45a2d8da540, type: 2}
   smileBody: {fileID: 8004226896113282909}
-  damType: 0
+  damType: 1
 --- !u!195 &6333455266019853038
 NavMeshAgent:
   m_ObjectHideFlags: 0

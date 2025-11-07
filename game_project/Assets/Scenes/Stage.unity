@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Navigation.RuntimeNavMeshBuilder
   tracked: {fileID: 0}
-  size: {x: 20, y: 20, z: 20}
+  size: {x: 50, y: 20, z: 50}
 --- !u!114 &187044885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
   followLerp: 8
   sizeEpsilon: 0.25
   centerEpsilon: 0.05
---- !u!21 &262678119
+--- !u!21 &242440588
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -198,37 +198,6 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: MMD4Mecanim/MMDLit-NEXTEdge-Pass4
   m_Shader: {fileID: 4800000, guid: 684f8af9b4ff4bc459588db5b0f6275d, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2001
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _EdgeSize: 0.005
-    - _PostfixRenderQueue: 1
-    m_Colors:
-    - _EdgeColor: {r: 0.39999998, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
---- !u!21 &344895022
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: MMD4Mecanim/MMDLit-NEXTEdge-Pass8
-  m_Shader: {fileID: 4800000, guid: ff1e1d0bbf6980244a107d25ff535f9a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -562,19 +531,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
-      propertyPath: nextEdgeMaterial_Pass4
-      value: 
-      objectReference: {fileID: 262678119}
-    - target: {fileID: 7918460650197038664, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
-      propertyPath: nextEdgeMaterial_Pass8
-      value: 
-      objectReference: {fileID: 344895022}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c801edf6f88997c4d9b672a5997c6335, type: 3}
+--- !u!21 &1519283052
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MMD4Mecanim/MMDLit-NEXTEdge-Pass8
+  m_Shader: {fileID: 4800000, guid: ff1e1d0bbf6980244a107d25ff535f9a, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2001
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _EdgeSize: 0.005
+    - _PostfixRenderQueue: 1
+    m_Colors:
+    - _EdgeColor: {r: 0.39999998, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &1570689918
 GameObject:
   m_ObjectHideFlags: 0

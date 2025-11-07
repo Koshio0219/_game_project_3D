@@ -1,13 +1,13 @@
 ﻿using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
 using Game.Base;
-using Game.Data;
 using Game.Framework;
 using Game.Soul;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Player
 {
@@ -35,6 +35,7 @@ namespace Game.Player
 
         private PlayerInputHandler input;
         private PlayerStateHandler stateHandler;
+        private CharacterController controller;
 
         [Header("Attack Timings")]
         public float normalAttackDelay = 0.1f;
@@ -50,6 +51,11 @@ namespace Game.Player
         [Header("Dodge Settings")]
         [SerializeField] private float invulDuration = 0.35f;
         [SerializeField] private float perfectDodgeWindow = 0.3f; // 敌人攻击命中前的时间窗
+        [SerializeField] private float dodgeDistance = 2f;     // 闪避水平距离
+        [SerializeField] private float dodgeHeight = 0.4f;     // 闪避高度抬升
+        [SerializeField] private float dodgeDuration = 0.25f;  // 动画持续时间
+        [SerializeField] private AnimationCurve dodgeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
 
         private bool isParrying;
         private bool isInvulnerable;// 受到伤害后是否处于无敌状态
@@ -59,7 +65,7 @@ namespace Game.Player
         private float lastAttackETA = 99999f;
 
         public event Action<GameObject> OnParrySuccess;
-        public event Action<GameObject> OnPerfectDodge;
+        public event UnityAction OnPerfectDodge;
 
         [Header("Hurt Setttings")]
         public float hurtInvulDuration = 1.35f;
@@ -72,6 +78,7 @@ namespace Game.Player
         {
             input = GetComponent<PlayerInputHandler>();
             stateHandler = GetComponent<PlayerStateHandler>();
+            controller = GetComponent<CharacterController>();
             EventQueueSystem.AddListener<SendDamageEvent>(DamageEventHandler);
         }
 
@@ -129,6 +136,25 @@ namespace Game.Player
                         break;
                 }
             }
+            else if (input.SkillPressed && PropManager.CanUseSkill())
+            {
+                StartSkillAttackAsync().Forget();
+            }
+            else if (input.ParryPressed)
+            {
+                if(TryParry())
+                {
+                    stateHandler.State = PlayerAnimatorState.ParrySuccess;
+                }
+                else
+                {
+                    stateHandler.State = PlayerAnimatorState.Parry;
+                }
+            }
+            else if (input.DodgePressed)
+            {
+                TryDodgeAsync(invulDuration).Forget();
+            }
         }
 
         #region Normal Attack (UniTask)
@@ -166,36 +192,63 @@ namespace Game.Player
         #region Skill (Area Attack)
         public async UniTaskVoid StartSkillAttackAsync()
         {
+            // 中断当前攻击
             attackCTS?.Cancel();
             attackCTS = new CancellationTokenSource();
-            stateHandler.State = PlayerAnimatorState.Attack;
 
-            await UniTask.Delay(TimeSpan.FromSeconds(skillHitDelay), cancellationToken: attackCTS.Token);
+            attackState = AttackState.Attacking;
+            stateHandler.State = PlayerAnimatorState.Skill;
 
-            var hits = Physics.OverlapSphere(transform.position, skillHitRadius);
-            var list = new List<GameObject>();
-            foreach (var c in hits)
+            try
             {
-                if (c.gameObject == gameObject) continue;
-                var dmgable = c.GetComponentInParent<IDamageable>();
-                if (dmgable != null)
+                //  播放技能动画、特效、音效
+                currentWeapon?.SpecialAttack(); // 可选：在 Weapon 类中定义
+                Debug.Log("[SkillAttack] Start skill animation");
+
+                //  前摇等待（例如 skillHitDelay = 0.35f）
+                await UniTask.Delay(TimeSpan.FromSeconds(skillHitDelay), cancellationToken: attackCTS.Token);
+
+                //  检测范围内的敌人
+                var hits = Physics.OverlapSphere(transform.position, skillHitRadius);
+                var hitTargets = new List<GameObject>();
+                foreach (var c in hits)
                 {
-                    list.Add(c.gameObject);
+                    if (c.gameObject == gameObject) continue;
+
+                    var dmgable = c.GetComponentInParent<IDamageable>();
+                    if (dmgable != null)
+                    {
+                        hitTargets.Add(c.gameObject);
+                    }
                 }
+
+                //  计算并发送伤害事件
+                float damage = PropManager.CalSkillAttackDamaage();
+                PropManager.RemoveSwordPoint(3);
+                EventQueueSystem.QueueEvent(new SendDamageEvent(InsId, hitTargets, damage));
+
+                Debug.Log($"[SkillAttack] Damage {damage} applied to {hitTargets.Count} targets.");
+
+                //  保持命中窗口一段时间
+                await UniTask.Delay(TimeSpan.FromSeconds(skillHitWindow), cancellationToken: attackCTS.Token);
+
+                //  技能冷却阶段
+                attackState = AttackState.Cooldown;
+                await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: attackCTS.Token);
+
+                // 回到待机状态
+                attackState = AttackState.Idle;
+                stateHandler.State = PlayerAnimatorState.Idle;
             }
-            float dmg = PropManager.CalSkillAttackDamaage();
-            EventQueueSystem.QueueEvent(new SendDamageEvent(InsId, list, dmg));
-            await UniTask.Delay(TimeSpan.FromSeconds(skillHitWindow), cancellationToken: attackCTS.Token);
+            catch (OperationCanceledException)
+            {
+                // 技能被中断（例如切换武器或重新攻击）
+                Debug.Log("[SkillAttack] Canceled");
+            }
         }
         #endregion
 
         #region Parry / Dodge / Damage
-        // 敌人每次即将攻击时调用
-        public void NotifyIncomingAttack(GameObject attacker, float timeToHit)
-        {
-            lastIncomingAttackTime = Time.time;
-            lastAttackETA = timeToHit;
-        }
 
         //当玩家按下招架键时由输入系统或角色控制器调用
         public bool TryParry()
@@ -218,6 +271,7 @@ namespace Game.Player
         {
             if (isParrying)
             {
+                PropManager.AddSwordPoint(2);
                 OnParrySuccess?.Invoke(attacker);
                 _ = SwordSoulManager.Instance.TriggerOnParryAsync(gameObject, attacker);
                 isParrying = false;
@@ -229,22 +283,79 @@ namespace Game.Player
         //当玩家按下闪避键时由输入系统调用
         public async UniTaskVoid TryDodgeAsync(float invulDuration = 0.35f)
         {
+            // 防止重复闪避
             if (isInvulnerable) return;
             isInvulnerable = true;
 
-            bool isPerfect = CheckPerfectDodge();
+            // 状态切换
             stateHandler.State = PlayerAnimatorState.Dodge;
 
+            // 完美闪避判定
+            bool isPerfect = CheckPerfectDodge();
             if (isPerfect)
             {
-                Debug.Log("✨ Perfect Dodge!");
-                OnPerfectDodge?.Invoke(null);
+                Debug.Log("Perfect Dodge!");
+                PropManager.AddSwordPoint(1);
+                OnPerfectDodge?.Invoke();
                 _ = SwordSoulManager.Instance.TriggerOnDodgeAsync(gameObject);
-                // 加入特写慢动作等演出效果
+                // TODO: 特写、时间减速、音效等演出
             }
 
+            // 执行闪避位移
+            await PerformDodgeMotionAsync();
+
+            // 等待无敌时间结束
             await UniTask.Delay(TimeSpan.FromSeconds(invulDuration));
             isInvulnerable = false;
+
+            // 动作结束 → 回Idle
+            stateHandler.State = PlayerAnimatorState.Idle;
+        }
+
+        private async UniTask PerformDodgeMotionAsync()
+        {
+            float elapsed = 0f;
+
+            // 获取当前朝向 + 闪避方向（默认朝右后方）
+            Vector3 forward = Camera.main.transform.forward;
+            Vector3 right = transform.right;
+            Vector3 dodgeDir = (-forward + right * 0.5f).normalized;
+
+            // 如果有输入方向，则按输入方向闪避
+            //if (input.MoveInput.sqrMagnitude > 0.01f)
+            //{
+            //    Vector3 inputDir = new Vector3(input.MoveInput.x, 0, input.MoveInput.y).normalized;
+            //    dodgeDir = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0) * inputDir;
+            //}
+
+            // 闪避主循环
+            while (elapsed < dodgeDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / dodgeDuration);
+                float curveT = dodgeCurve.Evaluate(t);
+
+                // 水平位移
+                float horizontalSpeed = dodgeDistance * curveT / dodgeDuration;
+                Vector3 move = horizontalSpeed * Time.deltaTime * dodgeDir;
+
+                // 高度抛物线
+                float heightOffset = Mathf.Sin(t * Mathf.PI) * dodgeHeight;
+                move.y = heightOffset * Time.deltaTime * 10f;
+
+                controller.Move(move);
+                await UniTask.Yield(PlayerLoopTiming.Update);
+            }
+
+            // 轻微校正落地
+            controller.Move(Vector3.down * 0.1f);
+        }
+
+        // 敌人每次即将攻击时调用
+        public void NotifyIncomingAttack(GameObject attacker, float timeToHit)
+        {
+            lastIncomingAttackTime = Time.time;
+            lastAttackETA = timeToHit;
         }
 
         private bool CheckPerfectDodge()
@@ -290,7 +401,7 @@ namespace Game.Player
         {
             stateHandler.State = PlayerAnimatorState.Dead;
             EventQueueSystem.RemoveListener<SendDamageEvent>(DamageEventHandler);
-            await UniTask.Delay(TimeSpan.FromSeconds(1f));
+            await UniTask.Delay(TimeSpan.FromSeconds(3f));
             EventQueueSystem.QueueEvent(new StageStatesEvent(StageStates.GameOver));
         }
 

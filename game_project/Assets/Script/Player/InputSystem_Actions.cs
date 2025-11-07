@@ -116,25 +116,25 @@ namespace Game.Player
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Interact"",
+                    ""name"": ""Parry"",
                     ""type"": ""Button"",
                     ""id"": ""852140f2-7766-474d-8707-702459ba45f3"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Crouch"",
+                    ""name"": ""Dodge"",
                     ""type"": ""Button"",
                     ""id"": ""27c5f898-bc57-4ee1-8800-db469aca5fe3"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -143,16 +143,16 @@ namespace Game.Player
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""f1ba0d36-48eb-4cd5-b651-1c94a6531f70"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Previous"",
+                    ""name"": ""Skill"",
                     ""type"": ""Button"",
                     ""id"": ""2776c80d-3c14-4091-8c56-d04ced07a2b0"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -161,7 +161,7 @@ namespace Game.Player
                     ""name"": ""Next"",
                     ""type"": ""Button"",
                     ""id"": ""b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -170,7 +170,7 @@ namespace Game.Player
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""641cd816-40e6-41b4-8c3d-04687c349290"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -499,11 +499,11 @@ namespace Game.Player
                 {
                     ""name"": """",
                     ""id"": ""1534dc16-a6aa-499d-9c3a-22b47347b52a"",
-                    ""path"": ""<Keyboard>/1"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Previous"",
+                    ""action"": ""Skill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -514,7 +514,7 @@ namespace Game.Player
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Previous"",
+                    ""action"": ""Skill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -525,7 +525,7 @@ namespace Game.Player
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Interact"",
+                    ""action"": ""Parry"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -536,7 +536,7 @@ namespace Game.Player
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Interact"",
+                    ""action"": ""Parry"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -547,18 +547,18 @@ namespace Game.Player
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Crouch"",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""36e52cba-0905-478e-a818-f4bfcb9f3b9a"",
-                    ""path"": ""<Keyboard>/c"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Crouch"",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1149,10 +1149,10 @@ namespace Game.Player
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
-            m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-            m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
+            m_Player_Parry = m_Player.FindAction("Parry", throwIfNotFound: true);
+            m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-            m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
+            m_Player_Skill = m_Player.FindAction("Skill", throwIfNotFound: true);
             m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
             // UI
@@ -1251,10 +1251,10 @@ namespace Game.Player
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Look;
         private readonly InputAction m_Player_Attack;
-        private readonly InputAction m_Player_Interact;
-        private readonly InputAction m_Player_Crouch;
+        private readonly InputAction m_Player_Parry;
+        private readonly InputAction m_Player_Dodge;
         private readonly InputAction m_Player_Jump;
-        private readonly InputAction m_Player_Previous;
+        private readonly InputAction m_Player_Skill;
         private readonly InputAction m_Player_Next;
         private readonly InputAction m_Player_Sprint;
         /// <summary>
@@ -1281,21 +1281,21 @@ namespace Game.Player
             /// </summary>
             public InputAction @Attack => m_Wrapper.m_Player_Attack;
             /// <summary>
-            /// Provides access to the underlying input action "Player/Interact".
+            /// Provides access to the underlying input action "Player/Parry".
             /// </summary>
-            public InputAction @Interact => m_Wrapper.m_Player_Interact;
+            public InputAction @Parry => m_Wrapper.m_Player_Parry;
             /// <summary>
-            /// Provides access to the underlying input action "Player/Crouch".
+            /// Provides access to the underlying input action "Player/Dodge".
             /// </summary>
-            public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
+            public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
             /// <summary>
             /// Provides access to the underlying input action "Player/Jump".
             /// </summary>
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             /// <summary>
-            /// Provides access to the underlying input action "Player/Previous".
+            /// Provides access to the underlying input action "Player/Skill".
             /// </summary>
-            public InputAction @Previous => m_Wrapper.m_Player_Previous;
+            public InputAction @Skill => m_Wrapper.m_Player_Skill;
             /// <summary>
             /// Provides access to the underlying input action "Player/Next".
             /// </summary>
@@ -1339,18 +1339,18 @@ namespace Game.Player
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
-                @Interact.started += instance.OnInteract;
-                @Interact.performed += instance.OnInteract;
-                @Interact.canceled += instance.OnInteract;
-                @Crouch.started += instance.OnCrouch;
-                @Crouch.performed += instance.OnCrouch;
-                @Crouch.canceled += instance.OnCrouch;
+                @Parry.started += instance.OnParry;
+                @Parry.performed += instance.OnParry;
+                @Parry.canceled += instance.OnParry;
+                @Dodge.started += instance.OnDodge;
+                @Dodge.performed += instance.OnDodge;
+                @Dodge.canceled += instance.OnDodge;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
-                @Previous.started += instance.OnPrevious;
-                @Previous.performed += instance.OnPrevious;
-                @Previous.canceled += instance.OnPrevious;
+                @Skill.started += instance.OnSkill;
+                @Skill.performed += instance.OnSkill;
+                @Skill.canceled += instance.OnSkill;
                 @Next.started += instance.OnNext;
                 @Next.performed += instance.OnNext;
                 @Next.canceled += instance.OnNext;
@@ -1377,18 +1377,18 @@ namespace Game.Player
                 @Attack.started -= instance.OnAttack;
                 @Attack.performed -= instance.OnAttack;
                 @Attack.canceled -= instance.OnAttack;
-                @Interact.started -= instance.OnInteract;
-                @Interact.performed -= instance.OnInteract;
-                @Interact.canceled -= instance.OnInteract;
-                @Crouch.started -= instance.OnCrouch;
-                @Crouch.performed -= instance.OnCrouch;
-                @Crouch.canceled -= instance.OnCrouch;
+                @Parry.started -= instance.OnParry;
+                @Parry.performed -= instance.OnParry;
+                @Parry.canceled -= instance.OnParry;
+                @Dodge.started -= instance.OnDodge;
+                @Dodge.performed -= instance.OnDodge;
+                @Dodge.canceled -= instance.OnDodge;
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
-                @Previous.started -= instance.OnPrevious;
-                @Previous.performed -= instance.OnPrevious;
-                @Previous.canceled -= instance.OnPrevious;
+                @Skill.started -= instance.OnSkill;
+                @Skill.performed -= instance.OnSkill;
+                @Skill.canceled -= instance.OnSkill;
                 @Next.started -= instance.OnNext;
                 @Next.performed -= instance.OnNext;
                 @Next.canceled -= instance.OnNext;
@@ -1717,19 +1717,19 @@ namespace Game.Player
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnAttack(InputAction.CallbackContext context);
             /// <summary>
-            /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// Method invoked when associated input action "Parry" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnInteract(InputAction.CallbackContext context);
+            void OnParry(InputAction.CallbackContext context);
             /// <summary>
-            /// Method invoked when associated input action "Crouch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// Method invoked when associated input action "Dodge" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnCrouch(InputAction.CallbackContext context);
+            void OnDodge(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
@@ -1738,12 +1738,12 @@ namespace Game.Player
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnJump(InputAction.CallbackContext context);
             /// <summary>
-            /// Method invoked when associated input action "Previous" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// Method invoked when associated input action "Skill" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnPrevious(InputAction.CallbackContext context);
+            void OnSkill(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "Next" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>

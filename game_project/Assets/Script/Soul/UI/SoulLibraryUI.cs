@@ -89,7 +89,7 @@ namespace Game.Soul.UI
             int globalB = deck.IndexOf(sameTypeSouls[newIndex]);
             SwordSoulManager.Instance.MoveSoul(globalA, globalB);
 
-            // ✅ 只调整 UI 顺序，而不重新 Build
+            //只调整 UI 顺序，而不重新 Build
             SwapUISlots(globalA, globalB,category);
         }
 

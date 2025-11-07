@@ -106,7 +106,7 @@ namespace Game.Hud
             {
                 while (par != null && this && isActiveAndEnabled)
                 {
-                    transform.position = par.position + new Vector3(0.5f, 1f, -1f);
+                    transform.position = par.position + new Vector3(0f, 1f, 0f);
                     await UniTask.DelayFrame(1, PlayerLoopTiming.PreLateUpdate);
                 }
             });

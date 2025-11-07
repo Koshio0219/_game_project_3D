@@ -85,6 +85,11 @@ namespace Game.Player
 
         private void Movement(float dt)
         {
+            // 排除特殊状态（闪避、招架），防止中途被移动逻辑打断
+            if (stateHandler.State == PlayerAnimatorState.Dodge ||
+                stateHandler.State == PlayerAnimatorState.Parry) 
+                return;
+
             var h = input.MoveInput.x;
             var v = input.MoveInput.y;
 
@@ -102,14 +107,8 @@ namespace Game.Player
                 return;
             transform.forward = targetDirection;
 
-            //transform.Translate(dt * moveSpeed * targetDirection);
             float moveSpeed = input.RunningInput && isGrounded ? runSpeed : walkSpeed;
-            //transform.position += dt * moveSpeed * transform.forward;
             controller.Move(dt * moveSpeed * transform.forward);
-
-            //rig.linearVelocity = Vector3.zero;
-            //rig.AddForce(transform.forward * moveSpeed * dt);
-            //rig.velocity = new Vector3(transform.position.x, 0, transform.position.z) * moveSpeed * dt;
 
             if (isGrounded && !isJumping)
                 stateHandler.State = PlayerAnimatorState.Running;
@@ -147,6 +146,11 @@ namespace Game.Player
 
         private void CheckIdle()
         {
+            // 只有当前状态属于可自由移动状态时，才判断是否Idle
+            if (stateHandler.State != PlayerAnimatorState.Running && 
+                stateHandler.State != PlayerAnimatorState.Jump)
+                return;
+
             var noMove = input.MoveInput == Vector2.zero;
             var noJump = !isJumping && velocity.y < 0;
             if (noMove && noJump)

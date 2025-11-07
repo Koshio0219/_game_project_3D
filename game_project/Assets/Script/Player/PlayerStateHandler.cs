@@ -10,6 +10,7 @@ namespace Game.Player
         Running,
         Jump,
         Attack,
+        Skill,
         Hurt, //受伤
         Dodge, //闪避
         ParrySuccess, //招架成功
@@ -20,6 +21,7 @@ namespace Game.Player
     public class PlayerStateHandler : MonoBehaviour
     {
         public Animator animator;
+
         private PlayerAnimatorState state = PlayerAnimatorState.Idle;
         public PlayerAnimatorState State
         {
@@ -31,6 +33,9 @@ namespace Game.Player
 
         private void OnPlayerStateChange(PlayerAnimatorState to)
         {
+            if (animator == null)
+                return;
+
             if (to == state)
                 return;
 
@@ -59,16 +64,70 @@ namespace Game.Player
                     }
                 case PlayerAnimatorState.Attack:
                     {
-                        var idx = Random.Range(1, 3);
-                        Debug.Log($"Attack{idx}");
-                        animator.CrossFade($"Attack{idx}", .2f,1);
-                        
-                        //animator.speed = 1f;
+                        animator.CrossFade($"Attack1", .2f,1);
+                        break;
+                    }
+                case PlayerAnimatorState.Skill:
+                    {
+                        animator.CrossFade($"Attack2", .2f, 1);
+                        break;
+                    }
+                case PlayerAnimatorState.Hurt:
+                    {
+                        //短动画直接播放不CrossFade
+                        animator.Play("Hurt");
+                        break;
+                    }
+                case PlayerAnimatorState.Dodge:
+                    {
+                        animator.CrossFade("Dodge", .2f);
+                        break;
+                    }
+                case PlayerAnimatorState.ParrySuccess:
+                    {
+                        animator.Play("Parry");
+                        break;
+                    }
+                case PlayerAnimatorState.Parry:
+                    {
+                        animator.Play("Parry");
+                        break;
+                    }
+                case PlayerAnimatorState.Dead:
+                    {
+                        animator.CrossFade("Dead", .2f);
                         break;
                     }
             }
 
             state = to;
+        }
+
+        public TimerTask idleDanceTask;
+
+        private void Awake()
+        {
+            if (idleDanceTask == null || animator == null)
+                return;
+            idleDanceTask.OnTimerComplete += SwitchIdle;
+        }
+
+        private void OnDestroy()
+        {
+            if (idleDanceTask == null || animator == null)
+                return;
+            idleDanceTask.OnTimerComplete -= SwitchIdle;
+        }
+
+        private void SwitchIdle()
+        {
+            if (animator == null)
+                return;
+            var isDance = animator.GetBool("IsIdleDance");
+            if (isDance)
+                animator.SetBool("IsIdleDance", false);
+            else
+                animator.SetBool("IsIdleDance", true);
         }
 
         private bool CheckStateConfig(PlayerAnimatorState to)

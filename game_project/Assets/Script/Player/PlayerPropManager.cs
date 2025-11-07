@@ -39,6 +39,20 @@ namespace Game.Player
             Prop -= removeProp;
         }
 
+        public void AddSwordPoint(int addPoint)
+        {
+            if (addPoint <= 0) return;
+            Prop.SwordPoint += addPoint;
+        }
+
+        public void RemoveSwordPoint(int removePoint)
+        {
+            if (removePoint <= 0 || removePoint > Prop.SwordPoint) return;
+            Prop.SwordPoint -= removePoint;
+        }
+
+        public bool CanUseSkill() => Prop.SwordPoint >= 3;
+
         public void ResetProp() => Prop = null;
     }
 }

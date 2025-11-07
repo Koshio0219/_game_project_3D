@@ -22,9 +22,9 @@ namespace Game.Unit
             faceMaterial = smileBody.GetComponent<Renderer>().materials[1];
         }
 
-        protected override void InitBehaviorTree()
+        protected override void InitBehaviorTree(List<Transform> list)
         {
-            base.InitBehaviorTree();
+            base.InitBehaviorTree(list);
         }
 
         void SetFace(Texture tex)
@@ -32,7 +32,11 @@ namespace Game.Unit
             faceMaterial.SetTexture("_MainTex", tex);
         }
 
-        void SetSpeed(float speed = 0f)
+        /// <summary>
+        /// 设置动画速度
+        /// </summary>
+        /// <param name="speed"> 0为静止Idle；>0 为Walk；</param>
+        void SetSpeed(float speed)
         {
             animator.SetFloat("Speed", speed);
         }
@@ -41,7 +45,7 @@ namespace Game.Unit
         {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) return;
             SetFace(faces.Idleface);
-            SetSpeed();
+            SetSpeed(1.2f);
         }
 
         protected override void OnChangeMove()
@@ -58,13 +62,13 @@ namespace Game.Unit
                     if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) break;
                     SetFace(faces.attackFace);
                     animator.SetTrigger("Attack");
-                    SetSpeed();
+                    //SetSpeed();
                     break;
                 case AttackState.Skill:
                     if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump")) return;
                     SetFace(faces.jumpFace);
                     animator.SetTrigger("Jump");
-                    SetSpeed();
+                    //SetSpeed();
                     break;
             }
         }
@@ -78,7 +82,7 @@ namespace Game.Unit
             animator.SetTrigger("Damage");
             animator.SetInteger("DamageType", damType);
             SetFace(faces.damageFace);
-            SetSpeed();
+           // SetSpeed();
         }
     }
 }

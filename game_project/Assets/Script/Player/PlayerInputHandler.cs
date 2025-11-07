@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Player
 {
@@ -15,6 +14,12 @@ namespace Game.Player
         public bool JumpPressed => jumpPressed;
         private bool attackPressed;
         public bool AttackPressed => attackPressed;
+        private bool skillPressed;
+        public bool SkillPressed => skillPressed;
+        private bool parryPressed;
+        public bool ParryPressed => parryPressed;
+        private bool dodgePressed;
+        public bool DodgePressed => dodgePressed;
 
         public void OnEnable() => input.Enable();
         public void OnDisable() => input.Disable();
@@ -26,6 +31,9 @@ namespace Game.Player
             InitJump();
             InitRun();
             InitAttack();
+            InitSkill();
+            InitDodge();
+            InitParry();
         }
 
         public void InitMove(bool canceled =true)
@@ -58,6 +66,30 @@ namespace Game.Player
             input.Player.Attack.performed += ctx => attackPressed = true;
             if (canceled)
                 input.Player.Attack.canceled += ctx => attackPressed = false;
+        }
+
+        public void InitSkill(bool canceled = true)
+        {
+            if (input == null) return;
+            input.Player.Skill.performed += ctx => skillPressed = true;
+            if (canceled)
+                input.Player.Skill.canceled += ctx => skillPressed = false;
+        }
+
+        public void InitParry(bool canceled = true)
+        {
+            if (input == null) return;
+            input.Player.Parry.performed += ctx => parryPressed = true;
+            if (canceled)
+                input.Player.Parry.canceled += ctx => parryPressed = false;
+        }
+
+        public void InitDodge(bool canceled = true)
+        {
+            if (input == null) return;
+            input.Player.Dodge.performed += ctx => dodgePressed = true;
+            if (canceled)
+                input.Player.Dodge.canceled += ctx => dodgePressed = false;
         }
     }
 }

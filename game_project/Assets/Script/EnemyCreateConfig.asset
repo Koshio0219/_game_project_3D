@@ -53,7 +53,7 @@ MonoBehaviour:
         killPoint: 0
       skillIds: 
     prefab: {fileID: 6333455266019853049, guid: 2e36ee15b0f3f604d81cb0e6675889da, type: 3}
-  - typeID: 3
+  - typeID: 4
     unitData:
       raceType: 0
       attackType: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
         killPoint: 0
       skillIds: 
     prefab: {fileID: 6333455266019853049, guid: be85ed1b1c8712a4fa2c683fd3826176, type: 3}
-  - typeID: 3
+  - typeID: 5
     unitData:
       raceType: 0
       attackType: 0
@@ -87,8 +87,14 @@ MonoBehaviour:
   - enemies:
     - typeID: 0
       pos: {x: 27, y: 3, z: 69}
-    - typeID: 9
-      pos: {x: 33, y: 4, z: 69}
+    - typeID: 1
+      pos: {x: 28, y: 3, z: 69}
+    - typeID: 2
+      pos: {x: 27, y: 3, z: 70}
+    - typeID: 3
+      pos: {x: 29, y: 3, z: 69}
+    - typeID: 4
+      pos: {x: 27, y: 3, z: 68}
   - enemies:
     - typeID: 1
       pos: {x: 25, y: 3, z: 70}

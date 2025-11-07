@@ -93,15 +93,21 @@ namespace Game.Player
         public int SwordPoint
         {
             get { return _SwordPoint; }
-            set { _SwordPoint = value; }
+            set {
+                _SwordPoint = value;
+                if (_SwordPoint > MaxSwordPoint)
+                    _SwordPoint = MaxSwordPoint;
+            }
         }
 
         public PlayerData(int maxSwordPoint=5)
         {
-            _maxHP = 0;
-            _HP = 0;
+            _maxHP = 99999;
+            _HP = 99999;
             _AtkPoint = 0;
-            _HitRate = 0.0f;
+            //test
+            _HitRate = 1.0f;
+            //_HitRate = 0.0f;
             _CritRate = 0.0f;
             _CritDmg = 0.0f;
             _maxSwordPoint = maxSwordPoint;

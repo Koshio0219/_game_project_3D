@@ -1,158 +1,235 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using System.Threading;
 
 namespace Game.Framework
 {
     public class GameEvent { }
+
     public class EventQueueSystem : MonoSingleton<EventQueueSystem>
     {
         public delegate void EventDelegate<T>(T e) where T : GameEvent;
-
         private delegate void InternalEventDelegate(GameEvent e);
 
-        private readonly Dictionary<Type, InternalEventDelegate> delegates = new();
-        private readonly Dictionary<Delegate, InternalEventDelegate> delegateLookup = new();
-        private readonly Dictionary<InternalEventDelegate, Delegate> delegateLookOnce = new();
+        private readonly Dictionary<Type, InternalEventDelegate> _delegates = new();
+        private readonly Dictionary<Delegate, InternalEventDelegate> _delegateLookup = new();
+        private readonly Dictionary<InternalEventDelegate, Delegate> _delegateOnceLookup = new();
 
-        private readonly Queue eventQueue = new();
+        private readonly Queue<GameEvent> _eventQueue = new();
+        private static readonly object _lock = new();
 
-        //thread locker
-        private static readonly Mutex mutex = new();
+        private static bool _isCleared = false;
 
-        public bool bLimitQueueProcessing = false;
-        public float limitQueueTime = 0.1f;
+        public bool LimitQueueProcessing = false;
+        public float LimitQueueTime = 0.1f;
 
-        //已清理标记
-        private static bool isCleared = false;
-        //注册侦听事件（持续）
-        //add a listener(長続き)
+        // ---------------------------
+        // Public APIs
+        // ---------------------------
+
         public static void AddListener<T>(EventDelegate<T> del) where T : GameEvent
         {
-            Instance.AddDelegate(del);
+            if (!HasInstance) return;
+            Instance.AddDelegate(del, once: false);
         }
 
-        //注册侦听事件（一次）
-        //add a listener(only one)
         public static void AddListenerOnce<T>(EventDelegate<T> del) where T : GameEvent
         {
-            var result = Instance.AddDelegate(del);
-            if (result != null)
-                Instance.delegateLookOnce[result] = del;
+            if (!HasInstance) return;
+            Instance.AddDelegate(del, once: true);
         }
 
-        //判定侦听事件是否存在
-        //Listenerの存在を判断する
         public static bool HasListener<T>(EventDelegate<T> del) where T : GameEvent
         {
-            return Instance.delegateLookup.ContainsKey(del);
+            return HasInstance && Instance._delegateLookup.ContainsKey(del);
         }
 
-        //移除侦听事件
-        //ListenerをRemoveする
         public static void RemoveListener<T>(EventDelegate<T> del) where T : GameEvent
         {
-            if (isCleared || Instance == null)
-                return;
-            if (Instance.delegateLookup.TryGetValue(del, out InternalEventDelegate eventDelegate))
-            {
-                if (Instance.delegates.TryGetValue(typeof(T), out InternalEventDelegate temp))
-                {
-                    temp -= eventDelegate;
-                    if (temp == null)
-                        Instance.delegates.Remove(typeof(T));
-                    else
-                        Instance.delegates[typeof(T)] = temp;
-                }
-                Instance.delegateLookup.Remove(del);
-            }
+            if (!HasInstance || _isCleared) return;
+            Instance.RemoveDelegate(del);
         }
 
         public static void RemoveAll()
         {
-            if (Instance != null)
+            if (!HasInstance) return;
+            Instance._delegates.Clear();
+            Instance._delegateLookup.Clear();
+            Instance._delegateOnceLookup.Clear();
+        }
+
+        public static void QueueEvent(GameEvent e)
+        {
+            if (!HasInstance) return;
+            lock (_lock)
             {
-                Instance.delegates.Clear();
-                Instance.delegateLookup.Clear();
-                Instance.delegateLookOnce.Clear();
+                Instance._eventQueue.Enqueue(e);
             }
         }
 
-        private InternalEventDelegate AddDelegate<T>(EventDelegate<T> del) where T : GameEvent
-        {
-            if (delegateLookup.ContainsKey(del))
-                return null;
-            void eventDelegate(GameEvent e) => del((T)e);
-            delegateLookup[del] = eventDelegate;
+        // ---------------------------
+        // Internal Delegate Handling
+        // ---------------------------
 
-            if (delegates.TryGetValue(typeof(T), out InternalEventDelegate temp))
-                delegates[typeof(T)] = temp += eventDelegate;
+        private InternalEventDelegate AddDelegate<T>(EventDelegate<T> del, bool once) where T : GameEvent
+        {
+            if (_delegateLookup.ContainsKey(del)) return null;
+
+            void Wrapper(GameEvent e)
+            {
+                // 检查目标对象是否还存在
+                if (del.Target is UnityEngine.Object uo && uo == null)
+                {
+                    RemoveDelegate(del);
+                    return;
+                }
+                del((T)e);
+            }
+
+            var internalDel = (InternalEventDelegate)Wrapper;
+            _delegateLookup[del] = internalDel;
+
+            if (_delegates.TryGetValue(typeof(T), out var temp))
+                _delegates[typeof(T)] = temp + internalDel;
             else
-                delegates[typeof(T)] = eventDelegate;
-            return eventDelegate;
+                _delegates[typeof(T)] = internalDel;
+
+            if (once)
+                _delegateOnceLookup[internalDel] = del;
+
+            return internalDel;
         }
 
-        //单个事件触发
-        //eventを触発する
-        private static void TriggerEvent(GameEvent e)
+        private void RemoveDelegate<T>(EventDelegate<T> del) where T : GameEvent
+        {
+            if (!_delegateLookup.TryGetValue(del, out var internalDel)) return;
+
+            if (_delegates.TryGetValue(typeof(T), out var temp))
+            {
+                temp -= internalDel;
+                if (temp == null)
+                    _delegates.Remove(typeof(T));
+                else
+                    _delegates[typeof(T)] = temp;
+            }
+
+            _delegateLookup.Remove(del);
+            _delegateOnceLookup.Remove(internalDel);
+        }
+
+        private void RemoveDelegate(Delegate del)
+        {
+            if (del == null) return;
+
+            if (_delegateLookup.TryGetValue(del, out var internalDel))
+            {
+                foreach (var kv in _delegates)
+                {
+                    var temp = kv.Value - internalDel;
+                    if (temp == null)
+                        _delegates.Remove(kv.Key);
+                    else
+                        _delegates[kv.Key] = temp;
+                }
+
+                _delegateLookup.Remove(del);
+                _delegateOnceLookup.Remove(internalDel);
+            }
+        }
+
+
+        private void TriggerEvent(GameEvent e)
         {
             var type = e.GetType();
-            if (Instance.delegates.TryGetValue(type, out InternalEventDelegate eventDelegate))
+            if (!_delegates.TryGetValue(type, out var eventDel)) return;
+
+            var invokeList = eventDel.GetInvocationList();
+            foreach (InternalEventDelegate call in invokeList)
             {
-                eventDelegate.Invoke(e);
-                //移除单一侦听
-                //もしonly oneのListenerであれば、そのListenerをRemoveする
-                foreach (InternalEventDelegate item in Instance.delegates[type].GetInvocationList())
+                try
                 {
-                    if (Instance.delegateLookOnce.TryGetValue(item, out Delegate temp))
+                    // Unity 对象销毁保护
+                    if (_delegateOnceLookup.ContainsKey(call))
                     {
-                        Instance.delegates[type] -= item;
-                        if (Instance.delegates[type] == null)
-                            Instance.delegates.Remove(type);
-                        Instance.delegateLookup.Remove(temp);
-                        Instance.delegateLookOnce.Remove(item);
+                        call.Invoke(e);
+                        RemoveDelegate(_delegateOnceLookup[call]);
                     }
+                    else
+                    {
+                        call.Invoke(e);
+                    }
+                }
+                catch (MissingReferenceException)
+                {
+                    // 监听目标被销毁，自动清理
+                    RemoveByInternal(call);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning($"[EventQueueSystem] Event {type.Name} threw exception: {ex.Message}");
                 }
             }
         }
 
-        //外部调用的推入事件队列接口
-        //外部からのEventをQueueに入る
-        public static void QueueEvent(GameEvent e)
+        private void RemoveByInternal(InternalEventDelegate call)
         {
-            if (!Instance.delegates.ContainsKey(e.GetType()))
-                return;
+            foreach (var kv in _delegates)
+            {
+                var temp = kv.Value - call;
+                if (temp == null)
+                    _delegates.Remove(kv.Key);
+                else
+                    _delegates[kv.Key] = temp;
+            }
 
-            mutex.WaitOne();
-            Instance.eventQueue.Enqueue(e);
-            mutex.ReleaseMutex();
+            if (_delegateOnceLookup.ContainsKey(call))
+                _delegateLookup.Remove(_delegateOnceLookup[call]);
+            _delegateOnceLookup.Remove(call);
         }
 
-        //事件队列触发处理
-        //EventQueueの触発の管理する関数
-        void Update()
+        // ---------------------------
+        // Queue Execution
+        // ---------------------------
+
+        private void Update()
         {
-            float timer = 0.0f;
-            while (eventQueue.Count > 0)
+            if (_eventQueue.Count == 0) return;
+
+            float timer = 0f;
+            while (_eventQueue.Count > 0)
             {
-                if (bLimitQueueProcessing)
-                    if (timer > limitQueueTime)
-                        return;
-                var e = eventQueue.Dequeue() as GameEvent;
+                if (LimitQueueProcessing && timer > LimitQueueTime)
+                    break;
+
+                GameEvent e;
+                lock (_lock)
+                {
+                    e = _eventQueue.Dequeue();
+                }
+
                 TriggerEvent(e);
-                if (bLimitQueueProcessing)
+                if (LimitQueueProcessing)
                     timer += Time.deltaTime;
             }
         }
 
+        // ---------------------------
+        // Cleanup
+        // ---------------------------
+
         protected override void OnApplicationQuit()
         {
-            RemoveAll();
-            eventQueue.Clear();
-            isCleared = true;
             base.OnApplicationQuit();
+            _eventQueue.Clear();
+            RemoveAll();
+            _isCleared = true;
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            _eventQueue.Clear();
+            RemoveAll();
         }
     }
 }

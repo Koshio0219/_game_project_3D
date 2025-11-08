@@ -248,6 +248,7 @@ namespace Game.Unit
         protected virtual void InitBehaviorTree(List<Transform> list)
         {
             behaviorTree.SetProp("TargetList", list);
+            behaviorTree.SetProp("Self", gameObject);
             //test null
             //behaviorTree.SetProp("TargetList156", 12);
         }

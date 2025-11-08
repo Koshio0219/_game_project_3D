@@ -14,6 +14,17 @@ namespace Game.Framework
         /// 是否跨场景保留。子类如需禁用持久化，override 返回 false 即可。
         /// </summary>
         protected virtual bool ShouldPersist => true;
+        public static bool HasInstance
+        {
+            get
+            {
+                if (instance == null && !bAppQuitting)
+                {
+                    _ = Instance; // 尝试创建
+                }
+                return instance != null && !bAppQuitting;
+            }
+        }
 
         /// <summary>
         /// 全局访问点

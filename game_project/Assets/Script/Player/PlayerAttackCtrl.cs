@@ -19,7 +19,6 @@ namespace Game.Player
         Cooldown
     }
 
-    [RequireComponent(typeof(PlayerInputHandler))]
     [RequireComponent(typeof(PlayerStateHandler))]
     public class PlayerAttackCtrl : MonoBehaviour, IDamageable
     {
@@ -33,7 +32,7 @@ namespace Game.Player
         private Weapon currentWeapon;
         private WeaponHitbox currentWeaponHitbox;
 
-        private PlayerInputHandler input;
+        private PlayerInputHandler Input => PlayerInputHandler.Instance;
         private PlayerStateHandler stateHandler;
         private CharacterController controller;
 
@@ -76,7 +75,6 @@ namespace Game.Player
 
         private void Awake()
         {
-            input = GetComponent<PlayerInputHandler>();
             stateHandler = GetComponent<PlayerStateHandler>();
             controller = GetComponent<CharacterController>();
             EventQueueSystem.AddListener<SendDamageEvent>(DamageEventHandler);
@@ -124,7 +122,7 @@ namespace Game.Player
         {
             if (currentWeapon == null) return;
 
-            if (input.AttackPressed)
+            if (Input.AttackPressed)
             {
                 switch (attackState)
                 {
@@ -136,11 +134,11 @@ namespace Game.Player
                         break;
                 }
             }
-            else if (input.SkillPressed && PropManager.CanUseSkill())
+            else if (Input.SkillPressed && PropManager.CanUseSkill())
             {
                 StartSkillAttackAsync().Forget();
             }
-            else if (input.ParryPressed)
+            else if (Input.ParryPressed)
             {
                 if(TryParry())
                 {
@@ -151,7 +149,7 @@ namespace Game.Player
                     stateHandler.State = PlayerAnimatorState.Parry;
                 }
             }
-            else if (input.DodgePressed)
+            else if (Input.DodgePressed)
             {
                 TryDodgeAsync(invulDuration).Forget();
             }
@@ -413,6 +411,10 @@ namespace Game.Player
             ApplyHit(e.damage, e.sourceId);
         }
 
+        private void OnDestroy()
+        {
+            EventQueueSystem.RemoveListener<SendDamageEvent>(DamageEventHandler);
+        }
         #endregion
     }
 }

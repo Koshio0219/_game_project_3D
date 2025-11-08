@@ -73,16 +73,36 @@ MonoBehaviour:
         killPoint: 0
       skillIds: 
     prefab: {fileID: 6333455266019853049, guid: 2e36ee15b0f3f604d81cb0e6675889da, type: 3}
-  - typeID: 9
+  - typeID: 6
     unitData:
-      raceType: 0
-      attackType: 0
+      raceType: 1
+      attackType: 1
       prop:
-        maxHp: 9999
+        maxHp: 500
         attack: 20
         killPoint: 0
       skillIds: 
-    prefab: {fileID: 3585369184098903352, guid: 9c18b98a0fb021d498de7e2eea5085c1, type: 3}
+    prefab: {fileID: 6199058164825075947, guid: 7b0c0fac2cde795499635f9298d135d0, type: 3}
+  - typeID: 7
+    unitData:
+      raceType: 2
+      attackType: 1
+      prop:
+        maxHp: 200
+        attack: 20
+        killPoint: 0
+      skillIds: 
+    prefab: {fileID: 6199058164825075947, guid: 62436167bb6c48541bc627e4eaaf70df, type: 3}
+  - typeID: 8
+    unitData:
+      raceType: 0
+      attackType: 2
+      prop:
+        maxHp: 999
+        attack: 50
+        killPoint: 0
+      skillIds: 
+    prefab: {fileID: 6333455266019853049, guid: be85ed1b1c8712a4fa2c683fd3826176, type: 3}
   levelEnemyData:
   - enemies:
     - typeID: 0
@@ -93,8 +113,27 @@ MonoBehaviour:
       pos: {x: 27, y: 3, z: 70}
     - typeID: 3
       pos: {x: 29, y: 3, z: 69}
-    - typeID: 4
+    - typeID: 6
       pos: {x: 27, y: 3, z: 68}
   - enemies:
-    - typeID: 1
+    - typeID: 5
       pos: {x: 25, y: 3, z: 70}
+    - typeID: 2
+      pos: {x: 26, y: 3, z: 70}
+    - typeID: 3
+      pos: {x: 26, y: 3, z: 67}
+    - typeID: 4
+      pos: {x: 27, y: 3, z: 67}
+    - typeID: 7
+      pos: {x: 27, y: 4, z: 67}
+  - enemies:
+    - typeID: 5
+      pos: {x: 25, y: 3, z: 70}
+    - typeID: 6
+      pos: {x: 26, y: 3, z: 70}
+    - typeID: 7
+      pos: {x: 26, y: 4, z: 67}
+    - typeID: 8
+      pos: {x: 27, y: 3, z: 67}
+    - typeID: 4
+      pos: {x: 27, y: 3, z: 67}

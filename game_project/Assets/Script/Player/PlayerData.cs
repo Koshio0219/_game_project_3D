@@ -99,7 +99,12 @@ namespace Game.Player
         public int MaxSwordPoint
         {
             get { return _maxSwordPoint; }
-            set { _maxSwordPoint = value; }
+            set {
+                if (value == _maxSwordPoint)
+                    return;
+                _maxSwordPoint = value;
+                EventQueueSystem.QueueEvent(new SwordPointChangeEvent(SwordPoint, SwordPoint, _maxSwordPoint));
+            }
         }
 
         //剑气
@@ -109,9 +114,12 @@ namespace Game.Player
             get { return _SwordPoint; }
             set
             {
+                if (value == _SwordPoint) return;
+                var lastValue = _SwordPoint;
                 _SwordPoint = value;
                 if (_SwordPoint > MaxSwordPoint)
                     _SwordPoint = MaxSwordPoint;
+                EventQueueSystem.QueueEvent(new SwordPointChangeEvent(lastValue, _SwordPoint, MaxSwordPoint));
             }
         }
 

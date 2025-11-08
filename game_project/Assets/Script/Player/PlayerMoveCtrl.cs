@@ -6,7 +6,6 @@ using Game.Framework;
 namespace Game.Player
 {
     [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(PlayerInputHandler))]
     [RequireComponent(typeof(PlayerStateHandler))]
     public class PlayerMoveCtrl : MonoBehaviour
     {
@@ -27,7 +26,7 @@ namespace Game.Player
         private Vector3 velocity;
         private bool isGrounded;
 
-        private PlayerInputHandler input;
+        private PlayerInputHandler Input => PlayerInputHandler.Instance;
         private PlayerStateHandler stateHandler;
         private Camera mainCamera;
 
@@ -38,7 +37,6 @@ namespace Game.Player
         void Awake()
         {
             controller = GetComponent<CharacterController>();
-            input = GetComponent<PlayerInputHandler>();
             stateHandler = GetComponent<PlayerStateHandler>();
             mainCamera = Camera.main;
         }
@@ -90,8 +88,8 @@ namespace Game.Player
                 stateHandler.State == PlayerAnimatorState.Parry) 
                 return;
 
-            var h = input.MoveInput.x;
-            var v = input.MoveInput.y;
+            var h = Input.MoveInput.x;
+            var v = Input.MoveInput.y;
 
             if (h == 0 && v == 0)
                 return;
@@ -107,7 +105,7 @@ namespace Game.Player
                 return;
             transform.forward = targetDirection;
 
-            float moveSpeed = input.RunningInput && isGrounded ? runSpeed : walkSpeed;
+            float moveSpeed = Input.RunningInput && isGrounded ? runSpeed : walkSpeed;
             controller.Move(dt * moveSpeed * transform.forward);
 
             if (isGrounded && !isJumping)
@@ -116,7 +114,7 @@ namespace Game.Player
 
         private void CheckJump()
         {
-            if (input.JumpPressed && isGrounded && !isJumping)
+            if (Input.JumpPressed && isGrounded && !isJumping)
             {
                 JumpAsync().Forget();
             }
@@ -151,7 +149,7 @@ namespace Game.Player
                 stateHandler.State != PlayerAnimatorState.Jump)
                 return;
 
-            var noMove = input.MoveInput == Vector2.zero;
+            var noMove = Input.MoveInput == Vector2.zero;
             var noJump = !isJumping && velocity.y < 0;
             if (noMove && noJump)
             {

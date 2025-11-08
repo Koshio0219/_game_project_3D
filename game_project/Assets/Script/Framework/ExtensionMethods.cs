@@ -393,6 +393,13 @@ namespace Game.Framework
             disableTokens.Remove(component);
         }
 
+        public static async UniTask WaitInputAsync(this MonoBehaviour mono, InputAction action)
+        {
+            var token = mono.GetCancellationTokenOnDestroy();
+            if (!action.enabled) action.Enable();
+            await UniTask.WaitUntil(() => action.triggered, cancellationToken: token);
+        }
+
         public static void WaitInput(this MonoBehaviour mono, ButtonControl buttonControl, UnityAction callback)
         {
             var token = mono.GetCancellationTokenOnDestroy();
@@ -403,6 +410,26 @@ namespace Game.Framework
                 {
                     await UniTask.Yield(PlayerLoopTiming.Update);
                     if (buttonControl.wasPressedThisFrame)
+                    {
+                        callback?.Invoke();
+                        break;
+                    }
+                }
+            }, token);
+        }
+
+        public static void WaitInput(this MonoBehaviour mono, InputAction action, UnityAction callback)
+        {
+            var token = mono.GetCancellationTokenOnDestroy();
+            UniTask.Void(async (_) =>
+            {
+                await UniTask.Yield(PlayerLoopTiming.Update); // 确保已经进入Update循环
+                if (!action.enabled) action.Enable(); // 确保 InputAction 已启用
+                while (!token.IsCancellationRequested && mono && mono.isActiveAndEnabled)
+                {
+                    await UniTask.Yield(PlayerLoopTiming.Update);
+
+                    if (action.triggered)
                     {
                         callback?.Invoke();
                         break;

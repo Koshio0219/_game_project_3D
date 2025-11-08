@@ -1,7 +1,6 @@
 ﻿using Game.Base;
 using Game.Framework;
 using KanKikuchi.AudioManager;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +12,7 @@ namespace Game.Hud
         private void Awake()
         {
             View.nextBtn.onClick.AddListener(OnNextBtnClick);
+            BGMSwitcher.FadeOutAndFadeIn(Random.value > 0.5f ? BGMPath.WAIT_STAGE : BGMPath.BGMNEXT_STAGE);
         }
 
         private void OnNextBtnClick()

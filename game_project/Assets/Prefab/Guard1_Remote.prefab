@@ -751,11 +751,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6199058164825075952}
-  - component: {fileID: 6199058164825075953}
   - component: {fileID: 6199058164825075964}
   - component: {fileID: 6199058164825075965}
   - component: {fileID: 3264212274758820713}
   - component: {fileID: 1119372911191793017}
+  - component: {fileID: 5443143726528366576}
   m_Layer: 10
   m_Name: Guard1_Remote
   m_TagString: Enemy
@@ -772,7 +772,7 @@ Transform:
   m_GameObject: {fileID: 6199058164825075947}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -784,54 +784,6 @@ Transform:
   - {fileID: 2068660516854909345}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6199058164825075953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6199058164825075947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startWhenEnabled: 1
-  asynchronousLoad: 0
-  pauseWhenDisabled: 0
-  restartWhenComplete: 1
-  logTaskChanges: 0
-  group: 0
-  resetValuesOnRestart: 0
-  externalBehavior: {fileID: 0}
-  mBehaviorSource:
-    behaviorName: Behavior
-    behaviorDescription: 
-    mTaskData:
-      types: []
-      parentIndex: 
-      startIndex: 
-      variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(699.8448,-11.2765932)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(-1.914917,142.765991)"},"ID":1,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-160,140)"},"ID":2,"Name":"Sequence","Instant":true,"AbortTypeabortType":"LowerPriority","Children":[{"Type":"Game.BehaviorTask.MyCanSeeObject","NodeData":{"Offset":"(-295.899963,180)","WatchedFields":["closest","radius"]},"ID":3,"Name":"My
-        Can See Object","Instant":true,"SharedTransformListtargets":{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":"TargetList","IsShared":true,"List`1mValue":[null,null]},"SharedFloatradius":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"ViewDistance","IsShared":true,"SinglemValue":10},"SharedFloatangle":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":179},"SharedTransformListresults":{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":null,"List`1mValue":[]},"SharedGameObjectclosest":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Closest","IsShared":true}},{"Type":"Game.BehaviorTask.RotateToGameObject","NodeData":{"Offset":"(-23.8999634,179)"},"ID":4,"Name":"Rotate
-        To Game Object","Instant":true,"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Closest","IsShared":true},"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2},"SharedFloatangleDifference":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2},"SharedVector3upVector":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,1,0)"},"BooleanwaitActionFinish":true},{"Type":"Game.BehaviorTask.GetPlayerIdByObj","NodeData":{"Offset":"(174.100037,190)"},"ID":5,"Name":"Get
-        Player Id By Obj","Instant":true,"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Closest","IsShared":true},"SharedIntplayerId":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"TargetId","IsShared":true,"Int32mValue":0}},{"Type":"BehaviorDesigner.Runtime.Tasks.InvokeMethod","NodeData":{"Offset":"(364.100037,180)","Comment":"Attack"},"ID":6,"Name":"Invoke
-        Method","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Self","IsShared":true,"GameObjectmValue":0},"SharedStringcomponentName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"Game.Unit.Enemy"},"SharedStringmethodName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"Attack"},"SharedVariableparameter1":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"TargetId","IsShared":true,"Int32mValue":0},"SharedVariableparameter2":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":10}},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(507.1001,187)"},"ID":7,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]},{"Type":"Game.BehaviorTask.Wander","NodeData":{"Offset":"(124.100037,140)"},"ID":8,"Name":"Wander","Instant":true,"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatkeepDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0.3},"SharedFloatminWanderDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatmaxWanderDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2},"Booleanrepeat":true}]},"DetachedTasks":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(960,770)"},"ID":9,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.InvokeMethod","NodeData":{"Offset":"(-60,131.914871)","Comment":"Attack"},"ID":10,"Name":"Invoke
-        Method","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Self","IsShared":true,"GameObjectmValue":1},"SharedStringcomponentName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"Game.Unit.Enemy"},"SharedStringmethodName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"Attack"},"SharedVariableparameter1":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"TargetId","IsShared":true,"Int32mValue":0},"SharedVariableparameter2":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":10}},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(76.80847,133.191483)"},"ID":11,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}],"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Closest","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Self","IsShared":true,"GameObjectmValue":2},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"Tag","IsShared":true,"StringmValue":"Player"},{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":"TargetList","IsShared":true,"List`1mValue":[null,null]},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"ViewAngle","IsShared":true,"SinglemValue":270},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"ViewDistance","IsShared":true,"SinglemValue":10},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"TargetId","IsShared":true,"Int32mValue":0}]}'
-      fieldSerializationData:
-        typeName: []
-        fieldNameHash: 
-        startIndex: 
-        dataPosition: 
-        unityObjects:
-        - {fileID: 6199058164825075947}
-        - {fileID: 6199058164825075947}
-        - {fileID: 6199058164825075947}
-        byteData: 
-        byteDataArray: 
-      Version: 1.7.1
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
 --- !u!195 &6199058164825075964
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -867,7 +819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7461846346337098401}
-  behaviorTree: {fileID: 6199058164825075953}
+  behaviorTree: {fileID: 5443143726528366576}
   normal_fire:
   - {fileID: 6419139466393883190}
   - {fileID: 7001187993410268299}
@@ -892,10 +844,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 0.6705065, z: 0}
+  m_Center: {x: 0, y: 0.68, z: 0}
 --- !u!114 &1119372911191793017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -909,6 +861,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Unit.AutoTriggerGenerator
   triggerScale: 1.1
+--- !u!114 &5443143726528366576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6199058164825075947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BehaviorDesigner.Runtime.BehaviorTree
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 0
+  restartWhenComplete: 0
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 0
+  externalBehavior: {fileID: 11400000, guid: 36b4d9f9e9d10cd49ab2ab993eff63ee, type: 2}
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: 
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects: []
+        byteData: 
+        byteDataArray: 
+      Version: 
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!1 &6408973140375179386
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,7 +978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseProp:
-    bulletPrefab: {fileID: 0}
+    bulletPrefab: {fileID: 7904547446819569583, guid: 598fd26f6aa2d35408623687a72fc134, type: 3}
     firePos: {fileID: 6419139466393883189}
     target: {fileID: 0}
     damage: 10
@@ -994,7 +986,7 @@ MonoBehaviour:
     extraCount: 1
     timeInterval: 0
     offseDistance: 0
-    angleOffseMode: 1
+    angleOffseMode: 0
     offseAngle: 60
 --- !u!1 &6583423281577605095
 GameObject:
@@ -1140,13 +1132,13 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8896051167825165466, guid: 5d3b96e797049734c9762210969b1823, type: 3}
-  - {fileID: -8041933295375320204, guid: 5d3b96e797049734c9762210969b1823, type: 3}
-  - {fileID: 7799636407927708051, guid: 5d3b96e797049734c9762210969b1823, type: 3}
-  - {fileID: -6271897200390792742, guid: 5d3b96e797049734c9762210969b1823, type: 3}
-  - {fileID: -55832809241049093, guid: 5d3b96e797049734c9762210969b1823, type: 3}
-  - {fileID: -1618427516953898762, guid: 5d3b96e797049734c9762210969b1823, type: 3}
-  - {fileID: -2856374186263792819, guid: 5d3b96e797049734c9762210969b1823, type: 3}
+  - {fileID: 2100000, guid: 1adffc7333cbaab4fa202738ed04291a, type: 2}
+  - {fileID: 2100000, guid: effdfb1c247aadb4e900bcf83f5d109f, type: 2}
+  - {fileID: 2100000, guid: 3b74a854761a91241a8188205f15f264, type: 2}
+  - {fileID: 2100000, guid: 2f24f56c97e010246948476a431de0f9, type: 2}
+  - {fileID: 2100000, guid: 6a489d0a90440744981afa58653435fa, type: 2}
+  - {fileID: 2100000, guid: d7adab0808097c741a511feab9033346, type: 2}
+  - {fileID: 2100000, guid: 08ba99fcc87f87149a2850f4df1458f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1304,7 +1296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseProp:
-    bulletPrefab: {fileID: 0}
+    bulletPrefab: {fileID: 7904547446819569583, guid: 8eab8965021ce16438d0f8b592cb78ab, type: 3}
     firePos: {fileID: 8537528804786337711}
     target: {fileID: 0}
     damage: 10
@@ -1312,7 +1304,7 @@ MonoBehaviour:
     extraCount: 1
     timeInterval: 0
     offseDistance: 0
-    angleOffseMode: 1
+    angleOffseMode: 0
     offseAngle: 60
 --- !u!1 &8074228665465697955
 GameObject:
@@ -1562,6 +1554,10 @@ PrefabInstance:
     - target: {fileID: 9036107827643978973, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9036107827998520549, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
+      propertyPath: hpHeight
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9036107827998520551, guid: 5f9b0b6395459f7488c7726fd7402ed7, type: 3}
       propertyPath: m_PresetInfoIsWorld

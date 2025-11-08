@@ -1,95 +1,95 @@
 ﻿using UnityEngine;
+using Game.Framework; 
 
 namespace Game.Player
 {
-    public class PlayerInputHandler: MonoBehaviour
+    public class PlayerInputHandler : MonoSingleton<PlayerInputHandler>
     {
         private InputSystem_Actions input;
 
-        private Vector2 moveInput;
-        public Vector2 MoveInput => moveInput;
-        private bool runningInput;
-        public bool RunningInput => runningInput;
-        private bool jumpPressed;
-        public bool JumpPressed => jumpPressed;
-        private bool attackPressed;
-        public bool AttackPressed => attackPressed;
-        private bool skillPressed;
-        public bool SkillPressed => skillPressed;
-        private bool parryPressed;
-        public bool ParryPressed => parryPressed;
-        private bool dodgePressed;
-        public bool DodgePressed => dodgePressed;
+        // ====== 公开属性 ======
+        public Vector2 MoveInput { get; private set; }
+        public bool RunningInput { get; private set; }
+        public bool JumpPressed { get; private set; }
+        public bool AttackPressed { get; private set; }
+        public bool SkillPressed { get; private set; }
+        public bool ParryPressed { get; private set; }
+        public bool DodgePressed { get; private set; }
 
-        public void OnEnable() => input.Enable();
-        public void OnDisable() => input.Disable();
-
-        private void Awake()
+        // ====== 生命周期 ======
+        public override void Init()
         {
             input = new InputSystem_Actions();
+            input.Enable();
+
             InitMove();
-            InitJump();
             InitRun();
+            InitJump();
             InitAttack();
             InitSkill();
-            InitDodge();
             InitParry();
+            InitDodge();
+
+            Debug.Log("[InputHandler] Initialized");
         }
 
-        public void InitMove(bool canceled =true)
+        protected override void OnDestroy()
         {
-            if(input== null)  return;
-            input.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-            if (canceled)
-                input.Player.Move.canceled += ctx => moveInput = Vector2.zero;
+            base.OnDestroy();
+            input?.Disable();
         }
 
-        public void InitJump(bool canceled = true)
+        // ====== 输入初始化 ======
+        private void InitMove(bool canceled = true)
         {
-            if (input == null) return;
-            input.Player.Jump.performed += ctx => jumpPressed = true;
+            input.Player.Move.performed += ctx => MoveInput = ctx.ReadValue<Vector2>();
             if (canceled)
-                input.Player.Jump.canceled += ctx => jumpPressed = false;
+                input.Player.Move.canceled += ctx => MoveInput = Vector2.zero;
         }
 
-        public void InitRun(bool canceled = true)
+        private void InitRun(bool canceled = true)
         {
-            if (input == null) return;
-            input.Player.Sprint.performed += ctx => runningInput = true;
+            input.Player.Sprint.performed += ctx => RunningInput = true;
             if (canceled)
-                input.Player.Sprint.canceled += ctx => runningInput = false;
+                input.Player.Sprint.canceled += ctx => RunningInput = false;
         }
 
-        public void InitAttack(bool canceled = true)
+        private void InitJump(bool canceled = true)
         {
-            if (input == null) return;
-            input.Player.Attack.performed += ctx => attackPressed = true;
+            input.Player.Jump.performed += ctx => JumpPressed = true;
             if (canceled)
-                input.Player.Attack.canceled += ctx => attackPressed = false;
+                input.Player.Jump.canceled += ctx => JumpPressed = false;
         }
 
-        public void InitSkill(bool canceled = true)
+        private void InitAttack(bool canceled = true)
         {
-            if (input == null) return;
-            input.Player.Skill.performed += ctx => skillPressed = true;
+            input.Player.Attack.performed += ctx => AttackPressed = true;
             if (canceled)
-                input.Player.Skill.canceled += ctx => skillPressed = false;
+                input.Player.Attack.canceled += ctx => AttackPressed = false;
         }
 
-        public void InitParry(bool canceled = true)
+        private void InitSkill(bool canceled = true)
         {
-            if (input == null) return;
-            input.Player.Parry.performed += ctx => parryPressed = true;
+            input.Player.Skill.performed += ctx => SkillPressed = true;
             if (canceled)
-                input.Player.Parry.canceled += ctx => parryPressed = false;
+                input.Player.Skill.canceled += ctx => SkillPressed = false;
         }
 
-        public void InitDodge(bool canceled = true)
+        private void InitParry(bool canceled = true)
         {
-            if (input == null) return;
-            input.Player.Dodge.performed += ctx => dodgePressed = true;
+            input.Player.Parry.performed += ctx => ParryPressed = true;
             if (canceled)
-                input.Player.Dodge.canceled += ctx => dodgePressed = false;
+                input.Player.Parry.canceled += ctx => ParryPressed = false;
         }
+
+        private void InitDodge(bool canceled = true)
+        {
+            input.Player.Dodge.performed += ctx => DodgePressed = true;
+            if (canceled)
+                input.Player.Dodge.canceled += ctx => DodgePressed = false;
+        }
+
+        // ====== 工具方法 ======
+        public InputSystem_Actions InputActions => input;
     }
 }

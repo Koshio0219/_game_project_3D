@@ -10,6 +10,8 @@ using UnityEngine.InputSystem;
 using KanKikuchi.AudioManager;
 using System.Linq;
 using Game.Player;
+using UnityEngine.InputSystem.LowLevel;
+using Game.Soul;
 
 namespace Game.Base
 {
@@ -59,7 +61,7 @@ namespace Game.Base
         private async void GameOverHandler()
         {
             //lose
-            BGMSwitcher.FadeOutAndFadeIn(BGMPath.BGMGAME_OVER);
+            //BGMSwitcher.FadeOutAndFadeIn(BGMPath.BGMGAME_OVER);
             //...something else...
             Debug.Log($"Game Over!");
             ClearAllEnemies();
@@ -67,14 +69,16 @@ namespace Game.Base
 
             await UniTask.Delay(1000);
             PlayerPropManager.Instance.ResetProp();
+            SwordSoulManager.Instance.ResetUsed();
             GameManager.Instance.LevelIdx = 0;
-            //this.WaitInput(Gamepad.current.buttonEast, () => { SceneLoader.Instance.BackToMenu(); SEManager.Instance.Stop(); BGMSwitcher.FadeOutAndFadeIn(BGMPath.START); });
+            this.WaitInput(PlayerInputHandler.Instance.InputActions.Player.Attack,()=> { SceneLoader.Instance.BackToMenu(); SEManager.Instance.Stop();});
         }
 
         private void BattleClearEndHandler()
         {
             Debug.Log($"battle clear !");
             ClearAllEnemies();
+            SwordSoulManager.Instance.ResetUsed();
 
             if (IsLastStage())
             {
@@ -116,7 +120,7 @@ namespace Game.Base
 
         public bool IsLastStage()
         {
-            return GameManager.Instance.LevelIdx >= GameManager.Instance.gameData.levelDatas.Count - 1;
+            return GameManager.Instance.LevelIdx >= GameManager.Instance.enemyCreateConfig.levelEnemyData.Count - 1;
         }
 
         private async void NextStage()
@@ -127,7 +131,7 @@ namespace Game.Base
             await UniTask.Delay(1000);
             GameManager.Instance.LevelIdx++;
             Debug.Log($"next stage! current level idx is {GameManager.Instance.LevelIdx}");
-            //this.WaitInput(Gamepad.current.buttonEast, () => { SceneLoader.Instance.GoToStage(); SEManager.Instance.Stop(); BGMSwitcher.FadeOutAndFadeIn(BGMPath.WAIT_STAGE); });
+            this.WaitInput(PlayerInputHandler.Instance.InputActions.Player.Attack, () => { SceneLoader.Instance.GoToReady(); SEManager.Instance.Stop(); });
         }
 
         private async void Win()
@@ -139,7 +143,7 @@ namespace Game.Base
             await UniTask.Delay(1000);
             GameManager.Instance.LevelIdx = 0;
             PlayerPropManager.Instance.ResetProp();
-            //this.WaitInput(Gamepad.current.buttonEast, () => { SceneLoader.Instance.BackToMenu(); SEManager.Instance.Stop(); BGMSwitcher.FadeOutAndFadeIn(BGMPath.START); });
+            this.WaitInput(PlayerInputHandler.Instance.InputActions.Player.Attack, () => { SceneLoader.Instance.BackToMenu(); SEManager.Instance.Stop(); });
         }
 
         public void AddOnePlayer(int playerId, GameObject playerIns)
@@ -175,6 +179,9 @@ namespace Game.Base
             if (!MapEnemyIdToInstance.ContainsKey(enemyId)) return;
             if (bDestroy) Destroy(MapEnemyIdToInstance[enemyId].gameObject);
             MapEnemyIdToInstance.Remove(enemyId);
+            //game clear 
+            if (MapEnemyIdToInstance.Count == 0)
+                EventQueueSystem.QueueEvent(new StageStatesEvent(StageStates.BattleClear));
         }
 
         public void ClearAllEnemies()

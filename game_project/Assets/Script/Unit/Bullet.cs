@@ -1,7 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Game.Base;
 using Game.Framework;
-using System.Collections;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
@@ -48,9 +47,6 @@ namespace Game.Unit
         private CancellationToken token = CancellationToken.None;
         private CancellationTokenSource tokenSource = null;
 
-        private UnityAction recycleAction = null;
-        private UnityAction moveAction = null;
-
         private BulletProp initProp;
         private Vector3 targetPos;
 
@@ -61,73 +57,88 @@ namespace Game.Unit
 
         public void Init(GameObject target)
         {
-            //token = this.GetCancellationTokenOnDestroy();
+            // 先把旧任务停掉（如果是池里复用）
+            if (tokenSource != null && !tokenSource.IsCancellationRequested)
+                tokenSource.Cancel();
+
             tokenSource = new CancellationTokenSource();
             token = tokenSource.Token;
-            //token = this.GetCancellationTokenOnDisable();
 
-            InitAction();
-            recycleAction.Invoke();
-            moveAction.Invoke();
+            // 重置属性
+            prop = new BulletProp(initProp);
 
-            if (target == null) return;
+            // 目标
             Target = target;
-            //fix to player center with height 0.6f
-            targetPos = Target.transform.position.FixHeight(Target.transform.position.y + .6f);
-        }
+            if (Target != null)
+            {
+                targetPos = Target.transform.position.FixHeight(Target.transform.position.y + .6f);
+            }
 
-        public void Recycle()
-        {
-            ResetAction();
-            if (this == null) return;
-            GameObjectPool.Instance.RecycleObj(gameObject);
+            // 启动生命周期 & 移动逻辑
+            InitAction();
         }
 
         private void InitAction()
         {
-            UniTask.Void(async (_) =>
+            // 寿命结束回收
+            UniTask.Void(async _ =>
             {
-                await UniTask.Delay(System.TimeSpan.FromSeconds(prop.lifeTime), cancellationToken: token);
-                Recycle();
-            }, token);
-            UniTask.Void(async (_) =>
-            {
-                while (this && isActiveAndEnabled)
+                try
                 {
-                    Move();
-                    await UniTask.DelayFrame(1, PlayerLoopTiming.FixedUpdate, token);
+                    await UniTask.Delay(
+                        System.TimeSpan.FromSeconds(prop.lifeTime),
+                        cancellationToken: token
+                    );
+                    Recycle();
                 }
+                catch { /* 被取消就算了 */ }
+            }, token);
+
+            // 持续移动
+            UniTask.Void(async _ =>
+            {
+                try
+                {
+                    while (this && isActiveAndEnabled && !token.IsCancellationRequested)
+                    {
+                        Move();
+                        await UniTask.DelayFrame(1, PlayerLoopTiming.FixedUpdate, token);
+                    }
+                }
+                catch { /* token 取消正常退出 */ }
             }, token);
         }
+
+        public void Recycle()
+        {
+            if (!this) return;
+
+            if (tokenSource != null && !tokenSource.IsCancellationRequested)
+                tokenSource.Cancel();
+
+            GameObjectPool.Instance.RecycleObj(gameObject);
+        }
+
 
         private void Move()
         {
             float deltaTime = Time.fixedDeltaTime;
+
             if (Target != null && prop.angleSpeed > 0)
             {
-                Vector3 offset = (targetPos- transform.position).normalized;
-
-                float angle = Vector3.Angle(transform.forward, offset);
-
-                float needTime = angle * 1.0f / prop.angleSpeed;
-
-                transform.forward = Vector3.Lerp(transform.forward, offset, deltaTime / needTime).normalized;
+                var offset = (targetPos - transform.position).normalized;
+                if (offset.sqrMagnitude > 0.0001f)
+                {
+                    float angle = Vector3.Angle(transform.forward, offset);
+                    float needTime = Mathf.Max(angle / prop.angleSpeed, 0.0001f);
+                    transform.forward = Vector3.Lerp(transform.forward, offset, deltaTime / needTime).normalized;
+                }
             }
+
             if (prop.speed < prop.maxSpeed)
-            {
                 prop.speed += deltaTime * prop.acceleration;
-            }
-            transform.position += deltaTime * prop.speed * transform.forward;
-        }
 
-        private void ResetAction()
-        {
-            tokenSource.Cancel();
-            prop = new BulletProp(initProp);
-            recycleAction = () => { };
-            moveAction = () => { };
-            tokenSource = null;
-            token = CancellationToken.None;
+            transform.position += deltaTime * prop.speed * transform.forward;
         }
     }
 }

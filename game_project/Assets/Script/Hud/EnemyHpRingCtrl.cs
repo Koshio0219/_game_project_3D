@@ -11,6 +11,7 @@ namespace Game.Hud
     [RequireComponent(typeof(EnemyHpRingView))]
     public class EnemyHpRingCtrl : MonoBehaviour
     {
+        public float hpHeight = 1f;
         private EnemyHpRingView view = null;
         public EnemyHpRingView View
         {
@@ -106,7 +107,7 @@ namespace Game.Hud
             {
                 while (par != null && this && isActiveAndEnabled)
                 {
-                    transform.position = par.position + new Vector3(0f, 1f, 0f);
+                    transform.position = par.position + new Vector3(0f, hpHeight, 0f);
                     await UniTask.DelayFrame(1, PlayerLoopTiming.PreLateUpdate);
                 }
             });

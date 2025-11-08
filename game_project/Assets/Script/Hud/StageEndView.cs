@@ -9,21 +9,19 @@ namespace Game.Hud
 {
     public class StageEndView : HudView
     {
-        public GameObject battleClearPage;
-        public GameObject gameOverPage;
-        public TextMeshProUGUI text_battleClear;
+        public GameObject endPage;
+        public TextMeshProUGUI text_stageEnd;
 
         public void Win()
         {
-            battleClearPage.Show();
-            gameOverPage.Hide();
-            ShowBattleClearText();
+            endPage.Show();
+            text_stageEnd.text = "Level Clear";
         }
 
         public void Lose()
         {
-            battleClearPage.Hide();
-            gameOverPage.Show();
+            endPage.Show();
+            text_stageEnd.text = "Game Over";
         }
 
         private void ShowBattleClearText()

@@ -78,42 +78,27 @@ namespace Game.Action
                 var angle = startAngle + i * advanceProp.offseAngle;
                 var dir = CalBulletDirection(angle);
                 var pos = baseProp.firePos.position + dir * advanceProp.offseDistance;
-                CreatOne(creatorId,pos,dir).Forget();
+                CreatOne(creatorId,pos,dir);
                 var delay = advanceProp.timeInterval;
                 if (delay == 0) continue;
                 await UniTask.Delay((int)(delay * 1000), cancellationToken: TokenSource.Token);
             }
         }
 
-        private async UniTask CreatOne(int creatorId, Vector3 position, Vector3 direction)
+        private void CreatOne(int creatorId, Vector3 position, Vector3 direction)
         {
-            //move
-            //var bullet = await AssetLoader.Instance.Load<Bullet>
-            //    (baseProp.bulletPrefab, TokenSource.Token);
-            var bullet = GameObjectPool.Instance.GetObj(baseProp.bulletPrefab).GetComponent<Bullet>();
+            var bullet = GameObjectPool.Instance
+                .GetObj(baseProp.bulletPrefab)
+                .GetComponent<Bullet>();
+
             bullet.transform.SetParent(null);
             bullet.transform.position = position;
             bullet.transform.forward = direction;
+
             bullet.Init(baseProp.target);
 
-            //hit
             var hit = bullet.GetComponent<BulletHit>();
             hit.Init((creatorId, baseProp.damage));
-
-            
-            /////////////
-            //var cts = new CancellationTokenSource();
-            //var enterTrigger = hit.GetAsyncTriggerEnterTrigger();
-            //var enter = await enterTrigger.OnTriggerEnterAsync(cts.Token);
-            ////hit.OnEnterHit(enter, creatorId, baseProp.damage);
-            //cts.Cancel();
-
-            ////recycle
-            //var self = transform.GetRootParent();
-            //var up = enter.transform.GetRootParent().gameObject;
-            //if (up.GetComponent<Bullet>()) return;
-            //if (up.GetInstanceID() == self.GetInstanceID()) return;
-            //bullet.Recycle();
         }
 
         private Vector3 CalBulletDirection(float angle)

@@ -1,28 +1,37 @@
-﻿using Cysharp.Threading.Tasks;
-using Game.Base;
+﻿using Game.Base;
 using Game.Framework;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Game.Hud
 {
     public class StageEndCtrl : HudCtrl<StageEndView>
     {
-        private async void Start()
+        private void Awake()
         {
-            View.battleClearPage.Hide();
-            View.gameOverPage.Hide();
-            await UniTask.Delay(100);
-            //switch (GameManager.stageManager.StageState)
-            //{
-            //    case StageStates.BattleClear:
-            //        View.Win();
-            //        break;
-            //    case StageStates.GameOver:
-            //        View.Lose();
-            //        break;
-            //}
+            EventQueueSystem.AddListener<StageStatesEvent>(StageStatesEventHandler);
+
+        }
+
+        private void OnDestroy()
+        {
+            EventQueueSystem.RemoveListener<StageStatesEvent>(StageStatesEventHandler);
+        }
+
+        private void StageStatesEventHandler(StageStatesEvent e)
+        {
+            switch (e.to)
+            {
+                case StageStates.BattleClear:
+                    View.Win();
+                    break;
+                case StageStates.GameOver:
+                    View.Lose();
+                    break;
+            }
+        }
+
+        private void Start()
+        {
+            View.endPage.Hide();
         }
     }
 }

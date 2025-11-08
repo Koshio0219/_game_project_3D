@@ -14,7 +14,7 @@ namespace Game.BehaviorTask
         public SharedFloat flySpeed = 1f;
         public SharedFloat aroundDistance = 3f;
         public SharedFloat minHeight = 0f;
-        public SharedFloat maxHeight = 5;
+        public SharedFloat maxHeight = 2f;
         public SharedInt maxRandomCount = 6;
 
         private Transform target;

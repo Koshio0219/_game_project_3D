@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332ef667ef169d24a8a3d6cf20458861, type: 3}
   m_Name: AfterimageDodgeSoul
   m_EditorClassIdentifier: Assembly-CSharp::Game.Soul.AfterimageDodgeSoul
-  soulID: "\u5E7B\u5F71\u6B8B\u50CF"
+  soulID: "\u5E7B\u5F71\u51B2\u950B"
   triggerType: 1
-  description: "\u6781\u9650\u95EA\u907F\u6210\u529F\u65F6\uFF0C\u7559\u4E0B\u6B8B\u50CF\u8FF7\u60D1\u654C\u4EBA"
+  description: "\u547D\u4E2D\u7387\uFF0C\u66B4\u51FB\u7387+50%\uFF0C\u7559\u4E0B\u6B8B\u50CF\u8FF7\u60D1\u654C\u4EBA"
   icon: {fileID: 21300000, guid: f7f14b97e3c3c8942adc091263a65981, type: 3}
   usedInStage: 0
-  afterimageMaterial: {fileID: 2100000, guid: 8c3f067d97073e844a53d8283b2d3820, type: 2}
-  duration: 0.3
+  afterimageMaterial: {fileID: 2100000, guid: a027387037c52884fbdb0ba64da507c6, type: 2}
+  duration: 1

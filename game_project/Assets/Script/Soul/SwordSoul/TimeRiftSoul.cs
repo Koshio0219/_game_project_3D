@@ -1,6 +1,7 @@
-﻿using UnityEngine;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
+using Game.Player;
 using System;
+using UnityEngine;
 
 namespace Game.Soul
 {
@@ -8,11 +9,17 @@ namespace Game.Soul
     public class TimeRiftSoul : SwordSoul
     {
         public float slowTimeScale = 0.2f;
-        public float duration = 0.8f;
+        public float duration = 2f;
+        public int addSwordPoint = 3;
+        public int addMaxSwordPoint = 1;
 
         public override async UniTask ApplyEffectAsync(GameObject player, GameObject attacker = null)
         {
             Debug.Log("[SwordSoul] TimeRift activated!");
+            var pm = PlayerPropManager.Instance.Prop;
+            if (pm == null) return;
+            pm.MaxSwordPoint += addMaxSwordPoint;
+            pm.SwordPoint += addSwordPoint;
             Time.timeScale = slowTimeScale;
             await UniTask.Delay(TimeSpan.FromSeconds(duration));
             Time.timeScale = 1f;

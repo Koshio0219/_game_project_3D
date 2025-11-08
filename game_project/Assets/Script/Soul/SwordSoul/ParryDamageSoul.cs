@@ -9,7 +9,7 @@ namespace Game.Soul
     [CreateAssetMenu(fileName = "Parry_Damage_Soul", menuName = "Game/Soul/ParryDamageSoul")]
     public class ParryDamageSoul : SwordSoul
     {
-        public int baseDamage = 200;
+        public int baseDamage = 100;
 
         public override async UniTask ApplyEffectAsync(GameObject owner, GameObject context)
         {

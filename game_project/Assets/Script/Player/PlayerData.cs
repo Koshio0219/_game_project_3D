@@ -12,16 +12,18 @@ namespace Game.Player
         public int MaxHP
         {
             get { return _maxHP; }
-            set{
+            set
+            {
                 var lastValue = _maxHP;
                 _maxHP = value;
                 //值减少
                 if (lastValue > _maxHP)
                 {
                     HP = _HP; //重新设置一遍HP，以防止HP超过最大值
-                }else if (lastValue < _maxHP)
+                }
+                else if (lastValue < _maxHP)
                 {
-                    HP+= (_maxHP - lastValue); //HP同步增加
+                    HP += (_maxHP - lastValue); //HP同步增加
                 }
             }
         }
@@ -31,12 +33,14 @@ namespace Game.Player
         public int HP
         {
             get { return _HP; }
-            set {
+            set
+            {
                 if (value > MaxHP)
                 {
                     _HP = MaxHP;
                     return;
-                }else if (value < 0)
+                }
+                else if (value < 0)
                 {
                     _HP = 0;
                     return;
@@ -59,7 +63,12 @@ namespace Game.Player
         public float HitRate
         {
             get { return _HitRate; }
-            set { _HitRate = value; }
+            set
+            {
+                _HitRate = value;
+                if (_HitRate > 1)
+                    _HitRate = 1;
+            }
         }
         //% 0-1
         [SerializeField]
@@ -67,7 +76,12 @@ namespace Game.Player
         public float CritRate
         {
             get { return _CritRate; }
-            set { _CritRate = value; }
+            set
+            {
+                _CritRate = value;
+                if (_CritRate > 1)
+                    _CritRate = 1;
+            }
         }
 
         //% >0
@@ -93,14 +107,15 @@ namespace Game.Player
         public int SwordPoint
         {
             get { return _SwordPoint; }
-            set {
+            set
+            {
                 _SwordPoint = value;
                 if (_SwordPoint > MaxSwordPoint)
                     _SwordPoint = MaxSwordPoint;
             }
         }
 
-        public PlayerData(int maxSwordPoint=5)
+        public PlayerData(int maxSwordPoint = 5)
         {
             _maxHP = 99999;
             _HP = 99999;

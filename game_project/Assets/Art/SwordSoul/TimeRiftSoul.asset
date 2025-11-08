@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Soul.TimeRiftSoul
   soulID: "\u65F6\u95F4\u65AD\u88C2"
   triggerType: 1
-  description: "\u77ED\u6682\u51CF\u7F13\u65F6\u95F4\u6D41\u52A8"
-  icon: {fileID: 0}
+  description: "\u5251\u6C14+3\uFF0C\u5251\u6C14\u4E0A\u9650+1\uFF0C\u77ED\u6682\u51CF\u7F13\u65F6\u95F4\u6D41\u52A8"
+  icon: {fileID: 21300000, guid: b8def40af07c73f499fc511d5b509daf, type: 3}
   usedInStage: 0
   slowTimeScale: 0.2
-  duration: 0.8
+  duration: 2

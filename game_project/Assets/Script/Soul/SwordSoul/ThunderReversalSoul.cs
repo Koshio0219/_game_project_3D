@@ -1,6 +1,8 @@
-﻿using UnityEngine;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
+using Game.Base;
+using Game.Framework;
 using System;
+using UnityEngine;
 
 namespace Game.Soul
 {
@@ -25,9 +27,10 @@ namespace Game.Soul
             var hits = Physics.OverlapSphere(player.transform.position, lightningRadius);
             foreach (var hit in hits)
             {
-                if (hit.CompareTag("Enemy"))
+                var root = hit.transform.root;
+                if (root.TryGetComponent<IEnemyBaseAction>(out var enemy))
                 {
-                    Debug.Log($"Enemy {hit.name} takes {damage} lightning damage!");
+                    EventQueueSystem.QueueEvent(new SendDamageEvent(player.transform.root.GetInstanceID(), enemy.EnemyUnitData.InsId, damage));
                 }
             }
 

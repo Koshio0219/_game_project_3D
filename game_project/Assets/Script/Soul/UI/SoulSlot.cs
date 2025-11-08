@@ -14,27 +14,30 @@ namespace Game.Soul.UI
         public Image background;
 
         private SoulLibraryUI libraryUI;
-        private SwordSoul soulData;
+        // 对外暴露：该 slot 绑定的 SwordSoul（便于查找）
+        public SwordSoul BoundSoul { get; private set; }
 
         public void Init(SwordSoul data, SoulLibraryUI ui)
         {
-            soulData = data;
+            // 使用局部变量确保回调捕获的是正确的实例（避免闭包与对象池副作用）
+            var captured = data;
+            BoundSoul = captured;
             libraryUI = ui;
 
             if (iconImage != null)
-                iconImage.sprite = data.icon;
+                iconImage.sprite = captured.icon;
 
-            // fix bug:先清理旧监听，防止对象池复用时重复注册
+            // 清理并注册按钮（对象池复用安全）
             if (leftButton != null)
             {
                 leftButton.onClick.RemoveAllListeners();
-                leftButton.onClick.AddListener(() => libraryUI.MoveSoulInCategory(soulData, -1));
+                leftButton.onClick.AddListener(() => libraryUI.MoveSoulInCategory(captured, -1));
             }
 
             if (rightButton != null)
             {
                 rightButton.onClick.RemoveAllListeners();
-                rightButton.onClick.AddListener(() => libraryUI.MoveSoulInCategory(soulData, +1));
+                rightButton.onClick.AddListener(() => libraryUI.MoveSoulInCategory(captured, +1));
             }
         }
 
@@ -47,7 +50,7 @@ namespace Game.Soul.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            libraryUI.ShowTooltip(this, soulData);
+            libraryUI.ShowTooltip(this, BoundSoul);
         }
 
         public void OnPointerExit(PointerEventData eventData)

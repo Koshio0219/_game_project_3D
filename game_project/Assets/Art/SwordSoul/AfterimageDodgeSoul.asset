@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Soul.AfterimageDodgeSoul
   soulID: "\u5E7B\u5F71\u51B2\u950B"
   triggerType: 1
-  description: "\u547D\u4E2D\u7387\uFF0C\u66B4\u51FB\u7387+50%\uFF0C\u7559\u4E0B\u6B8B\u50CF\u8FF7\u60D1\u654C\u4EBA"
+  description: "\u547D\u4E2D\u7387+50%\uFF0C\u66B4\u51FB\u7387+50%\uFF0C\u539F\u5730\u7559\u4E0B\u6B8B\u50CF"
   icon: {fileID: 21300000, guid: f7f14b97e3c3c8942adc091263a65981, type: 3}
   usedInStage: 0
   afterimageMaterial: {fileID: 2100000, guid: a027387037c52884fbdb0ba64da507c6, type: 2}
   duration: 1
+  addHitRate: 0.5
+  addCritRate: 0.5

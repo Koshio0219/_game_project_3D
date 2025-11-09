@@ -6,6 +6,7 @@ using Game.Soul;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -89,12 +90,12 @@ namespace Game.Player
         public void EnterLevel(bool isFirstLevel)
         {
             PropManager.Init(new PlayerData(GameManager.Instance.gameData.playerConfig.maxSwordPoint));
-            EquipWeapon(GameManager.Instance.gameData.playerConfig.initWeaponId);
+            EquipWeapon(GameManager.Instance.gameData.playerConfig.initWeaponId,isFirstLevel);
             _ = SwordSoulManager.Instance.ApplyInherentSoulsAsync();
             EventQueueSystem.QueueEvent(new PlayerEnterLevelEvent(PropManager.Prop));
         }
 
-        public void EquipWeapon(int weaponId)
+        public void EquipWeapon(int weaponId,bool isFirstLevel)
         {
             if (currentWeapon != null) return;
             var data = GameManager.Instance.gameData.playerWeaponDatas[weaponId];
@@ -102,7 +103,8 @@ namespace Game.Player
             currentWeapon = GameObjectPool.Instance.GetObj(data.prefab, weaponTransform[data.handType]).GetComponent<Weapon>();
             currentWeapon.transform.ResetLocal();
             currentWeapon.InitWeapon(weaponId);
-            PropManager.AddProp(currentWeapon.AddProp);
+            if (isFirstLevel)
+                PropManager.AddProp(currentWeapon.AddProp);
 
             currentWeaponHitbox = currentWeapon.GetComponentInChildren<WeaponHitbox>();
             if (currentWeaponHitbox == null)
@@ -316,7 +318,7 @@ namespace Game.Player
 
             // 获取当前朝向 + 闪避方向（默认朝右后方）
             Vector3 forward = Camera.main.transform.forward;
-            Vector3 right = transform.right;
+            Vector3 right = Camera.main.transform.right;
             Vector3 dodgeDir = (-forward + right * 0.5f).normalized;
 
             // 如果有输入方向，则按输入方向闪避
@@ -372,7 +374,7 @@ namespace Game.Player
         //    Debug.Log("玩家撞到了：" + hit.gameObject.name);
         //}
 
-        public void ApplyHit(float damageAmount, int attackerId)
+        public async UniTaskVoid ApplyHit(float damageAmount, int attackerId)
         {
             if (isInvulnerable) return;
 
@@ -392,7 +394,8 @@ namespace Game.Player
             OnHurt?.Invoke(damageAmount, attackerId);
 
             isInvulnerable = true;
-            this.Delay(hurtInvulDuration, () => isInvulnerable = false);
+            await this.Delay(hurtInvulDuration);
+            isInvulnerable = false;
         }
 
         private async UniTaskVoid Death()
@@ -408,7 +411,7 @@ namespace Game.Player
             if (e.damageActonType == DamageActonType.Trigger && e.enterObj.GetInstanceID() != InsId) return;
             if (e.damageActonType == DamageActonType.PointTo && e.targetId != InsId) return;
             if (e.damageActonType == DamageActonType.Range && !e.rangeObjs.Contains(gameObject)) return;
-            ApplyHit(e.damage, e.sourceId);
+            ApplyHit(e.damage, e.sourceId).Forget();
         }
 
         private void OnDestroy()

@@ -125,12 +125,14 @@ namespace Game.Player
 
         public PlayerData(int maxSwordPoint = 5)
         {
-            _maxHP = 99999;
-            _HP = 99999;
+            //_maxHP = 99999;
+            //_HP = 99999;
+            _maxHP = 0;
+            _HP = 0;
             _AtkPoint = 0;
             //test
-            _HitRate = 1.0f;
-            //_HitRate = 0.0f;
+            //_HitRate = 1.0f;
+            _HitRate = 0.0f;
             _CritRate = 0.0f;
             _CritDmg = 0.0f;
             _maxSwordPoint = maxSwordPoint;

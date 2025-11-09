@@ -101,6 +101,9 @@ namespace Game.Soul
 
         public async UniTask ApplyInherentSoulsAsync()
         {
+            if (categorizedDeck.Count == 0)
+                RebuildCategoryCache();
+
             if (!categorizedDeck.ContainsKey(SoulTriggerType.Inherent))
                 return;
 

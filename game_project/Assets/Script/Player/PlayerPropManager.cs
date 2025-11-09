@@ -18,7 +18,12 @@ namespace Game.Player
         public float CalNormalAttackDamaage()
         {
             bool isHit = UnityEngine.Random.value < Prop.HitRate;
-            if (!isHit) return 0;
+            if (!isHit) 
+            { 
+                //未命中+1 剑气
+                AddSwordPoint(1);
+                return 0; 
+            }
             bool isCritical = UnityEngine.Random.value < Prop.CritRate;
             if (!isCritical) return Prop.AtkPoint;
             return Prop.AtkPoint * (1 + Prop.CritDmg);

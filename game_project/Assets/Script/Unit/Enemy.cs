@@ -93,10 +93,10 @@ namespace Game.Unit
                 return;
             //通知玩家有攻击即将命中
             attackSystem.NotifyIncomingAttack(gameObject, timeToHit);
-            await UniTask.Delay(TimeSpan.FromSeconds(timeToHit), cancellationToken: this.GetCancellationTokenOnDestroy());
+            await UniTask.Delay(TimeSpan.FromSeconds(timeToHit));
 
             // 如果敌人已死亡、中断攻击、被击退等，可提前终止
-            if (!gameObject.activeInHierarchy)
+            if (this == null || !isActiveAndEnabled)
                 return;
 
             // 限定只有近战或Boss敌人才会触发招架逻辑

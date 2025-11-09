@@ -14,6 +14,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using static UnityEngine.UI.GridLayoutGroup;
 using Radom = UnityEngine.Random;
 
 namespace Game.Framework
@@ -376,21 +377,38 @@ namespace Game.Framework
 
         public static CancellationToken GetCancellationTokenOnDisable(this Component component)
         {
+            if (component == null)
+                return CancellationToken.None;
+
             if (!disableTokens.TryGetValue(component, out var source))
             {
                 source = new CancellationTokenSource();
+                disableTokens.Remove(component); // 移除旧引用
                 disableTokens.Add(component, source);
                 WatchDisable(component, source).Forget();
             }
+
             return source.Token;
         }
 
         private static async UniTaskVoid WatchDisable(Component component, CancellationTokenSource source)
         {
-            var trigger = component.GetAsyncDisableTrigger();
-            await trigger.OnDisableAsync();
-            source.Cancel();
-            disableTokens.Remove(component);
+            try
+            {
+                var trigger = component.GetAsyncDisableTrigger();
+                await trigger.OnDisableAsync();
+                if (component != null)
+                    source.Cancel();
+                disableTokens.Remove(component);
+            }
+            catch (OperationCanceledException)
+            {
+                // 正常取消，不打印
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[GetCancellationTokenOnDisable] Exception: {ex}");
+            }
         }
 
         public static async UniTask WaitInputAsync(this MonoBehaviour mono, InputAction action)
@@ -438,22 +456,40 @@ namespace Game.Framework
             }, token);
         }
 
-        public static void Delay(this float time,UnityAction callback,CancellationToken cancellationToken)
+        public static void Delay(this MonoBehaviour mono, float seconds, UnityAction callback, bool cancelOnDisable = false)
         {
-            UniTask.Void(async (_) =>
-            {
-                await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken:cancellationToken);
-                callback?.Invoke();
-            },cancellationToken);
-        }
+            if (mono == null) return;
 
-        public static void Delay(this MonoBehaviour mono, float time, UnityAction callback)
-        {
             UniTask.Void(async () =>
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: mono.GetCancellationTokenOnDestroy());
-                callback?.Invoke();
+                var token = cancelOnDisable
+                    ? mono.GetCancellationTokenOnDisable()   // 对象失活也取消（适合对象池）
+                    : mono.GetCancellationTokenOnDestroy();  // 仅销毁时取消
+
+                try
+                {
+                    await UniTask.Delay(TimeSpan.FromSeconds(seconds), cancellationToken: token);
+
+                    if (!token.IsCancellationRequested)
+                        callback?.Invoke();
+                }
+                catch (OperationCanceledException)
+                {
+                    // 正常取消，静静吞掉，不打印错误
+                }
             });
+        }
+
+        public static async UniTask Delay(this MonoBehaviour mono, float seconds)
+        {
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(seconds),
+                                    cancellationToken: mono.GetCancellationTokenOnDestroy());
+            }
+            catch (OperationCanceledException)
+            {
+            }
         }
 
         #endregion

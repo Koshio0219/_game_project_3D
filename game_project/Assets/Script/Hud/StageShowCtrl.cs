@@ -29,8 +29,8 @@ namespace Game.Hud
 
         private void PlayerEnterLevelHandler(PlayerEnterLevelEvent e)
         {
-            View.InitHpbar(e.playerData.MaxHP);
-            View.InitSwordPointBar(e.playerData.MaxSwordPoint);
+            View.InitHpbar(e.playerData.HP,e.playerData.MaxHP);
+            View.InitSwordPointBar(e.playerData.SwordPoint,e.playerData.MaxSwordPoint);
             View.UpdateStats(e.playerData);
         }
 

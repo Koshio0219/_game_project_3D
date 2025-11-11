@@ -18,14 +18,16 @@ namespace Game.Hud
         public TextMeshProUGUI critText;
         public TextMeshProUGUI critDmgText;
 
-        public void InitHpbar(float hp)
+        public void InitHpbar(float hp,float maxHp)
         {
-            hpBar.InitValueView($"{hp}/{hp}", "生命值");
+            hpBar.InitValueView($"{hp}/{maxHp}", "生命值");
+            UpdateHpbar(0, hp, maxHp);
         }
 
-        public void InitSwordPointBar(int point)
+        public void InitSwordPointBar(int point,int maxPoint)
         {
-            swordPointBar.InitValueView($"{0}/{point}", "剑气");
+            swordPointBar.InitValueView($"{point}/{maxPoint}", "剑气");
+            UpdateSwordPointBar(0, point, maxPoint);
         }
 
         public void UpdateHpbar(float lastHp,float nowHp,float maxHp)

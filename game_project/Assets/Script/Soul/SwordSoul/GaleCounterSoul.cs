@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Game.Base;
 using Game.Framework;
+using Game.Hud;
 using Game.Player;
 using System;
 using UnityEngine;
@@ -28,12 +29,8 @@ namespace Game.Soul
             var pm = PlayerPropManager.Instance.Prop;
             if (pm == null) return;
 
-            //生成一个简易气浪特效
-            var effect = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            effect.transform.position = player.transform.position;
-            effect.transform.localScale = Vector3.one * shockwaveRadius;
-            effect.GetComponent<Renderer>().material.color = Color.cyan;
-            Destroy(effect, 0.4f);
+            //特效
+            EffectManager.Instance.PlayEffect("Range", player.transform.position + Vector3.up,1);
 
             // 敌人击退逻辑
             int swordPoint = pm.SwordPoint;
@@ -49,6 +46,7 @@ namespace Game.Soul
             }
 
             await UniTask.Delay(TimeSpan.FromSeconds(0.3f));
+            UIMessageSystem.Instance.AddMessage($"触发招架剑魂:{soulID}");
         }
     }
 }

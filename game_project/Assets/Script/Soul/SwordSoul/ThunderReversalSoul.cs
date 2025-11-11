@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Game.Base;
 using Game.Framework;
+using Game.Hud;
 using System;
 using UnityEngine;
 
@@ -16,12 +17,8 @@ namespace Game.Soul
         {
             Debug.Log("[SwordSoul] ThunderReversal activated!");
 
-            // 生成特效
-            var fx = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            fx.transform.position = player.transform.position;
-            fx.transform.localScale = Vector3.one * lightningRadius;
-            fx.GetComponent<Renderer>().material.color = Color.yellow;
-            GameObject.Destroy(fx, 0.3f);
+            //特效
+            EffectManager.Instance.PlayEffect("Range", player.transform.position + Vector3.up,1);
 
             // 示例敌人伤害逻辑
             var hits = Physics.OverlapSphere(player.transform.position, lightningRadius);
@@ -35,6 +32,7 @@ namespace Game.Soul
             }
 
             await UniTask.Delay(TimeSpan.FromSeconds(0.3f));
+            UIMessageSystem.Instance.AddMessage($"触发招架剑魂:{soulID}");
         }
     }
 }

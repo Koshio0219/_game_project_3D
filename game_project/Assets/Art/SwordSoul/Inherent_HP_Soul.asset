@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Soul.InherentHPSoul
   soulID: "\u5192\u9669\u4E4B\u9B42"
   triggerType: 0
-  description: "\u751F\u547D\u503C+100"
+  description: "\u751F\u547D\u4E0A\u9650+100\uFF08\u540C\u65F6\u6062\u590D100\u70B9\u751F\u547D\u503C\uFF09"
   icon: {fileID: 21300000, guid: b2d3d7075d789da4bba2153fde2e0659, type: 3}
   usedInStage: 0
   addMaxHP: 100

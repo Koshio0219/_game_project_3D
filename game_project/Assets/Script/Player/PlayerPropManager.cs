@@ -1,5 +1,6 @@
 ﻿using Game.Base;
 using Game.Framework;
+using Game.Hud;
 using System;
 using UnityEngine;
 
@@ -22,6 +23,7 @@ namespace Game.Player
             { 
                 //未命中+1 剑气
                 AddSwordPoint(1);
+                UIMessageSystem.Instance.AddMessage("攻击未命中，剑气+1");
                 return 0; 
             }
             bool isCritical = UnityEngine.Random.value < Prop.CritRate;

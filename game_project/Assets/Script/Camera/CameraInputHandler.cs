@@ -10,8 +10,5 @@ namespace Game.CameraSystem
 {
     internal class CameraInputHandler
     {
-
-
-
     }
 }

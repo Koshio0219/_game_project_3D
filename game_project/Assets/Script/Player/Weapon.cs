@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Game.Base;
+using Game.Framework;
 using System.Collections;
 using UnityEngine;
 
@@ -45,6 +46,7 @@ namespace Game.Player
         public virtual void SpecialAttack()
         {
             Debug.Log($"ID: {WeaponID} - Special Attack");
+            EffectManager.Instance.PlayEffect("Skill", transform.position);
         }
     }
 }

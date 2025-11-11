@@ -3981,10 +3981,10 @@ MonoBehaviour:
   skillHitRadius: 3
   skillHitDelay: 1
   skillHitWindow: 0.35
-  parryWindow: 0.25
+  parryWindow: 0.5
   parryCooldown: 1
-  invulDuration: 0.35
-  perfectDodgeWindow: 0.3
+  invulDuration: 0.5
+  perfectDodgeWindow: 0.5
   dodgeDistance: 2
   dodgeHeight: 0.4
   dodgeDuration: 0.25

@@ -782,7 +782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f74b97632ee84864fab2c52cb057134c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aroundAxis: 2
+  aroundAxis: 0
   angleSpeed: 180
 --- !u!1 &7011922011992266746
 GameObject:

@@ -1,70 +1,129 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
+using Game.Framework;
+using System;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game.CameraSystem
 {
-    public enum CameraMode { Free, LockOn, Special }
-
-    public class CameraManager : MonoBehaviour
+    public class CameraManager : MonoSingleton<CameraManager>
     {
-        public static CameraManager Instance;
-        public CameraMode currentMode;
+        public CinemachineCamera mainCamera;
+        public CinemachineCamera parryCamera;
+        public CinemachineCamera dodgeCamera;
 
-        [Header("Cinemachine References")]
-        public CinemachineCamera freeLookCamera;
-        public CinemachineTargetGroup targetGroup;
-        public CinemachineCamera specialCam;
+        public float blendDuration = 0.4f;
+        public float parryDuration = 0.8f;
+        public float dodgeDuration = 0.6f;
 
+        public float shakeAmplitude = 1.2f;
+        public float shakeFrequency = 2.0f;
+        public float shakeTime = 0.25f;
+
+        private CinemachineBrain brain;
+        private CinemachineBasicMultiChannelPerlin noiseComp;
         private Transform player;
-        private Transform lockOnTarget;
 
-        void Awake() => Instance = this;
+        protected override bool ShouldPersist => false;
 
-        void Start() 
+        protected override void Awake()
         {
-            player = GameObject.FindWithTag("Player").transform; 
-            SwitchMode(CameraMode.Free);
-            freeLookCamera.Follow = player;
+            base.Awake();
+            brain = Camera.main.GetComponent<CinemachineBrain>();
+            if (mainCamera != null)
+                noiseComp = mainCamera.GetComponent<CinemachineBasicMultiChannelPerlin>();
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
-        public void SwitchMode(CameraMode mode)
+        protected override void OnDestroy()
         {
-            currentMode = mode;
-            freeLookCamera.gameObject.SetActive(mode == CameraMode.Free);
-            targetGroup.gameObject.SetActive(mode == CameraMode.LockOn);
-            specialCam.gameObject.SetActive(mode == CameraMode.Special);
+            base.OnDestroy();
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
-        public void SetLockOnTarget(Transform target)
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            lockOnTarget = target;
-            targetGroup.Targets = new List<CinemachineTargetGroup.Target>
+            if (scene.name == "Stage")
+                RebindPlayer().Forget();
+        }
+
+        private void Start()
+        {
+            RebindPlayer().Forget();
+            SetActiveCamera(mainCamera);
+        }
+
+        private async UniTask RebindPlayer()
+        {
+            await UniTask.DelayFrame(1); // 等待Cinemachine初始化完毕
+            player = GameObject.FindWithTag("Player")?.transform;
+            if (player == null)
             {
-            new() { Object = player, Weight = 1f, Radius = 1f },
-            new() { Object = lockOnTarget, Weight = 1f, Radius = 2f }
-            };
+                Debug.LogWarning("CameraManager: 未找到 Player 对象");
+                return;
+            }
+
+            AssignTarget(mainCamera, player, player);
+            AssignTarget(parryCamera, player, player);
+            AssignTarget(dodgeCamera, player, player);
+
+            Debug.Log("CameraManager: 成功绑定新 Player。");
         }
 
-        public void ClearLockOnTarget()
+        private void AssignTarget(CinemachineCamera cam, Transform follow, Transform lookAt)
         {
-            lockOnTarget = null;
-            targetGroup.Targets = new List<CinemachineTargetGroup.Target>
-            {
-            new CinemachineTargetGroup.Target { Object = player, Weight = 1f, Radius = 1f }
-            };
+            if (cam == null) return;
+            cam.Follow = follow;
+            cam.LookAt = lookAt;
         }
 
-        public IEnumerator TriggerSpecialCam(float duration = 0.4f)
+        private void SetActiveCamera(CinemachineCamera cam)
         {
-            SwitchMode(CameraMode.Special);
-            yield return new WaitForSeconds(duration);
-            SwitchMode(CameraMode.Free);
+            if (mainCamera) mainCamera.gameObject.SetActive(false);
+            if (parryCamera) parryCamera.gameObject.SetActive(false);
+            if (dodgeCamera) dodgeCamera.gameObject.SetActive(false);
+
+            if (cam) cam.gameObject.SetActive(true);
+        }
+
+        public async UniTaskVoid PlayParryCamera()
+        {
+            if (parryCamera == null) return;
+
+            SetActiveCamera(parryCamera);
+            ShakeCamera();
+
+            await UniTask.Delay(TimeSpan.FromSeconds(parryDuration));
+            await UniTask.Delay(TimeSpan.FromSeconds(blendDuration));
+            SetActiveCamera(mainCamera);
+
+        }
+
+        public async UniTaskVoid PlayDodgeCamera()
+        {
+            if (dodgeCamera == null) return;
+
+            SetActiveCamera(dodgeCamera);
+            ShakeCamera();
+
+            await UniTask.Delay(TimeSpan.FromSeconds(dodgeDuration));
+            await UniTask.Delay(TimeSpan.FromSeconds(blendDuration));
+            SetActiveCamera(mainCamera);
+
+        }
+
+        private async void ShakeCamera()
+        {
+            if (noiseComp == null) return;
+            noiseComp.AmplitudeGain = shakeAmplitude;
+            noiseComp.FrequencyGain = shakeFrequency;
+
+            await UniTask.Delay(TimeSpan.FromSeconds(shakeTime));
+
+            noiseComp.AmplitudeGain = 0;
+            noiseComp.FrequencyGain = 0;
         }
     }
 }

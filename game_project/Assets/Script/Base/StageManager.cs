@@ -76,8 +76,9 @@ namespace Game.Base
 
         private void BattleClearEndHandler()
         {
-            Debug.Log($"battle clear !");
+            Debug.Log($"battle clear !");   
             ClearAllEnemies();
+            EffectManager.Instance.PlayEffect("BattleClear", MapPlayerIdToInstance.Values.ToList()[0].transform.position);
             SwordSoulManager.Instance.ResetUsed();
 
             if (IsLastStage())

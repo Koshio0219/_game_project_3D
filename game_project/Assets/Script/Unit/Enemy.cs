@@ -146,9 +146,8 @@ namespace Game.Unit
             //dead animation time delay
             await UniTask.Delay(1000);
 
-
             if (GameManager.stageManager.StageState == StageStates.BattleClear) return;
-            //EffectManager.Instance.Play(EffectManager.EffectID.EnemyDead, this.transform.position);
+            EffectManager.Instance.PlayEffect("Death", transform.position + Vector3.up);
             SEManager.Instance.Play(SEPath.ENEMY_DEAD);
             GameManager.stageManager.RemoveOneEnemy(enemyUnitData.InsId);
 

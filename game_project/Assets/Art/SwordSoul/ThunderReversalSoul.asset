@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Soul.ThunderReversalSoul
   soulID: "\u96F7\u9706\u53CD\u5236"
   triggerType: 2
-  description: "\u5BF95\u8303\u56F4\u5185\u654C\u4EBA\u9020\u621080\u70B9AOE\u4F24\u5BB3"
+  description: "\u5BF95\u8303\u56F4\u5185\u654C\u4EBA\u9020\u621080\u70B9\u4F24\u5BB3"
   icon: {fileID: 21300000, guid: 310f32da1bf96bf4b8a1c360c393bf7b, type: 3}
   usedInStage: 0
   lightningRadius: 5

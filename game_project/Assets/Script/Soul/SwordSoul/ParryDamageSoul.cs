@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Game.Base;
 using Game.Framework;
+using Game.Hud;
 using Game.Player;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ namespace Game.Soul
             }
 
             await UniTask.Delay(200);
+            UIMessageSystem.Instance.AddMessage($"触发招架剑魂:{soulID}");
         }
     }
 }

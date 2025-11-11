@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Game.Hud;
 using Game.Player;
 using System;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace Game.Soul
             if (pm == null) return;
             pm.MaxSwordPoint += addMaxSwordPoint;
             pm.SwordPoint += addSwordPoint;
+            UIMessageSystem.Instance.AddMessage($"触发闪避剑魂:{soulID}");
             Time.timeScale = slowTimeScale;
             await UniTask.Delay(TimeSpan.FromSeconds(duration));
             Time.timeScale = 1f;

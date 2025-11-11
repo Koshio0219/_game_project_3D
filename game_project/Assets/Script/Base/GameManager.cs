@@ -69,6 +69,18 @@ namespace Game.Base
             EventQueueSystem.AddListener<SceneLoadStartEvent>(SceneLoadStartHandler);
         }
 
+        public void LockCursor()
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        public void UnlockCursor()
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
         private void SceneLoadStartHandler(SceneLoadStartEvent e)
         {
             Debug.Log("change scene started!");
@@ -83,8 +95,8 @@ namespace Game.Base
 
         internal void SetFrameRate(int frameRate)
         {
-            if (QualitySettings.vSyncCount != 0) QualitySettings.vSyncCount = 0;
             Application.targetFrameRate = frameRate;
+            QualitySettings.vSyncCount = 1;
         }
 
         internal void SetFixedDeltaTime(float deltaTime)

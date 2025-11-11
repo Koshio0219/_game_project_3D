@@ -7,6 +7,8 @@ namespace Game.Player
     {
         private InputSystem_Actions input;
 
+        protected override bool ShouldPersist => false;
+
         // ====== 公开属性 ======
         public Vector2 MoveInput { get; private set; }
         public bool RunningInput { get; private set; }

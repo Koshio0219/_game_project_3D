@@ -1,7 +1,8 @@
-﻿using UnityEngine;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
+using Game.Hud;
 using Game.Player;
 using System;
+using UnityEngine;
 
 namespace Game.Soul
 {
@@ -36,6 +37,7 @@ namespace Game.Soul
 
             // 简单演出
             await UniTask.Delay(200);
+            UIMessageSystem.Instance.AddMessage($"触发闪避剑魂:{soulID}");
 
             // buff 持续期间（不阻塞主流程），使用独立任务在后台回退
             _ = UniTask.Delay(TimeSpan.FromSeconds(durationSec)).ContinueWith(() =>
@@ -43,6 +45,7 @@ namespace Game.Soul
                 pm.AtkPoint -= buffAtk;
                 pm.HitRate-= addHitRate;
                 pm.CritDmg -= buffCritDamageRate;
+                UIMessageSystem.Instance.AddMessage($"闪避剑魂:{soulID}效果结束");
                 pm.InvokeChanged();
             });
 

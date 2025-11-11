@@ -5,8 +5,6 @@
 /// </summary>
 public static class BGMPath{
 
-	public const string BATTLE27      = "BGM/Battle/battle27";
-	public const string BGMGAME_OVER  = "BGM/BGMGameOver";
 	public const string BGMNEXT_STAGE = "BGM/BGMNextStage";
 	public const string BGMWIN        = "BGM/BGMWin";
 	public const string CHARA_SELECT  = "BGM/CharaSelect";

@@ -1,8 +1,11 @@
 ﻿using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
 using Game.Base;
+using Game.CameraSystem;
 using Game.Framework;
+using Game.Hud;
 using Game.Soul;
+using KanKikuchi.AudioManager;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -104,7 +107,10 @@ namespace Game.Player
             currentWeapon.transform.ResetLocal();
             currentWeapon.InitWeapon(weaponId);
             if (isFirstLevel)
+            {
                 PropManager.AddProp(currentWeapon.AddProp);
+                UIMessageSystem.Instance.AddMessage("装备武器:攻击力+100，生命值+100");
+            }
 
             currentWeaponHitbox = currentWeapon.GetComponentInChildren<WeaponHitbox>();
             if (currentWeaponHitbox == null)
@@ -272,12 +278,29 @@ namespace Game.Player
             if (isParrying)
             {
                 PropManager.AddSwordPoint(2);
+                UIMessageSystem.Instance.AddMessage("招架成功，剑气+2");
                 OnParrySuccess?.Invoke(attacker);
-                _ = SwordSoulManager.Instance.TriggerOnParryAsync(gameObject, attacker);
+                OnParrySuccessEffect(attacker).Forget();
+ 
                 isParrying = false;
+                if (this == null || !isActiveAndEnabled)
+                    return true;
+                _ = SwordSoulManager.Instance.TriggerOnParryAsync(gameObject, attacker);
                 return true;
             }
             return false;
+        }
+
+        public async UniTaskVoid OnParrySuccessEffect(GameObject attacker)
+        {
+            // 特效
+            EffectManager.Instance.PlayEffect("Parry", attacker.transform.position + Vector3.up);
+            // 镜头特写
+            CameraManager.Instance.PlayParryCamera().Forget();
+            // 短暂停顿（时间缩放）
+            Time.timeScale = 0.1f;
+            await UniTask.Delay(1300, ignoreTimeScale: true);
+            Time.timeScale = 1f;
         }
 
         //当玩家按下闪避键时由输入系统调用
@@ -296,9 +319,12 @@ namespace Game.Player
             {
                 Debug.Log("Perfect Dodge!");
                 PropManager.AddSwordPoint(1);
+                UIMessageSystem.Instance.AddMessage("极限闪避成功，剑气+1");
                 OnPerfectDodge?.Invoke();
+                OnPerfectDodgeEffect().Forget();
+                if (this == null || !isActiveAndEnabled)
+                    return;
                 _ = SwordSoulManager.Instance.TriggerOnDodgeAsync(gameObject);
-                // TODO: 特写、时间减速、音效等演出
             }
 
             // 执行闪避位移
@@ -320,13 +346,6 @@ namespace Game.Player
             Vector3 forward = Camera.main.transform.forward;
             Vector3 right = Camera.main.transform.right;
             Vector3 dodgeDir = (-forward + right * 0.5f).normalized;
-
-            // 如果有输入方向，则按输入方向闪避
-            //if (input.MoveInput.sqrMagnitude > 0.01f)
-            //{
-            //    Vector3 inputDir = new Vector3(input.MoveInput.x, 0, input.MoveInput.y).normalized;
-            //    dodgeDir = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0) * inputDir;
-            //}
 
             // 闪避主循环
             while (elapsed < dodgeDuration)
@@ -356,6 +375,9 @@ namespace Game.Player
         {
             lastIncomingAttackTime = Time.time;
             lastAttackETA = timeToHit;
+
+            //播放攻击预警
+            EffectManager.Instance.PlayEffectFollow("AttackWarn", attacker.transform, Vector3.up, lifeTime: 1f);
         }
 
         private bool CheckPerfectDodge()
@@ -369,10 +391,13 @@ namespace Game.Player
             return false;
         }
 
-        //void OnControllerColliderHit(ControllerColliderHit hit)
-        //{
-        //    Debug.Log("玩家撞到了：" + hit.gameObject.name);
-        //}
+        public async UniTaskVoid OnPerfectDodgeEffect()
+        {
+            CameraManager.Instance.PlayDodgeCamera().Forget();
+            Time.timeScale = 0.3f;
+            await UniTask.Delay(2300, ignoreTimeScale: true);
+            Time.timeScale = 1f;
+        }
 
         public async UniTaskVoid ApplyHit(float damageAmount, int attackerId)
         {
@@ -402,7 +427,10 @@ namespace Game.Player
         {
             stateHandler.State = PlayerAnimatorState.Dead;
             EventQueueSystem.RemoveListener<SendDamageEvent>(DamageEventHandler);
-            await UniTask.Delay(TimeSpan.FromSeconds(3f));
+            EffectManager.Instance.PlayEffect("Death", transform.position + Vector3.up);
+            GameManager.stageManager.RemoveOnePlayer(InsId);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(1));
             EventQueueSystem.QueueEvent(new StageStatesEvent(StageStates.GameOver));
         }
 

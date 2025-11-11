@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Game.Hud;
 using Game.Player;
 using System;
 using UnityEngine;
@@ -43,6 +44,7 @@ namespace Game.Soul
 
             // 简单演出
             await UniTask.Delay(TimeSpan.FromSeconds(duration));
+            UIMessageSystem.Instance.AddMessage($"触发闪避剑魂:{soulID}");
         }
     }
 }

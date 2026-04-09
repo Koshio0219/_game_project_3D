@@ -230,7 +230,7 @@ namespace Game.Base
         {
             foreach (var item in MapPlayerIdToInstance)
             {
-                if (target.GetInstanceID() == item.Value.GetInstanceID())
+                if (target.GetEntityId() == item.Value.GetEntityId())
                 {
                     return item.Key;
                 }

@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Game.Framework;
 using System;
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,18 +22,23 @@ namespace Game.CameraSystem
         public float shakeFrequency = 2.0f;
         public float shakeTime = 0.25f;
 
-        private CinemachineBrain brain;
-        private CinemachineBasicMultiChannelPerlin noiseComp;
+        //private CinemachineBrain brain;
+        //private CinemachineBasicMultiChannelPerlin noiseComp;
+        private readonly Dictionary<CinemachineCamera, CinemachineBasicMultiChannelPerlin> noiseComps = new();
+
         private Transform player;
 
         protected override bool ShouldPersist => false;
-
         protected override void Awake()
         {
             base.Awake();
-            brain = Camera.main.GetComponent<CinemachineBrain>();
+            //brain = Camera.main.GetComponent<CinemachineBrain>();
             if (mainCamera != null)
-                noiseComp = mainCamera.GetComponent<CinemachineBasicMultiChannelPerlin>();
+                noiseComps.Add(mainCamera, mainCamera.GetComponent<CinemachineBasicMultiChannelPerlin>());
+            if (parryCamera != null)
+                noiseComps.Add(parryCamera, parryCamera.GetComponent<CinemachineBasicMultiChannelPerlin>());
+            if (dodgeCamera != null)
+                noiseComps.Add(dodgeCamera, dodgeCamera.GetComponent<CinemachineBasicMultiChannelPerlin>());
 
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
@@ -93,12 +99,11 @@ namespace Game.CameraSystem
             if (parryCamera == null) return;
 
             SetActiveCamera(parryCamera);
-            ShakeCamera();
+            ShakeCamera(parryCamera);
 
             await UniTask.Delay(TimeSpan.FromSeconds(parryDuration));
             await UniTask.Delay(TimeSpan.FromSeconds(blendDuration));
             SetActiveCamera(mainCamera);
-
         }
 
         public async UniTaskVoid PlayDodgeCamera()
@@ -106,16 +111,16 @@ namespace Game.CameraSystem
             if (dodgeCamera == null) return;
 
             SetActiveCamera(dodgeCamera);
-            ShakeCamera();
+            ShakeCamera(dodgeCamera);
 
             await UniTask.Delay(TimeSpan.FromSeconds(dodgeDuration));
             await UniTask.Delay(TimeSpan.FromSeconds(blendDuration));
             SetActiveCamera(mainCamera);
-
         }
 
-        private async void ShakeCamera()
+        private async void ShakeCamera(CinemachineCamera cam)
         {
+            var noiseComp = noiseComps[cam];
             if (noiseComp == null) return;
             noiseComp.AmplitudeGain = shakeAmplitude;
             noiseComp.FrequencyGain = shakeFrequency;

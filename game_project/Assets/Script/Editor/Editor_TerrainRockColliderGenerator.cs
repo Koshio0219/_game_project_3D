@@ -35,7 +35,7 @@ public class Editor_TerrainRockColliderGenerator : EditorWindow
 
     private void GenerateRockColliders()
     {
-        var terrains = Object.FindObjectsOfType<Terrain>();
+        var terrains = Object.FindObjectsByType<Terrain>();
         if (terrains.Length == 0)
         {
             EditorUtility.DisplayDialog("提示", "场景中未找到任何 Terrain。", "好的");

@@ -26,20 +26,19 @@ namespace Game.Hud
         }
         //public HudConfig Mode => GameData.Instance.HudConfig;
 
-        private int rootObjId = -1;
-        private int RootObjId
+        private GameObject rootObj = null;
+        private GameObject RootObj
         {
             get
             {
-                if (rootObjId == -1)
+                if (rootObj == null)
                 {
                     var up = transform.GetRootParent();
-                    var objId = up.gameObject.GetInstanceID();
-                    rootObjId = objId;
+                    rootObj = up.gameObject;
                     //detach the hpui with enemy
                     Detach();
                 }
-                return rootObjId;
+                return rootObj;
             }
         }
 
@@ -62,8 +61,8 @@ namespace Game.Hud
 
         private void InitEnemyHpHandler(InitEnemyHpEvent e)
         {
-            var targetId = GameManager.stageManager.GetEnemy(e.enemyId).gameObject.GetInstanceID();
-            if (RootObjId != targetId) return;
+            var target = GameManager.stageManager.GetEnemy(e.enemyId).gameObject;
+            if (RootObj != target) return;
             View.InitHpView(e.hp);
         }
 
@@ -74,9 +73,7 @@ namespace Game.Hud
 
         private void EnemyHpChangeHandler(EnemyHpChangeEvent e)
         {
-            var up = transform.GetRootParent();
-            var objId = up.gameObject.GetInstanceID();
-            if (RootObjId != GameManager.stageManager.GetEnemy(e.enemyId).gameObject.GetInstanceID()) return;
+            if (RootObj != GameManager.stageManager.GetEnemy(e.enemyId).gameObject) return;
             View.UpdateHpView(e.lastHp, e.nowHp);
         }
 
@@ -96,7 +93,7 @@ namespace Game.Hud
         private void ResetData()
         {
             view = null;
-            rootObjId = -1;
+            rootObj = null;
         }
 
         private void Detach()

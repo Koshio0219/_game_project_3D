@@ -27,7 +27,7 @@ namespace Game.Player
     public class PlayerAttackCtrl : MonoBehaviour, IDamageable
     {
         private int? _insId;
-        public int InsId => _insId ??= gameObject.GetInstanceID();
+        public int InsId => _insId ??= gameObject.GetEntityId();
 
         public PlayerPropManager PropManager => PlayerPropManager.Instance;
 

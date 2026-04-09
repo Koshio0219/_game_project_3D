@@ -92,6 +92,10 @@ PluginImporter:
       enabled: 0
       settings:
         CPU: AnyCPU
+    Switch2:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
     VisionOS:
       enabled: 0
       settings:

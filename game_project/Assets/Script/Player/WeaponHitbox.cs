@@ -48,7 +48,7 @@ namespace Game.Player
             if (other.gameObject == owner.gameObject) return;
 
             var root = other.transform.root.gameObject;
-            int id = root.GetInstanceID();
+            int id = root.GetEntityId();
             if (alreadyHit.Contains(id)) return;
             alreadyHit.Add(id);
 

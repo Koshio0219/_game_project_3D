@@ -354,7 +354,7 @@ namespace Game.Editor
             // 某些组在当前 Unity 版本可能不可用，尝试读取判断
             try
             {
-                PlayerSettings.GetScriptingDefineSymbolsForGroup(g);
+                GetDefinesForGroupCompat(g);
                 return true;
             }
             catch
@@ -367,7 +367,7 @@ namespace Game.Editor
         {
             try
             {
-                return PlayerSettings.GetScriptingDefineSymbolsForGroup(g) ?? "";
+                return GetDefinesForGroupCompat(g) ?? "";
             }
             catch
             {
@@ -377,13 +377,98 @@ namespace Game.Editor
 
         private static void SetDefinesFor(BuildTargetGroup g, string defines)
         {
-            // 写入当前 BuildTargetGroup
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(g, defines ?? "");
+            SetDefinesForGroupCompat(g, defines ?? "");
 
             // 再尝试给 Editor 目标也写入（IDE 才会立刻识别宏，避免灰色）
 #if UNITY_EDITOR
             TrySetEditorNamedBuildTarget(defines ?? "");
 #endif
+        }
+
+        private static string GetDefinesForGroupCompat(BuildTargetGroup g)
+        {
+            var namedBuildTargetType = typeof(PlayerSettings).Assembly.GetType("UnityEditor.Build.NamedBuildTarget");
+            if (namedBuildTargetType != null)
+            {
+                var fromGroupMethod = namedBuildTargetType.GetMethod(
+                    "FromBuildTargetGroup",
+                    System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static,
+                    null,
+                    new[] { typeof(BuildTargetGroup) },
+                    null);
+
+                if (fromGroupMethod != null)
+                {
+                    try
+                    {
+                        var namedTarget = fromGroupMethod.Invoke(null, new object[] { g });
+                        if (namedTarget != null)
+                        {
+                            var defineMethod = typeof(PlayerSettings).GetMethods()
+                                .FirstOrDefault(m =>
+                                    m.Name == "GetScriptingDefineSymbols" &&
+                                    m.GetParameters().Length == 1 &&
+                                    m.GetParameters()[0].ParameterType.FullName == namedBuildTargetType.FullName);
+
+                            if (defineMethod != null)
+                                return defineMethod.Invoke(null, new[] { namedTarget }) as string ?? "";
+                        }
+                    }
+                    catch
+                    {
+                        // ignore and fallback
+                    }
+                }
+            }
+
+#pragma warning disable CS0618
+            return PlayerSettings.GetScriptingDefineSymbolsForGroup(g) ?? "";
+#pragma warning restore CS0618
+        }
+
+        private static void SetDefinesForGroupCompat(BuildTargetGroup g, string defines)
+        {
+            var namedBuildTargetType = typeof(PlayerSettings).Assembly.GetType("UnityEditor.Build.NamedBuildTarget");
+            if (namedBuildTargetType != null)
+            {
+                var fromGroupMethod = namedBuildTargetType.GetMethod(
+                    "FromBuildTargetGroup",
+                    System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static,
+                    null,
+                    new[] { typeof(BuildTargetGroup) },
+                    null);
+
+                if (fromGroupMethod != null)
+                {
+                    try
+                    {
+                        var namedTarget = fromGroupMethod.Invoke(null, new object[] { g });
+                        if (namedTarget != null)
+                        {
+                            var defineMethod = typeof(PlayerSettings).GetMethods()
+                                .FirstOrDefault(m =>
+                                    m.Name == "SetScriptingDefineSymbols" &&
+                                    m.GetParameters().Length == 2 &&
+                                    m.GetParameters()[0].ParameterType.FullName == namedBuildTargetType.FullName &&
+                                    m.GetParameters()[1].ParameterType == typeof(string));
+
+                            if (defineMethod != null)
+                            {
+                                defineMethod.Invoke(null, new[] { namedTarget, defines ?? "" });
+                                return;
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        // ignore and fallback
+                    }
+                }
+            }
+
+#pragma warning disable CS0618
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(g, defines ?? "");
+#pragma warning restore CS0618
         }
 
 #if UNITY_EDITOR

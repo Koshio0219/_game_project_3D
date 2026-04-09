@@ -138,7 +138,7 @@ namespace Game.Player
             }
 
             // 等待角色落地
-            await UniTask.WaitUntil(() => controller.isGrounded);
+            await UniTask.WaitUntil(() => controller.isGrounded, cancellationToken: this.GetCancellationTokenOnDestroy());
             isJumping = false;
         }
 

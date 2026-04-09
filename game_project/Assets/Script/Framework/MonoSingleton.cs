@@ -47,7 +47,7 @@ namespace Game.Framework
                     if (instance == null)
                     {
 #if UNITY_2022_2_OR_NEWER
-                        var existing = Object.FindFirstObjectByType<T>();
+                        var existing = FindAnyObjectByType<T>();
                         if (existing != null)
                         {
                             instance = existing;
